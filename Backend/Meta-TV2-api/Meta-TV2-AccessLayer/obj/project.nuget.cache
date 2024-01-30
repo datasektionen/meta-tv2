@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "fauSN34dGLdUKnm1CGd1rbv2OXdgiF/2K2bqfWMS3syGFWS4BoaG+QHClLIh0ua4u5Hnn3TzlmBYjMeJFsiZOg==",
+  "dgSpecHash": "wEz27U8CYLqKjxBRrqTYj9pc/beHXaW7QKk/OJ7JaY8fTGKzxnr+EPuN6DWCm1zjqAgLZm89eJTKuz8XywrOMw==",
   "success": true,
-  "projectFilePath": "/Users/danielnikolic/Dokument/PVK/metatv/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-api.csproj",
+  "projectFilePath": "/Users/danielnikolic/Dokument/PVK/metatv/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-AccessLayer/Meta-TV2-api.csproj",
   "expectedPackageFiles": [
     "/Users/danielnikolic/.nuget/packages/microsoft.entityframeworkcore/8.0.1/microsoft.entityframeworkcore.8.0.1.nupkg.sha512",
     "/Users/danielnikolic/.nuget/packages/microsoft.entityframeworkcore.abstractions/8.0.1/microsoft.entityframeworkcore.abstractions.8.0.1.nupkg.sha512",
