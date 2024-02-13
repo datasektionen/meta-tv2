@@ -1,8 +1,12 @@
 ﻿namespace Meta_TV2_BusinessLayer;
 
-public class BusinessRules
+using Meta_TV2_DataLayer;
+
+public class BusinessRules : IBusinessRules
 {
-    public void testMethod(){
-        // Do something
+    IDataAccess DataAccess = new DataAccess();
+    
+    public void TestMethod(){
+        DataAccess.TestData();
     }
 }

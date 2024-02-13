@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Meta-TV2-BusinessLayer")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b98aa7b37e5efb43765f53cd58532733f4dec4be")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ea946b7e881cfbdfd71f80996ffd8a174a992dc2")]
 [assembly: System.Reflection.AssemblyProductAttribute("Meta-TV2-BusinessLayer")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Meta-TV2-BusinessLayer")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

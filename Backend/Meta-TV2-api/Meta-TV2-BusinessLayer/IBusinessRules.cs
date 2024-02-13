@@ -7,5 +7,5 @@ public interface IBusinessRules
     /// Triple click "/" to auto generate
     /// documentation template
     /// </summary>
-    public void testMethod();
+    public void TestMethod();
 }
