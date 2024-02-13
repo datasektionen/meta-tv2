@@ -6,7 +6,11 @@ public class BusinessRules : IBusinessRules
 {
     IDataAccess DataAccess = new DataAccess();
     
-    public void TestMethod(){
-        DataAccess.TestData();
+    public void TestMethod(string Name){
+        DataAccess.TestData(Name);
+    }
+
+    public string getFirstAlphabetical(){
+        return DataAccess.getFirstAlphabetical();
     }
 }

@@ -5,5 +5,6 @@ public interface IDataAccess
     /// <summary>
     /// Documentation goes in the interface class
     /// </summary>
-    public void TestData();
+    public void TestData(string Name);
+    public string getFirstAlphabetical();
 }

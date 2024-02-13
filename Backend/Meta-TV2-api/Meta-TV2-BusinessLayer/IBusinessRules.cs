@@ -7,5 +7,6 @@ public interface IBusinessRules
     /// Triple click "/" to auto generate
     /// documentation template
     /// </summary>
-    public void TestMethod();
+    public void TestMethod(string Name);
+    public string getFirstAlphabetical();
 }

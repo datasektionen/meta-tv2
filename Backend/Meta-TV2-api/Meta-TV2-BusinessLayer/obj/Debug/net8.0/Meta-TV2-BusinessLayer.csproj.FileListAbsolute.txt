@@ -1,0 +1,16 @@
+/Users/danielnikolic/Dokument/PVK/metatv/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-BusinessLayer/bin/Debug/net8.0/Meta-TV2-BusinessLayer.deps.json
+/Users/danielnikolic/Dokument/PVK/metatv/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-BusinessLayer/bin/Debug/net8.0/Meta-TV2-BusinessLayer.dll
+/Users/danielnikolic/Dokument/PVK/metatv/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-BusinessLayer/bin/Debug/net8.0/Meta-TV2-BusinessLayer.pdb
+/Users/danielnikolic/Dokument/PVK/metatv/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-BusinessLayer/bin/Debug/net8.0/Meta-TV2-DataLayer.dll
+/Users/danielnikolic/Dokument/PVK/metatv/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-BusinessLayer/bin/Debug/net8.0/Meta-TV2-DataLayer.pdb
+/Users/danielnikolic/Dokument/PVK/metatv/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-BusinessLayer/obj/Debug/net8.0/Meta-TV2-BusinessLayer.csproj.AssemblyReference.cache
+/Users/danielnikolic/Dokument/PVK/metatv/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-BusinessLayer/obj/Debug/net8.0/Meta-TV2-BusinessLayer.GeneratedMSBuildEditorConfig.editorconfig
+/Users/danielnikolic/Dokument/PVK/metatv/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-BusinessLayer/obj/Debug/net8.0/Meta-TV2-BusinessLayer.AssemblyInfoInputs.cache
+/Users/danielnikolic/Dokument/PVK/metatv/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-BusinessLayer/obj/Debug/net8.0/Meta-TV2-BusinessLayer.AssemblyInfo.cs
+/Users/danielnikolic/Dokument/PVK/metatv/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-BusinessLayer/obj/Debug/net8.0/Meta-TV2-BusinessLayer.csproj.CoreCompileInputs.cache
+/Users/danielnikolic/Dokument/PVK/metatv/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-BusinessLayer/obj/Debug/net8.0/Meta-TV2-BusinessLayer.sourcelink.json
+/Users/danielnikolic/Dokument/PVK/metatv/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-BusinessLayer/obj/Debug/net8.0/Meta-TV2-BusinessLayer.csproj.CopyComplete
+/Users/danielnikolic/Dokument/PVK/metatv/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-BusinessLayer/obj/Debug/net8.0/Meta-TV2-BusinessLayer.dll
+/Users/danielnikolic/Dokument/PVK/metatv/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-BusinessLayer/obj/Debug/net8.0/refint/Meta-TV2-BusinessLayer.dll
+/Users/danielnikolic/Dokument/PVK/metatv/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-BusinessLayer/obj/Debug/net8.0/Meta-TV2-BusinessLayer.pdb
+/Users/danielnikolic/Dokument/PVK/metatv/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-BusinessLayer/obj/Debug/net8.0/ref/Meta-TV2-BusinessLayer.dll

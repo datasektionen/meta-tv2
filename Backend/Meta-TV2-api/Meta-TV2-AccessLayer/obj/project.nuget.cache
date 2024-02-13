@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "wEz27U8CYLqKjxBRrqTYj9pc/beHXaW7QKk/OJ7JaY8fTGKzxnr+EPuN6DWCm1zjqAgLZm89eJTKuz8XywrOMw==",
+  "dgSpecHash": "l7qcOpql53V1DF1lNceS3L+0wvAhEwYnKDDCqdu/0Jb8fMoXszdxbxalQA6E9Mb8AJV5WLsAqcd3NBtlOzwO7g==",
   "success": true,
   "projectFilePath": "/Users/danielnikolic/Dokument/PVK/metatv/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-AccessLayer/Meta-TV2-api.csproj",
   "expectedPackageFiles": [
@@ -8,9 +8,11 @@
     "/Users/danielnikolic/.nuget/packages/microsoft.entityframeworkcore.abstractions/8.0.1/microsoft.entityframeworkcore.abstractions.8.0.1.nupkg.sha512",
     "/Users/danielnikolic/.nuget/packages/microsoft.entityframeworkcore.analyzers/8.0.1/microsoft.entityframeworkcore.analyzers.8.0.1.nupkg.sha512",
     "/Users/danielnikolic/.nuget/packages/microsoft.entityframeworkcore.inmemory/8.0.1/microsoft.entityframeworkcore.inmemory.8.0.1.nupkg.sha512",
+    "/Users/danielnikolic/.nuget/packages/microsoft.entityframeworkcore.relational/8.0.0/microsoft.entityframeworkcore.relational.8.0.0.nupkg.sha512",
     "/Users/danielnikolic/.nuget/packages/microsoft.extensions.apidescription.server/6.0.5/microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "/Users/danielnikolic/.nuget/packages/microsoft.extensions.caching.abstractions/8.0.0/microsoft.extensions.caching.abstractions.8.0.0.nupkg.sha512",
     "/Users/danielnikolic/.nuget/packages/microsoft.extensions.caching.memory/8.0.0/microsoft.extensions.caching.memory.8.0.0.nupkg.sha512",
+    "/Users/danielnikolic/.nuget/packages/microsoft.extensions.configuration.abstractions/8.0.0/microsoft.extensions.configuration.abstractions.8.0.0.nupkg.sha512",
     "/Users/danielnikolic/.nuget/packages/microsoft.extensions.dependencyinjection/8.0.0/microsoft.extensions.dependencyinjection.8.0.0.nupkg.sha512",
     "/Users/danielnikolic/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/8.0.0/microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
     "/Users/danielnikolic/.nuget/packages/microsoft.extensions.logging/8.0.0/microsoft.extensions.logging.8.0.0.nupkg.sha512",
@@ -18,6 +20,8 @@
     "/Users/danielnikolic/.nuget/packages/microsoft.extensions.options/8.0.0/microsoft.extensions.options.8.0.0.nupkg.sha512",
     "/Users/danielnikolic/.nuget/packages/microsoft.extensions.primitives/8.0.0/microsoft.extensions.primitives.8.0.0.nupkg.sha512",
     "/Users/danielnikolic/.nuget/packages/microsoft.openapi/1.2.3/microsoft.openapi.1.2.3.nupkg.sha512",
+    "/Users/danielnikolic/.nuget/packages/npgsql/8.0.0/npgsql.8.0.0.nupkg.sha512",
+    "/Users/danielnikolic/.nuget/packages/npgsql.entityframeworkcore.postgresql/8.0.0/npgsql.entityframeworkcore.postgresql.8.0.0.nupkg.sha512",
     "/Users/danielnikolic/.nuget/packages/swashbuckle.aspnetcore/6.4.0/swashbuckle.aspnetcore.6.4.0.nupkg.sha512",
     "/Users/danielnikolic/.nuget/packages/swashbuckle.aspnetcore.swagger/6.4.0/swashbuckle.aspnetcore.swagger.6.4.0.nupkg.sha512",
     "/Users/danielnikolic/.nuget/packages/swashbuckle.aspnetcore.swaggergen/6.4.0/swashbuckle.aspnetcore.swaggergen.6.4.0.nupkg.sha512",
