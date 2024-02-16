@@ -7,5 +7,6 @@ namespace Meta_TV2_DataLayer;
 public class Blacklist
 {
     [Key]
+    [Column("alias")]
     public string alias {get; set;}
 }
