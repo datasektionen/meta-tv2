@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Meta-TV2-api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+13b54f89ac4a7a7a9ae6502c46ae017be09a5c0c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e6166f33ba6674153308dbc7d84a611721b069ee")]
 [assembly: System.Reflection.AssemblyProductAttribute("Meta-TV2-api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Meta-TV2-api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

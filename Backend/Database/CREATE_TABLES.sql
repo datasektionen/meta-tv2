@@ -4,7 +4,7 @@ CREATE TABLE Groups (
 	title VARCHAR(50) NOT NULL,
 	priority BOOLEAN NOT NULL,
 	hidden BOOLEAN NOT NULL,
-	createdBy VARCHAR(15),
+	createdBy VARCHAR(15) NOT NULL,
 	startDate timestamp without time zone NOT NULL,
 	endDate timestamp without time zone,
 	archive BOOLEAN NOT NULL,
