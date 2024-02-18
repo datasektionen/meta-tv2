@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="../build/Meta-TV2-api.props" />
-</Project>
