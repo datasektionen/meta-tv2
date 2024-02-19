@@ -1,33 +1,34 @@
 {
   "format": 1,
   "restore": {
-    "/Users/danielnikolic/Dokument/PVK/metatv/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-AccessLayer/Meta-TV2-api.csproj": {}
+    "/Users/daniel/Documents/School/PVK/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-AccessLayer/Meta-TV2-api.csproj": {}
   },
   "projects": {
-    "/Users/danielnikolic/Dokument/PVK/metatv/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-AccessLayer/Meta-TV2-api.csproj": {
+    "/Users/daniel/Documents/School/PVK/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-AccessLayer/Meta-TV2-api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/danielnikolic/Dokument/PVK/metatv/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-AccessLayer/Meta-TV2-api.csproj",
+        "projectUniqueName": "/Users/daniel/Documents/School/PVK/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-AccessLayer/Meta-TV2-api.csproj",
         "projectName": "Meta-TV2-api",
-        "projectPath": "/Users/danielnikolic/Dokument/PVK/metatv/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-AccessLayer/Meta-TV2-api.csproj",
-        "packagesPath": "/Users/danielnikolic/.nuget/packages/",
-        "outputPath": "/Users/danielnikolic/Dokument/PVK/metatv/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-AccessLayer/obj/",
+        "projectPath": "/Users/daniel/Documents/School/PVK/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-AccessLayer/Meta-TV2-api.csproj",
+        "packagesPath": "/Users/daniel/.nuget/packages/",
+        "outputPath": "/Users/daniel/Documents/School/PVK/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-AccessLayer/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/danielnikolic/.nuget/NuGet/NuGet.Config"
+          "/Users/daniel/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "/usr/local/share/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/Users/danielnikolic/Dokument/PVK/metatv/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-BusinessLayer/Meta-TV2-BusinessLayer.csproj": {
-                "projectPath": "/Users/danielnikolic/Dokument/PVK/metatv/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-BusinessLayer/Meta-TV2-BusinessLayer.csproj"
+              "/Users/daniel/Documents/School/PVK/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-BusinessLayer/Meta-TV2-BusinessLayer.csproj": {
+                "projectPath": "/Users/daniel/Documents/School/PVK/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-BusinessLayer/Meta-TV2-BusinessLayer.csproj"
               }
             }
           }
@@ -36,6 +37,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -70,34 +76,35 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.101/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.201/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "/Users/danielnikolic/Dokument/PVK/metatv/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-BusinessLayer/Meta-TV2-BusinessLayer.csproj": {
+    "/Users/daniel/Documents/School/PVK/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-BusinessLayer/Meta-TV2-BusinessLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/danielnikolic/Dokument/PVK/metatv/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-BusinessLayer/Meta-TV2-BusinessLayer.csproj",
+        "projectUniqueName": "/Users/daniel/Documents/School/PVK/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-BusinessLayer/Meta-TV2-BusinessLayer.csproj",
         "projectName": "Meta-TV2-BusinessLayer",
-        "projectPath": "/Users/danielnikolic/Dokument/PVK/metatv/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-BusinessLayer/Meta-TV2-BusinessLayer.csproj",
-        "packagesPath": "/Users/danielnikolic/.nuget/packages/",
-        "outputPath": "/Users/danielnikolic/Dokument/PVK/metatv/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-BusinessLayer/obj/",
+        "projectPath": "/Users/daniel/Documents/School/PVK/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-BusinessLayer/Meta-TV2-BusinessLayer.csproj",
+        "packagesPath": "/Users/daniel/.nuget/packages/",
+        "outputPath": "/Users/daniel/Documents/School/PVK/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-BusinessLayer/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/danielnikolic/.nuget/NuGet/NuGet.Config"
+          "/Users/daniel/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "/usr/local/share/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/Users/danielnikolic/Dokument/PVK/metatv/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-DataLayer/Meta-TV2-DataLayer.csproj": {
-                "projectPath": "/Users/danielnikolic/Dokument/PVK/metatv/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-DataLayer/Meta-TV2-DataLayer.csproj"
+              "/Users/daniel/Documents/School/PVK/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-DataLayer/Meta-TV2-DataLayer.csproj": {
+                "projectPath": "/Users/daniel/Documents/School/PVK/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-DataLayer/Meta-TV2-DataLayer.csproj"
               }
             }
           }
@@ -106,6 +113,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -127,26 +139,27 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.101/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.201/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "/Users/danielnikolic/Dokument/PVK/metatv/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-DataLayer/Meta-TV2-DataLayer.csproj": {
+    "/Users/daniel/Documents/School/PVK/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-DataLayer/Meta-TV2-DataLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/danielnikolic/Dokument/PVK/metatv/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-DataLayer/Meta-TV2-DataLayer.csproj",
+        "projectUniqueName": "/Users/daniel/Documents/School/PVK/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-DataLayer/Meta-TV2-DataLayer.csproj",
         "projectName": "Meta-TV2-DataLayer",
-        "projectPath": "/Users/danielnikolic/Dokument/PVK/metatv/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-DataLayer/Meta-TV2-DataLayer.csproj",
-        "packagesPath": "/Users/danielnikolic/.nuget/packages/",
-        "outputPath": "/Users/danielnikolic/Dokument/PVK/metatv/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-DataLayer/obj/",
+        "projectPath": "/Users/daniel/Documents/School/PVK/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-DataLayer/Meta-TV2-DataLayer.csproj",
+        "packagesPath": "/Users/daniel/.nuget/packages/",
+        "outputPath": "/Users/daniel/Documents/School/PVK/meta-tv2/Backend/Meta-TV2-api/Meta-TV2-DataLayer/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/danielnikolic/.nuget/NuGet/NuGet.Config"
+          "/Users/daniel/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "/usr/local/share/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -159,6 +172,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -186,7 +204,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.101/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.201/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

@@ -40,4 +40,23 @@ public class DataAccess : IDataAccess
     //     Blacklist a = query.First();
     //     return a.alias;
     // }
+
+    public List<Groups> GetGroups(){
+        var query = (from x in db.Groups where x.archive == false select x);
+        List<Groups> groups = query.ToList();
+        return groups;
+
+    }
+
+    public Groups GetGroupById(int id){
+        var query = (from x in db.Groups where x.groupId == id select x);
+        Groups group = query.First();
+        return group;
+    }
+
+    public void ArchiveGroup(Groups group){
+        db.Update(group);
+        db.SaveChanges();
+        db.Dispose();
+    }
 }

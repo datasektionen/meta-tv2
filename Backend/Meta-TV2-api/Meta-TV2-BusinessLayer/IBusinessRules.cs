@@ -8,5 +8,12 @@ namespace Meta_TV2_BusinessLayer;
 
 public interface IBusinessRules
 {
-    public bool Test_AddGroups(string groupObject);
+    public bool AddGroup(string groupObject);
+
+    public string GetGroups();
+
+    public string GetGroupById(int id);
+
+    public bool ArchiveGroup(int id);
+
 }

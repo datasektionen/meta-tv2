@@ -22,9 +22,37 @@ public class TestApiRoute : ControllerBase
     "archiveDate": null
     }
     */
+    
+}
+
+[Route("[controller]")]
+public class Group : ControllerBase
+{
+    IBusinessRules businessRules = new BusinessRules();
+    
     [HttpPost]
-    public IActionResult Test_AddGroups(string GroupObject){
-        var add = businessRules.Test_AddGroups(GroupObject);
-        return add ? Ok() : BadRequest();
+    public IActionResult AddGroup(string GroupObject){
+        var add = businessRules.AddGroup(GroupObject);
+        return add ? Ok() : BadRequest("Failed to add group.");
+    }
+
+    [HttpGet]   
+    public IActionResult GetGroups(){
+        var groups = businessRules.GetGroups();
+        return groups != null ? Ok(groups) : NotFound("No groups found");
+    }
+
+    [HttpGet("{id}")]
+    public IActionResult GetGroupById(int id) 
+    {
+        var group = businessRules.GetGroupById(id); 
+        return group != null ? Ok(group) : NotFound("Group based on ID: "+ id+ " not found"); 
+    }
+
+    [HttpDelete("{id}")]
+    public IActionResult DeleteGroup(int id)
+    {
+        var delete = businessRules.ArchiveGroup(id);
+        return delete ? Ok() : NotFound("Group based on ID: "+ id+ " not found");
     }
 }
