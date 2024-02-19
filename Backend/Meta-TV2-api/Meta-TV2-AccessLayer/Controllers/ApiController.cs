@@ -4,28 +4,10 @@ using Meta_TV2_BusinessLayer;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
-[Route("[controller]")]
-public class WeatherForecastController : ControllerBase
-{
-    IBusinessRules businessRules = new BusinessRules();
-    private static readonly string[] Summaries = new[]
-    {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
-
-    private readonly ILogger<WeatherForecastController> _logger;
-
-    public WeatherForecastController(ILogger<WeatherForecastController> logger)
-    {
-        _logger = logger;
-    }
-}
-
 [Route("[controller]/dbinput")]
 public class TestApiRoute : ControllerBase 
 {
     IBusinessRules businessRules = new BusinessRules();
-
     /*
     Example JSON for this method:
 
