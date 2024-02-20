@@ -41,7 +41,7 @@ public class DataAccess : IDataAccess
     //     return a.alias;
     // }
 
-    public List<Groups> GetGroups(){
+    public List<Groups> GetGroupsTest(){
         var query = (from x in db.Groups where x.archive == false select x);
         List<Groups> groups = query.ToList();
         return groups;
@@ -58,5 +58,11 @@ public class DataAccess : IDataAccess
         db.Update(group);
         db.SaveChanges();
         db.Dispose();
+    }
+
+    public List<Groups> GetGroups(int page, int size){
+        var query = (from x in db.Groups where x.archive == false select x);
+        List<Groups> groups = query.Skip((page - 1) * size).Take(size).ToList();
+        return groups;
     }
 }

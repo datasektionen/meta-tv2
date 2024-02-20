@@ -21,15 +21,15 @@ public class BusinessRules : IBusinessRules
         }
     }
 
-    public string GetGroups(){
+    public string GetGroupsTest(){
         try
         {
-            List<Groups> result = DataAccess.GetGroups();
+            List<Groups> result = DataAccess.GetGroupsTest();
             if (result.Count == 0 || result == null)
             {
                 return null;
             }
-            return JsonSerializer.Serialize(DataAccess.GetGroups());
+            return JsonSerializer.Serialize(DataAccess.GetGroupsTest());
         }
         catch (Exception e)
         {
@@ -63,6 +63,23 @@ public class BusinessRules : IBusinessRules
         {
             // logg e?
             return false;
+        }
+    }
+
+    public string GetGroups(int page, int size){
+        try
+        {
+            List<Groups> result = DataAccess.GetGroups(page, size);
+            if (result.Count == 0 || result == null)
+            {
+                return null;
+            }
+            return JsonSerializer.Serialize(DataAccess.GetGroups(page-1, size));
+        }
+        catch (Exception e)
+        {
+            // logg e?
+            return null;
         }
     }
 }

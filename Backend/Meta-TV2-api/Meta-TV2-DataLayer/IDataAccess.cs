@@ -32,11 +32,13 @@ public interface IDataAccess
     /// <param name="blacklist">Blacklist object to add</param>
     public void Test_AddBlacklist(Blacklist blacklist);
 
-    public List<Groups> GetGroups();
+    public List<Groups> GetGroupsTest();
 
     public Groups GetGroupById(int id);
 
     public void ArchiveGroup(Groups group);
+
+    public List<Groups> GetGroups(int page, int size);
 
 
 

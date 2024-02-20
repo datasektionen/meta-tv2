@@ -38,7 +38,15 @@ public class Group : ControllerBase
 
     [HttpGet]   
     public IActionResult GetGroups(){
-        var groups = businessRules.GetGroups();
+        var groups = businessRules.GetGroupsTest();
+        return groups != null ? Ok(groups) : NotFound("No groups found");
+    }
+
+    //Create a route for /Group/page=1&size=10
+    [HttpGet("page={page}&size={size}")]
+    public IActionResult GetGroupsByPage(int page, int size)
+    {
+        var groups = businessRules.GetGroups(page, size);
         return groups != null ? Ok(groups) : NotFound("No groups found");
     }
 
@@ -46,13 +54,13 @@ public class Group : ControllerBase
     public IActionResult GetGroupById(int id) 
     {
         var group = businessRules.GetGroupById(id); 
-        return group != null ? Ok(group) : NotFound("Group based on ID: "+ id+ " not found"); 
+        return group != null ? Ok(group) : NotFound($"Group based on ID: {id} not found"); 
     }
 
     [HttpDelete("{id}")]
     public IActionResult DeleteGroup(int id)
     {
         var delete = businessRules.ArchiveGroup(id);
-        return delete ? Ok() : NotFound("Group based on ID: "+ id+ " not found");
+        return delete ? Ok() : NotFound($"Group based on ID: {id} not found");
     }
 }

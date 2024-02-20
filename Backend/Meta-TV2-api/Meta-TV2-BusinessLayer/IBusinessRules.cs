@@ -10,10 +10,12 @@ public interface IBusinessRules
 {
     public bool AddGroup(string groupObject);
 
-    public string GetGroups();
+    public string GetGroupsTest();
 
     public string GetGroupById(int id);
 
     public bool ArchiveGroup(int id);
+
+    public string GetGroups(int page, int size);
 
 }
