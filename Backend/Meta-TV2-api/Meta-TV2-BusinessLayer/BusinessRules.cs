@@ -39,19 +39,10 @@ public class BusinessRules : IBusinessRules
     }
 
     public async Task<string> GetGroupById(int id){
-        try
-        {
-            var data = await DataAccess.GetGroupById(id);
-            if (data.HasValue)
-                return JsonSerializer.Serialize(data);
-            else return null;
-        }
-        catch (Exception e)
-        {
-            return null;
-        }
-        
-        
+        var data = await DataAccess.GetGroupById(id);
+        if (data.HasValue)
+            return JsonSerializer.Serialize(data);
+        else return null;
     }
 
     public async Task<bool> ArchiveGroup(int id){

@@ -61,13 +61,13 @@ public class DataAccess : IDataAccess
         catch (Exception e)
         {
             Console.WriteLine($"Caught exception in GetGroupById({id}): {e.Message}");
-            throw;
+            return Optional<Groups>.Empty();
         }
     }
 
-    public void ArchiveGroup(Groups group){
+    public async void ArchiveGroup(Groups group){
         db.Update(group);
-        db.SaveChanges();
+        await db.SaveChangesAsync();
         db.Dispose();
     }
 

@@ -53,8 +53,8 @@ public class Group : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> GetGroupById(int id) 
     {
-        var group = await businessRules.GetGroupById(id); 
-        return group != null ? Ok(group) : NotFound($"Group based on ID: {id} not found"); 
+        var group = await businessRules.GetGroupById(id);
+        return group != null ? Ok(group) : NotFound($"No result for groupId {id}"); 
     }
 
     // [HttpDelete("{id}")]
