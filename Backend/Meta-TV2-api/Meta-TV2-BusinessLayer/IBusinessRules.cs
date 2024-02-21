@@ -12,9 +12,9 @@ public interface IBusinessRules
 
     public string GetGroupsTest();
 
-    public string GetGroupById(int id);
+    public Task<string> GetGroupById(int id);
 
-    public bool ArchiveGroup(int id);
+    public Task<bool> ArchiveGroup(int id);
 
     public string GetGroups(int page, int size);
 

@@ -1,4 +1,7 @@
-﻿namespace Meta_TV2_DataLayer;
+﻿using Microsoft.EntityFrameworkCore;
+using Npgsql;
+
+namespace Meta_TV2_DataLayer;
 
 // Värt att kolla in "transactions" för timeouts
 public class DataAccess : IDataAccess
@@ -42,16 +45,24 @@ public class DataAccess : IDataAccess
     // }
 
     public List<Groups> GetGroupsTest(){
-        var query = (from x in db.Groups where x.archive == false select x);
-        List<Groups> groups = query.ToList();
-        return groups;
-
+        var query = from x in db.Groups where x.archive == false select x;
+        return query.ToList();
     }
 
-    public Groups GetGroupById(int id){
-        var query = (from x in db.Groups where x.groupId == id select x);
-        Groups group = query.First();
-        return group;
+    public async Task<Optional<Groups>> GetGroupById(int id){
+        try
+        {
+            var query = from x in db.Groups where x.groupId == id select x;
+            var group = await query.FirstOrDefaultAsync();
+            if (group != null)
+                return Optional<Groups>.Result(group);
+            else return Optional<Groups>.Empty();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Caught exception in GetGroupById({id}): {e.Message}");
+            throw;
+        }
     }
 
     public void ArchiveGroup(Groups group){

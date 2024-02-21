@@ -51,16 +51,16 @@ public class Group : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public IActionResult GetGroupById(int id) 
+    public async Task<IActionResult> GetGroupById(int id) 
     {
-        var group = businessRules.GetGroupById(id); 
+        var group = await businessRules.GetGroupById(id); 
         return group != null ? Ok(group) : NotFound($"Group based on ID: {id} not found"); 
     }
 
-    [HttpDelete("{id}")]
-    public IActionResult DeleteGroup(int id)
-    {
-        var delete = businessRules.ArchiveGroup(id);
-        return delete ? Ok() : NotFound($"Group based on ID: {id} not found");
-    }
+    // [HttpDelete("{id}")]
+    // public IActionResult DeleteGroup(int id)
+    // {
+    //     var delete = businessRules.ArchiveGroup(id);
+    //     return delete ? Ok() : NotFound($"Group based on ID: {id} not found");
+    // }
 }
