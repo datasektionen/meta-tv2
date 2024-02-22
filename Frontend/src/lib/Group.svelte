@@ -1,6 +1,4 @@
 <script>
-    import { slide } from "svelte/transition";
-
     export let state = "preview"; //preview, create, edit, restore
     export let title = "Title";
     export let creator = "bwidman";
@@ -8,10 +6,15 @@
     export let hidden = false;
     export let priority = false;
     export let neverExpire = false;
-    export let startDate = "2024-01-01 00:00";
-    export let endDate = "2024-12-31 23:59";
-    export let archivedDate = "2024-12-31 23:59";
+    export let startDate = (new Date()).toISOString().split('T')[0];
+    export let startTime = (new Date()).getHours().toLocaleString(undefined,{minimumIntegerDigits: 2}) + ":" + (new Date()).getMinutes().toLocaleString(undefined,{minimumIntegerDigits: 2});
+    export let endDate = (new Date()).toISOString().split('T')[0];
+    export let endTime = (new Date()).getHours().toLocaleString(undefined,{minimumIntegerDigits: 2}) + ":" + (new Date()).getMinutes().toLocaleString(undefined,{minimumIntegerDigits: 2});
+    export let archivedDate = "wr3w";
     export let slides = [];
+
+    $: startDateTime = `${startDate} ${startTime}`;
+    $: endDateTime = `${endDate} ${endTime}`;
 
     const clickedEdit = () => {
         state = "edit";
@@ -29,7 +32,7 @@
     <!--HEADER-->
     <div class="group_header">
         {#if state === "create" || state === "edit"}
-            <input type="text" bind:value={title}/>
+            <input type="text" class="group_title-input" bind:value={title} placeholder="Title"/>
         {:else if state === "preview" || state === "restore"}
             <h1>{title}</h1>
         {/if}
@@ -45,7 +48,8 @@
             {#if hidden == false && state === "preview"}
                 <button class="group_edit-button" on:click={clickedEdit}>Edit</button>
             {/if}
-            {#if hidden == false && state === "edit"}
+            {#if state === "edit"}
+                <button class="group_slide-history-button">History</button>
                 <button class="group_confirm-button" on:click={clickedConfirm}>Confirm</button>
             {/if}
             <button class="group_delete-button">Delete</button>
@@ -60,43 +64,50 @@
             {:else}
                 <p>There are no slides yet</p>
             {/each}
+            {#if state === "create" || state === "edit"}
+                <button class="group_add-slide-button">+</button>
+            {/if}
         </div>
-    {/if}
-    {#if state === "create" || state === "edit"}
-        <button class="group_add-slide-button">+</button>
+    {:else}
+        <p class="group_footer_gray-text">This content has been hidden</p>
     {/if}
 
     <!--FOOTER-->
     <div class="group_footer">
         {#if state === "create" || state === "edit"}
-            <input type="date" value={(new Date()).toISOString().split('T')[0]}/>
-            <input type="time" value={(new Date()).getHours().toLocaleString(undefined,{minimumIntegerDigits: 2}) + ":" + (new Date()).getMinutes().toLocaleString(undefined,{minimumIntegerDigits: 2})}/>            
-            
+            <input type="date" bind:value={startDate}/>
+            <input type="time" bind:value={startTime}/>            
+
             <p>--></p>
             {#if !neverExpire}
-                <input type="date" value={(new Date()).toISOString().split('T')[0]}/>
-                <input type="time" value={(new Date()).getHours().toLocaleString(undefined,{minimumIntegerDigits: 2}) + ":" + (new Date()).getMinutes().toLocaleString(undefined,{minimumIntegerDigits: 2})}/>
+                <input type="date" bind:value={endDate}/>
+                <input type="time" bind:value={endTime}/>
             {/if}
 
             <p>Never expire: </p>
             <input type="checkbox" bind:checked={neverExpire}/>
 
-            <p>Only display this group: </p>
-            <input type="checkbox" bind:checked={priority}/>
-
-            <button>Hide content</button>
+            <div class="group_footer_right-container">
+                <p>Only display this group: </p>
+                <input type="checkbox" bind:checked={priority}/>
+                <button>Hide content</button>
+            </div>
+            
         {:else if state === "preview"}
-            <p>CIcon {startDate} ---> {endDate}</p>
+            <p>CIcon {startDateTime} ---> 
+                {#if neverExpire}
+                    Forever
+                {:else}
+                    {endDateTime}
+                {/if}
+            </p>
         {:else if state === "restore"}
-            <p>Archived {archivedDate}</p>
+            <p>Archived: {archivedDate}</p>
         {/if}
         
-        {#if hidden && state !== "create"}
-            <p class="group_footer_gray-text">This content has been hidden</p>
-        {/if}
     </div>
     {#if state === "create"}
-        <button on:click={clickedPublish}>Publish</button>
+        <button class="group_publish-button" on:click={clickedPublish}>Publish</button>
     {/if}
 </div>
 
@@ -127,6 +138,13 @@
     .group_delete-button{
         
     }
+    .group_title-input{
+        border: 0;
+        height: 80%;
+        border-radius: 10px;
+        font-size: larger;
+        text-align: center;
+    }
 
     .group_slide-holder{
         margin-top: 10px;
@@ -136,7 +154,8 @@
     .group_add-slide-button{
         width: 80%;
         height: 40px;
-        background-color: #67F49F;
+        background-color: #66ff66;
+        border-width: 1px;
         border-radius: 10px;
         font-size: larger;
     }
@@ -144,7 +163,7 @@
     .group_footer {
         padding: 20px;
         height: 50px;
-        width: 100%;
+        width: auto;
     }
 
     .group_header_gray-text,
@@ -155,7 +174,19 @@
         margin-right: 20px;
     }
     .group_footer_gray-text{
+        text-align: center;
+    }
+    .group_footer_right-container{
         float: right;
-        margin-right: 80px;
+    }
+
+    .group_publish-button{
+        padding: 10px;
+        display: block;
+        background-color: #66ff66;
+        margin-right: 0;
+        margin-left:auto;
+        margin-top: 0;
+        margin-bottom: auto;
     }
 </style>
