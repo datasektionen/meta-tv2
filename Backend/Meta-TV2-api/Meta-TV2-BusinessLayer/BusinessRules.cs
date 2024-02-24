@@ -38,25 +38,20 @@ public class BusinessRules : IBusinessRules
         }
     }
 
-    public string GetGroupById(int id){
-        try
-        {
-            return JsonSerializer.Serialize(DataAccess.GetGroupById(id));
-        }
-        catch (Exception e)
-        {
-            // logg e?
-            return null;
-        }
+    public async Task<string> GetGroupById(int id){
+        var data = await DataAccess.GetGroupById(id);
+        if (data.HasValue)
+            return JsonSerializer.Serialize(data);
+        else return null;
     }
 
-    public bool ArchiveGroup(int id){
+    public async Task<bool> ArchiveGroup(int id){
         try
         {
-            var group = DataAccess.GetGroupById(id);
-            group.archive = true;
-            group.archiveDate = DateTime.Now;
-            DataAccess.ArchiveGroup(group);
+            var group = await DataAccess.GetGroupById(id);
+            group.Value.archive = true;
+            group.Value.archiveDate = DateTime.Now;
+            DataAccess.ArchiveGroup(group.Value);
             return true;
         }
         catch (Exception e)

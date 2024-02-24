@@ -34,7 +34,7 @@ public interface IDataAccess
 
     public List<Groups> GetGroupsTest();
 
-    public Groups GetGroupById(int id);
+    public Task<Optional<Groups>> GetGroupById(int id);
 
     public void ArchiveGroup(Groups group);
 
