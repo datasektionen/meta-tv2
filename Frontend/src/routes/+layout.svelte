@@ -28,18 +28,15 @@
     header a {
         text-decoration: none;
         color: black;
+        display: inline-block;
     }
 
     nav a {
-        margin: 1em;
+        margin: 0.5em 1em;
         padding: 1em 1.5em;
         color: white;
         background-color: #e83c84;
         border-radius: 0.5em;
-    }
-
-    main {
-        min-height: 75vh;
     }
 
     footer {
