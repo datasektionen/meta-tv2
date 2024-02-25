@@ -10,7 +10,7 @@
     export let startTime = (new Date()).getHours().toLocaleString(undefined,{minimumIntegerDigits: 2}) + ":" + (new Date()).getMinutes().toLocaleString(undefined,{minimumIntegerDigits: 2});
     export let endDate = (new Date()).toISOString().split('T')[0];
     export let endTime = (new Date()).getHours().toLocaleString(undefined,{minimumIntegerDigits: 2}) + ":" + (new Date()).getMinutes().toLocaleString(undefined,{minimumIntegerDigits: 2});
-    export let archivedDate = "wr3w";
+    export let archivedDate = "";
     export let slides = [];
 
     $: startDateTime = `${startDate} ${startTime}`;
