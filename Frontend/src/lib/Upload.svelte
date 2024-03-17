@@ -1,5 +1,13 @@
 <script>
     let type = 0;
+    let fileInput = "";
+    let imageURL = "";
+    let websiteURL = "";
+
+    function handleFileUpload(event) {
+        const file = event.target.files[0];
+
+    }
 
     function drop(event) {
         const dt = event.dataTransfer;
@@ -8,6 +16,20 @@
     }
 
     function handleFile(file) {
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                fileInput = reader.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function submitImageURL() {
+        
+    }
+
+    function submitWebsiteURL() {
 
     }
 </script>
@@ -31,7 +53,7 @@
         <div id="upload-area">
             {#if type == 0}
                 <div>
-                    <input type="file" id="file" accept="image/*,video/*,.html"/>
+                    <input type="file" id="file" accept="image/*,video/*,.html" on:change={handleFileUpload}/>
                     <p>Images, GIF, videos & HTML</p>
                 </div>
                 <div 
@@ -42,9 +64,13 @@
                     on:dragenter|preventDefault|stopPropagation
                 ><p>Drag and drop</p></div>
             {:else if type == 1}
-                <input type="text" id="image-link" placeholder="Direct link to image"/>
+                <form on:submit|preventDefault={submitImageURL}>
+                    <input bind:value={imageURL} type="text" id="image-link" placeholder="Direct link to image"/>
+                </form>
             {:else if type == 2}
-                <input type="text" id="website" placeholder="Link to website"/>
+                <form on:submit|preventDefault={submitWebsiteURL}>
+                    <input bind:value={websiteURL} type="text" id="website" placeholder="Link to website"/>
+                </form>
             {/if}
         </div>
     </div>
@@ -81,10 +107,15 @@
         align-items: center;
     }
 
+    form {
+        width: 100%;
+        grid-column: 1 / span 3;
+    }
+
     input[type="text"] {
         display: block;
         padding: 0.8em;
-        grid-column: 1 / span 3;
+        width: 100%;
     }
 
     input[type="file"] {
