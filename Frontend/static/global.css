@@ -1,8 +1,8 @@
 *{
     margin: 0;
     padding: 0;
-}
 
-p{
-    color: firebrick; 
+    font-family: "Lato", sans-serif;
+    font-weight: 900;
+    font-style: normal;
 }
