@@ -13,6 +13,10 @@
     export let archivedDate = "";
     export let slides = [];
 
+    let iconColorBlack = "#000000"
+    let iconColorRed = "#E82305"
+    let iconColorGreen = "#0FF71E"
+
     $: startDateTime = `${startDate} ${startTime}`;
     $: endDateTime = `${endDate} ${endTime}`;
 
@@ -20,7 +24,12 @@
         state = "edit";
     };
     const clickedConfirm = () => {
-        state = "preview";
+        title = title.trim();
+        if (title.length >= 3){
+            state = "preview";
+        } else {
+            alert("Title too short");
+        }
     };
     const clickedPublish = () => {
         state = "preview";
@@ -32,7 +41,7 @@
     <!--HEADER-->
     <div class="group_header">
         {#if state === "create" || state === "edit"}
-            <input type="text" class="group_title-input" bind:value={title} placeholder="Title"/>
+            <input type="text" maxlength="35" class="group_title-input" bind:value={title} placeholder="Title"/>
         {:else if state === "preview" || state === "restore"}
             <h1>{title}</h1>
         {/if}
@@ -46,13 +55,23 @@
                 <p>Priority</p>
             {/if}
             {#if hidden == false && state === "preview"}
-                <button class="group_edit-button" on:click={clickedEdit}>Edit</button>
+                <button class="group_edit-button" on:click={clickedEdit}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24"><path fill={iconColorBlack} d="M16.293 3.293a1 1 0 0 1 1.414 0l3 3a1 1 0 0 1 0 1.414l-9 9A1 1 0 0 1 11 17H8a1 1 0 0 1-1-1v-3a1 1 0 0 1 .293-.707zM9 13.414V15h1.586l8-8L17 5.414zM3 7a2 2 0 0 1 2-2h5a1 1 0 1 1 0 2H5v12h12v-5a1 1 0 1 1 2 0v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+                </button>
             {/if}
             {#if state === "edit"}
-                <button class="group_slide-history-button">History</button>
-                <button class="group_confirm-button" on:click={clickedConfirm}>Confirm</button>
+                <button class="group_slide-history-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 16 16"><path fill={iconColorBlack} fill-rule="evenodd" d="M4.806.665A8 8 0 1 1 .612 11.07a.75.75 0 1 1 1.385-.575A6.5 6.5 0 1 0 2.523 4.5H4.25a.75.75 0 0 1 0 1.5H0V1.75a.75.75 0 0 1 1.5 0v1.586A8 8 0 0 1 4.806.666ZM8 3a.75.75 0 0 1 .75.75v3.94l2.034 2.034a.75.75 0 1 1-1.06 1.06L7.47 8.53l-.22-.22V3.75A.75.75 0 0 1 8 3" clip-rule="evenodd"/></svg>
+                </button>
+                <button class="group_confirm-button" on:click={clickedConfirm}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="2.25em" height="2em" viewBox="0 0 1600 1280"><path fill={iconColorGreen} d="M1575 310q0 40-28 68l-724 724l-136 136q-28 28-68 28t-68-28l-136-136L53 740q-28-28-28-68t28-68l136-136q28-28 68-28t68 28l294 295l656-657q28-28 68-28t68 28l136 136q28 28 28 68"/></svg>
+                </button>
             {/if}
-            <button class="group_delete-button">Delete</button>
+            {#if state !== "restore"}
+                <button class="group_delete-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 16 16"><path fill={iconColorRed} d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/></svg>
+                </button>
+            {/if}
         </div>
     </div>
 
@@ -60,12 +79,14 @@
     {#if hidden == false || state === "create"}
         <div class="group_slide-holder"> 
             {#each slides as slide}
-                slide
+                {slide}
             {:else}
                 <p>There are no slides yet</p>
             {/each}
             {#if state === "create" || state === "edit"}
-                <button class="group_add-slide-button">+</button>
+                <button class="group_add-slide-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 1408 1408"><path fill={iconColorBlack} d="M1408 608v192q0 40-28 68t-68 28H896v416q0 40-28 68t-68 28H608q-40 0-68-28t-28-68V896H96q-40 0-68-28T0 800V608q0-40 28-68t68-28h416V96q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68"/></svg>
+                </button>
             {/if}
         </div>
     {:else}
@@ -78,7 +99,7 @@
             <input type="date" bind:value={startDate}/>
             <input type="time" bind:value={startTime}/>            
 
-            <p>--></p>
+            <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 16 16"><path fill={iconColorBlack} fill-rule="evenodd" d="M10.159 10.72a.75.75 0 1 0 1.06 1.06l3.25-3.25L15 8l-.53-.53l-3.25-3.25a.75.75 0 0 0-1.061 1.06l1.97 1.97H1.75a.75.75 0 1 0 0 1.5h10.379z" clip-rule="evenodd"/></svg>
             {#if !neverExpire}
                 <input type="date" bind:value={endDate}/>
                 <input type="time" bind:value={endTime}/>
@@ -94,7 +115,11 @@
             </div>
             
         {:else if state === "preview"}
-            <p>CIcon {startDateTime} ---> 
+            <p>
+                <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24"><g fill="none" stroke={iconColorBlack} stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M8 2v4m8-4v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"/></g></svg> 
+                {startDateTime} 
+                <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 16 16"><path fill={iconColorBlack} fill-rule="evenodd" d="M10.159 10.72a.75.75 0 1 0 1.06 1.06l3.25-3.25L15 8l-.53-.53l-3.25-3.25a.75.75 0 0 0-1.061 1.06l1.97 1.97H1.75a.75.75 0 1 0 0 1.5h10.379z" clip-rule="evenodd"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24"><g fill="none" stroke={iconColorBlack} stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M8 2v4m8-4v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"/></g></svg> 
                 {#if neverExpire}
                     Forever
                 {:else}
@@ -135,13 +160,22 @@
     .group_header_right-container{
         float: right;
     }
+    .group_slide-history-button{
+        all: unset;
+    }
+    .group_confirm-button{
+        all: unset;
+    }
     .group_delete-button{
-        
+        all: unset;
+    }
+    .group_edit-button{
+        all: unset;
     }
     .group_title-input{
         border: 0;
         height: 80%;
-        border-radius: 10px;
+        border-radius: 0.4em;
         font-size: larger;
         text-align: center;
     }
