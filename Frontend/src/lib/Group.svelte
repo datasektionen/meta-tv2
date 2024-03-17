@@ -1,4 +1,6 @@
 <script>
+    import Slide from '$lib/Slide.svelte';
+
     export let state = "preview"; //preview, create, edit, restore
     export let title = "Title";
     export let creator = "bwidman";
