@@ -1,5 +1,5 @@
 <script>
-    import { slide } from "svelte/transition";
+    import Slide from '$lib/Slide.svelte';
 
     let beingEdited = false;
     let beingCreated = false;
@@ -27,9 +27,10 @@
     </div>
     <div class="group_slide-holder"> 
         {#each slides as slide}
-            slide
+            <Slide />
         {:else}
             <p>There are no slides yet</p>
+            <Slide />
         {/each}
     </div>
     <div class="group_footer">
