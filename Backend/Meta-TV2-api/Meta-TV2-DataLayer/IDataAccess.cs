@@ -5,7 +5,7 @@ public interface IDataAccess
 
 
     /// <summary>
-    /// Method to add groups.
+    /// Method to add groups, will be added to the database.
     /// </summary>
     /// <param name="group">Groups object to add</param>
     public void AddGroups(Groups group);
@@ -24,20 +24,21 @@ public interface IDataAccess
     public Task<List<Groups>> GetGroups();
 
     /// <summary>
-    /// Function to get a group by id, that is not archived
+    /// Function to get a group by id, the id corresponds to the group id stored in the database to fetch.
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
     public Task<Optional<Groups>> GetGroupById(int id);
 
     /// <summary>
-    /// Function to archive a group, takes in a group object
+    /// Function to archive a group, takes in a group object. Group will not be deleted, only archieved. 
     /// </summary>
     /// <param name="group"></param>
     public void ArchiveGroup(Groups group);
 
     /// <summary>
     /// Gets groups based on page and size, that are not archived. size decides how many objects to return, page decides which set of objects to return. 
+    /// For exampe page = 1 & size=3 will get the 3 first groups, page=2 & size=3 will groups 4-6.
     /// </summary>
     /// <param name="page"></param>
     /// <param name="size"></param>
