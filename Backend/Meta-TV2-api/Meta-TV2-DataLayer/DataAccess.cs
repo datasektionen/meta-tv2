@@ -8,29 +8,13 @@ public class DataAccess : IDataAccess
 {
     MetaTvContext db = new MetaTvContext();
     
-    public void Test_AddPosts(Posts post){
-        db.Add(post);
-        db.SaveChanges();
-        db.Dispose();
-    }
 
-    public void Test_AddSlides(Slides slide){
-        db.Add(slide);
-        db.SaveChanges();
-        db.Dispose();
-    }
-
-    public void Test_AddGroups(Groups group){
+    public async void AddGroups(Groups group){
         db.Add(group);
-        db.SaveChanges();
+        await db.SaveChangesAsync();
         db.Dispose();
     }
 
-    public void Test_AddChanges(Changes change){
-        db.Add(change);
-        db.SaveChanges();
-        db.Dispose();
-    }
 
     public void Test_AddBlacklist(Blacklist blacklist){
         db.Add(blacklist);
@@ -44,9 +28,9 @@ public class DataAccess : IDataAccess
     //     return a.alias;
     // }
 
-    public List<Groups> GetGroupsTest(){
+    public async Task<List<Groups>> GetGroups(){
         var query = from x in db.Groups where x.archive == false select x;
-        return query.ToList();
+        return await query.ToListAsync();
     }
 
     public async Task<Optional<Groups>> GetGroupById(int id){
@@ -71,9 +55,12 @@ public class DataAccess : IDataAccess
         db.Dispose();
     }
 
-    public List<Groups> GetGroups(int page, int size){
+    public async Task<Optional<List<Groups>>> GetGroups(int page, int size){
         var query = (from x in db.Groups where x.archive == false select x);
-        List<Groups> groups = query.Skip((page - 1) * size).Take(size).ToList();
-        return groups;
+        List<Groups> groups = await query.Skip((page-1) * size).Take(size).ToListAsync();
+        if (groups.Count() == 0) {
+            return Optional<List<Groups>>.Empty();
+        }
+        return Optional<List<Groups>>.Result(groups);
     }
 }

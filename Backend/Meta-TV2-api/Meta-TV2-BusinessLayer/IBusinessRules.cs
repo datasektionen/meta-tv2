@@ -8,14 +8,14 @@ namespace Meta_TV2_BusinessLayer;
 
 public interface IBusinessRules
 {
-    public bool AddGroup(string groupObject);
+    public Task<bool> AddGroup(string groupObject);
 
-    public string GetGroupsTest();
+    public Task<string> GetGroups();
 
     public Task<string> GetGroupById(int id);
 
     public Task<bool> ArchiveGroup(int id);
 
-    public string GetGroups(int page, int size);
+    public Task<string> GetGroups(int page, int size);
 
 }
