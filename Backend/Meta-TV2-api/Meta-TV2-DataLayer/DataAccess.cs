@@ -1,6 +1,6 @@
-﻿namespace Meta_TV2_DataLayer;
+﻿using Microsoft.EntityFrameworkCore;
 
-using Microsoft.EntityFrameworkCore;
+namespace Meta_TV2_DataLayer;
 
 public class DataAccess : IDataAccess
 {
