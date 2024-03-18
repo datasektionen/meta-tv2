@@ -3,6 +3,7 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
+using Meta_TV2_DataLayer;
 
 namespace Meta_TV2_BusinessLayer;
 
@@ -42,5 +43,17 @@ public interface IBusinessRules
     /// <param name="size"></param>
     /// <returns>JSON serialized list of groups if found, otherwise null</returns>
     public Task<string> GetGroups(int page, int size);
+
+    public Task<string> GetSlides();
+
+    public Task<string> GetSlidesByGroup(int groupId);
+
+    public Task<string> GetSlideById(int id);
+
+    public Task<string> GetSlidesByGroup(int groupId, int page, int size);
+
+    public Task<bool> CreateSlide(string slideObject);
+
+    public Task<bool> ArchiveSlide(int id);
 
 }

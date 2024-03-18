@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Data.Common;
+using Microsoft.EntityFrameworkCore;
 
 namespace Meta_TV2_DataLayer;
 
@@ -48,7 +49,7 @@ public class DataAccess : IDataAccess
         }
     }
 
-    public async void ArchiveGroup(Groups group){
+    public async void ArchiveGroup(Groups group){ //TODO: Archieve all slides associated with group
         db.Update(group);
         await db.SaveChangesAsync();
         db.Dispose();
@@ -61,5 +62,59 @@ public class DataAccess : IDataAccess
             return Optional<List<Groups>>.Empty();
         }
         return Optional<List<Groups>>.Result(groups);
+    }
+
+    public async Task<Optional<List<Slides>>> GetSlides() {
+        var query = from x in db.Slides where x.archive == false select x;
+        var slides = await query.ToListAsync();
+        if (slides.Count == 0) {
+            return Optional<List<Slides>>.Empty();
+        }
+        return Optional<List<Slides>>.Result(slides);
+    }
+
+    public async Task<Optional<List<Slides>>> GetSlidesByGroup(int groupId) {
+        var query = from x in db.Slides where x.archive == false & x.groupId == groupId select x;
+        var slides = await query.ToListAsync();
+        if(slides.Count == 0) {
+            return Optional<List<Slides>>.Empty();
+        }
+        return Optional<List<Slides>>.Result(slides);
+    }
+
+    public async Task<Optional<Slides>> GetSlideById(int id) {
+        var query = from x in db.Slides where x.slideId == id select x;
+        var slide = await query.FirstOrDefaultAsync();
+        if(slide == null) {
+            return Optional<Slides>.Empty();
+        }
+        return Optional<Slides>.Result(slide);
+    }
+
+    public async Task<Optional<List<Slides>>> GetSlidesByGroup(int groupId, int page, int size) {
+        var query = from x in db.Slides where x.archive == false & x.groupId == groupId select x;
+        List<Slides> groups = await query.Skip((page-1) * size).Take(size).ToListAsync();
+        if (groups.Count == 0){
+            return Optional<List<Slides>>.Empty();
+        }
+        return Optional<List<Slides>>.Result(groups);
+    }
+
+    public async Task<bool> CreateSlide(Slides obj) {
+        try{
+            db.Add(obj);
+            await db.SaveChangesAsync();
+            db.Dispose();
+            return true;
+        } catch (Exception e) {
+            Console.WriteLine(e);
+            return false;
+        }
+    }
+
+    public async void UpdateSlide(Slides slide){
+        db.Update(slide);
+        await db.SaveChangesAsync();
+        db.Dispose();
     }
 }

@@ -45,6 +45,17 @@ public interface IDataAccess
     /// <returns></returns>
     public Task<Optional<List<Groups>>> GetGroups(int page, int size);
 
+    public Task<Optional<List<Slides>>> GetSlides();
+
+    public Task<Optional<List<Slides>>> GetSlidesByGroup(int groupId);
+
+    public Task<Optional<Slides>> GetSlideById(int id);
+
+    public Task<Optional<List<Slides>>> GetSlidesByGroup(int groupId, int page, int size);
+
+    public Task<bool> CreateSlide(Slides obj);
+
+    public void UpdateSlide(Slides slide);
 
 
 }
