@@ -5,7 +5,7 @@ public interface IDataAccess
 
 
     /// <summary>
-    /// Test method for adding to the "Groups" table.
+    /// Method to add groups.
     /// </summary>
     /// <param name="group">Groups object to add</param>
     public void AddGroups(Groups group);
@@ -31,13 +31,13 @@ public interface IDataAccess
     public Task<Optional<Groups>> GetGroupById(int id);
 
     /// <summary>
-    /// Function to arhieve a group, takes in a group object
+    /// Function to archive a group, takes in a group object
     /// </summary>
     /// <param name="group"></param>
     public void ArchiveGroup(Groups group);
 
     /// <summary>
-    /// Gets groups based on page and size, thare are not archived. size decides how many objects to return, page decides which set of objects to return. 
+    /// Gets groups based on page and size, that are not archived. size decides how many objects to return, page decides which set of objects to return. 
     /// </summary>
     /// <param name="page"></param>
     /// <param name="size"></param>

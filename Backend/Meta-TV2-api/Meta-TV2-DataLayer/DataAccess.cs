@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Npgsql;
 
 namespace Meta_TV2_DataLayer;
 
