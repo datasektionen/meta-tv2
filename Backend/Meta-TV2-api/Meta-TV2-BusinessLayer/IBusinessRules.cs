@@ -1,42 +1,36 @@
-﻿using System.Net.Http.Json;
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
-using System.Text.RegularExpressions;
-
-namespace Meta_TV2_BusinessLayer;
+﻿namespace Meta_TV2_BusinessLayer;
 
 public interface IBusinessRules
 {
     /// <summary>
-    /// A function that will invoke AddGroup function from the dataLayer
+    /// Deserializes a Group JSON object and adds the deserialized Group object to database by invoking datalayer
     /// </summary>
-    /// <param name="groupObject"></param>
-    /// <returns>will return true/false if the operation was sucessfull or not.</returns>
+    /// <param name="groupObject">Group JSON object</param>
+    /// <returns>True if successfull otherwise false</returns>
     public Task<bool> AddGroup(string groupObject);
 
     /// <summary>
-    /// A function that will invoke GetGroups function from the dataLayer, 
+    /// Gets groups (non-archived) by invoking datalayer and serializing Group objects to JSON object
     /// </summary>
-    /// <returns>will return a JSON serialized list of groups if any was found, otherwise null.</returns>
+    /// <returns>Group JSON object if any groups were found, othwerwise null</returns>
     public Task<string> GetGroups();
 
     /// <summary>
-    /// Same as getGroups, but will return a single group based on the group id
+    /// Gets group (including archived) by id by invoking datalayer and serializes Group object to JSON object
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns>JSON serialized group object if found, or null if not found</returns>
+    /// <param name="id">Group Id in database</param>
+    /// <returns>Group JSON object if any group was found, othwerwise null</returns>
     public Task<string> GetGroupById(int id);
 
     /// <summary>
-    /// Will invoke ArchieveGroup from datalayer, will change archieved attribute to true. 
+    /// Archives group in database by updating Group object attributes and invokes datalayer
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns>Will return true if successfull otherwise false</returns>
+    /// <param name="id">Id of group to archive</param>
+    /// <returns>True if successfull otherwise false</returns>
     public Task<bool> ArchiveGroup(int id);
 
     /// <summary>
-    /// Will invoke getGroups(page, size) from datalyer
+    /// Gets groups (non-archived) by pagination by invoking datalayer and serializing Group objects to JSON object
     /// </summary>
     /// <param name="page"></param>
     /// <param name="size"></param>

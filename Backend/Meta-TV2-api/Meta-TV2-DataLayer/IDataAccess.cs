@@ -2,48 +2,38 @@
 
 public interface IDataAccess
 {
-
-
     /// <summary>
-    /// Method to add groups, will be added to the database.
+    /// Adds Group object to database
     /// </summary>
-    /// <param name="group">Groups object to add</param>
+    /// <param name="group">Group object to be added</param>
     public void AddGroups(Groups group);
 
+    /// <summary>
+    /// Gets all non-archived groups from database (in database order)
+    /// </summary>
+    /// <returns>Optional object with a list of Group objects as value, otherwise empty Optional object if no groups found</returns>
+    public Task<Optional<List<Groups>>> GetGroups();
 
     /// <summary>
-    /// Test method for adding to the "Blacklist" table.
+    /// Gets group (including archived) from database by Id
     /// </summary>
-    /// <param name="blacklist">Blacklist object to add</param>
-    public void Test_AddBlacklist(Blacklist blacklist);
-
-    /// <summary>
-    /// Function to retrive all groups that are not archived.
-    /// </summary>
-    /// <returns>Groups not archived</returns>
-    public Task<List<Groups>> GetGroups();
-
-    /// <summary>
-    /// Function to get a group by id, the id corresponds to the group id stored in the database to fetch.
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="id">Group Id in database</param>
+    /// <returns>Optional object with the Group object as value, otherwise empty Optional object if no group found</returns>
     public Task<Optional<Groups>> GetGroupById(int id);
 
     /// <summary>
-    /// Function to archive a group, takes in a group object. Group will not be deleted, only archieved. 
+    /// Updates group entry in database to new Group object based on Id
     /// </summary>
-    /// <param name="group"></param>
-    public void ArchiveGroup(Groups group);
+    /// <param name="group">Group object with updated attributes</param>
+    public void UpdateGroup(Groups group);
 
     /// <summary>
-    /// Gets groups based on page and size, that are not archived. size decides how many objects to return, page decides which set of objects to return. 
-    /// For exampe page = 1 & size=3 will get the 3 first groups, page=2 & size=3 will groups 4-6.
+    /// Gets groups (non-archived) by pagination (in database order)
     /// </summary>
-    /// <param name="page"></param>
-    /// <param name="size"></param>
-    /// <returns></returns>
-    public Task<Optional<List<Groups>>> GetGroups(int page, int size);
+    /// <param name="size">Determines number of groups per page</param>
+    /// <param name="page">Determines which chunk of groups to get</param>
+    /// <returns>Optional object with a list of Group objects as value, otherwise empty Optional object if no groups found</returns>
+    public Task<Optional<List<Groups>>> GetGroups(int size, int page);
 
 
 
