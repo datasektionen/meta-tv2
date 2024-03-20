@@ -1,5 +1,6 @@
 <script>
     import Ban from '$lib/Ban.svelte'
+    import Setting from '$lib/Setting.svelte';
 </script>
 
 <Ban bans = {[
@@ -24,3 +25,5 @@
     "test19@kth.se",
     "test20@kth.se"
 ]} />
+
+<Setting />
