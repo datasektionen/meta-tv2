@@ -15,7 +15,7 @@ public class Group : ControllerBase
         return add ? Ok() : BadRequest("Failed to add group.");
     }
 
-    [HttpGet]   
+    [HttpGet]
     public async Task<IActionResult> GetGroups(){
         var groups = await businessRules.GetGroups();
         return groups != null ? Ok(groups) : NotFound("No groups found");
