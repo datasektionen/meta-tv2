@@ -65,7 +65,7 @@
     }
     .ban_remove{
         position: absolute;
-        left: 220px;
+        left: 210px;
         border: none;
         background: none;
         color: #FF0000;
