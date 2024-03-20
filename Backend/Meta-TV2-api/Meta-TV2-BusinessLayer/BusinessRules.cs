@@ -61,6 +61,7 @@ public class BusinessRules : IBusinessRules
         }
     }
 
+    // TODO: Swap page and size to match datalayer method signature. Swap this signature as well and change in accesslayer.
     public async Task<string> GetGroups(int page, int size){
         try
         {
