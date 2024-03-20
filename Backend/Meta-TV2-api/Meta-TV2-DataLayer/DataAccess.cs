@@ -1,5 +1,4 @@
-﻿using System.Data.Common;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace Meta_TV2_DataLayer;
 
@@ -8,25 +7,17 @@ public class DataAccess : IDataAccess
 {
     MetaTvContext db = new MetaTvContext();
     
-
     public async void AddGroups(Groups group){
         db.Add(group);
         await db.SaveChangesAsync();
         db.Dispose();
     }
 
-
     public void Test_AddBlacklist(Blacklist blacklist){
         db.Add(blacklist);
         db.SaveChanges();
         db.Dispose();
     }
-
-    // public string getFirstAlphabetical(){
-    //     var query = from x in db.Blacklist select x;
-    //     Blacklist a = query.First();
-    //     return a.alias;
-    // }
 
     public async Task<List<Groups>> GetGroups(){
         var query = from x in db.Groups where x.archive == false select x;
@@ -100,16 +91,10 @@ public class DataAccess : IDataAccess
         return Optional<List<Slides>>.Result(groups);
     }
 
-    public async Task<bool> CreateSlide(Slides obj) {
-        try{
-            db.Add(obj);
-            await db.SaveChangesAsync();
-            db.Dispose();
-            return true;
-        } catch (Exception e) {
-            Console.WriteLine(e);
-            return false;
-        }
+    public async void AddSlide(Slides obj) {
+        db.Add(obj);
+        await db.SaveChangesAsync();
+        db.Dispose();
     }
 
     public async void UpdateSlide(Slides slide){

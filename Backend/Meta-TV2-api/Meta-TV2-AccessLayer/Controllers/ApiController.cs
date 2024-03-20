@@ -2,7 +2,6 @@ namespace Meta_TV2_api.Controllers;
 
 using Meta_TV2_BusinessLayer;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 
 [Route("[controller]")]
 public class Group : ControllerBase
@@ -55,26 +54,24 @@ public class Slide : ControllerBase {
     [HttpGet("{id}")]
     public async Task<IActionResult> GetSlidesByGroup(int id) {
         var slides = await businessRules.GetSlidesByGroup(id);
-        return slides != null ? Ok(slides) : NotFound("No slides found");
+        return slides != null ? Ok(slides) : NotFound($"No slides found for group id; {id}");
     }
-
 
     [HttpGet("{id}/page={page}&size={size}")]
     public async Task<IActionResult> GetSlidesByGroupPage(int id, int page, int size) {
         var slides = await businessRules.GetSlidesByGroup(id, page, size);
-        return slides != null ? Ok(slides) : NotFound("No slides found");
+        return slides != null ? Ok(slides) : NotFound($"No slides found for group id: {id}");
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateSlide(string slideObject) {
-        var created = await businessRules.CreateSlide(slideObject);
-        return created ? Ok() : BadRequest("Failed too add Slide");
+    public async Task<IActionResult> AddSlide(string slideObject) {
+        var created = await businessRules.AddSlide(slideObject);
+        return created ? Ok() : BadRequest("Failed to add Slide");
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> ArchiveSlide(int id) {
         var delete = await businessRules.ArchiveSlide(id);
-        return delete ? Ok() : BadRequest($"Failed to archive slide: {id}");
+        return delete ? Ok() : BadRequest($"Failed to remove slide: {id}");
     }
-
 }

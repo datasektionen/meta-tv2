@@ -2,14 +2,11 @@
 
 public interface IDataAccess
 {
-
-
     /// <summary>
     /// Method to add groups, will be added to the database.
     /// </summary>
     /// <param name="group">Groups object to add</param>
     public void AddGroups(Groups group);
-
 
     /// <summary>
     /// Test method for adding to the "Blacklist" table.
@@ -45,7 +42,6 @@ public interface IDataAccess
     /// <returns></returns>
     public Task<Optional<List<Groups>>> GetGroups(int page, int size);
 
-
     /// <summary>
     /// Gets all non-archived slides from database (in database order)
     /// </summary>
@@ -68,7 +64,7 @@ public interface IDataAccess
 
     /// <summary>
     /// Gets all non-archived slides associated with a specific group Id, page and size from the database.
-    /// The size determens the how many slides to return, and page determens which set of slides to return.
+    /// The size determines how many slides to return, and page determines which set of slides to return.
     /// Page is 1 indexed.
     /// </summary>
     /// <param name="groupId">the group Id to filter slides on</param>
@@ -78,18 +74,15 @@ public interface IDataAccess
     public Task<Optional<List<Slides>>> GetSlidesByGroup(int groupId, int page, int size);
 
     /// <summary>
-    /// Creates a new Slide object and stores the Slide object inside the database.
+    /// Creates a new Slide and stores the Slide inside the database.
     /// </summary>
     /// <param name="obj">The slide object to store</param>
-    /// <returns>True if operation was sucessfull, False if not</returns>
-    public Task<bool> CreateSlide(Slides obj);
+    public void AddSlide(Slides obj);
 
     /// <summary>
-    /// Updates a already existing slide in the databse and stores the update
-    /// Will update the slide with the given attributes based on the slideId given inside of (slide)
+    /// Updates an already existing slide in the databse and stores the update.
+    /// Will update the slide with the given attributes based on the slideId.
     /// </summary>
     /// <param name="slide">The updated slide to store</param>
     public void UpdateSlide(Slides slide);
-
-
 }

@@ -2,7 +2,6 @@
 
 using System.Text.Json;
 using Meta_TV2_DataLayer;
-using Microsoft.EntityFrameworkCore.Migrations.Operations;
 
 public class BusinessRules : IBusinessRules
 {
@@ -65,7 +64,7 @@ public class BusinessRules : IBusinessRules
     public async Task<string> GetGroups(int page, int size){
         try
         {
-            Optional<List<Groups>> result = await DataAccess.GetGroups(page, size);
+            var result = await DataAccess.GetGroups(page, size);
             if(!result.HasValue){
                 return null;
             }
@@ -82,10 +81,9 @@ public class BusinessRules : IBusinessRules
     public async Task<string> GetSlides() {
         try
         {
-            Optional<List<Slides>> result = await DataAccess.GetSlides();
-            if(!result.HasValue) {
+            var result = await DataAccess.GetSlides();
+            if(!result.HasValue) 
                 return null;
-            }
             return JsonSerializer.Serialize(result.Value);
         }
         catch (Exception e)
@@ -96,10 +94,9 @@ public class BusinessRules : IBusinessRules
 
     public async Task<string> GetSlidesByGroup(int groupId) {
         try {
-            Optional<List<Slides>> result = await DataAccess.GetSlidesByGroup(groupId);
-            if(!result.HasValue) {
+            var result = await DataAccess.GetSlidesByGroup(groupId);
+            if(!result.HasValue) 
                 return null;
-            }
             return JsonSerializer.Serialize(result.Value);
         } catch (Exception e) {
             return null;
@@ -108,36 +105,32 @@ public class BusinessRules : IBusinessRules
 
     public async Task<string> GetSlideById(int id) {
         try{
-            Optional<Slides> result = await DataAccess.GetSlideById(id);
-            if(!result.HasValue){
+            var result = await DataAccess.GetSlideById(id);
+            if(!result.HasValue)
                 return null;
-            }
             return JsonSerializer.Serialize(result.Value);
         } catch(Exception e) {
             return null;
         }
     }
 
-
     public async Task<string> GetSlidesByGroup(int groupId, int page, int size) {
         try {
-            Optional<List<Slides>> result = await DataAccess.GetSlidesByGroup(groupId, page, size);
-            if(!result.HasValue) {
+            var result = await DataAccess.GetSlidesByGroup(groupId, page, size);
+            if(!result.HasValue) 
                 return null;
-            }
             return JsonSerializer.Serialize(result.Value);
         } catch(Exception e){
             return null;
         }
     }
 
-    public async Task<bool> CreateSlide(string slideObject){
+    public async Task<bool> AddSlide(string slideObject){
         try {
-            var obj = JsonSerializer.Deserialize<Slides>(slideObject);
-            var status = await DataAccess.CreateSlide(obj);
-            return status;
+            var slide = JsonSerializer.Deserialize<Slides>(slideObject);
+            DataAccess.AddSlide(slide);
+            return true;
         } catch(Exception e) {
-            Console.WriteLine(e);
             return false;
         }
     }
@@ -145,9 +138,8 @@ public class BusinessRules : IBusinessRules
     public async Task<bool> ArchiveSlide(int id) {
         try {
             var slide = await DataAccess.GetSlideById(id);
-            if (!slide.HasValue) {
+            if (!slide.HasValue) 
                 return false;
-            }
             slide.Value.archive = true;
             slide.Value.archiveDate = DateTime.Now;
             DataAccess.UpdateSlide(slide.Value);

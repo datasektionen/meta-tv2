@@ -57,7 +57,7 @@ public interface IBusinessRules
     /// <returns>Slide JSON object if any slides were found, otherwise null</returns>
     public Task<string> GetSlidesByGroup(int groupId);
     /// <summary>
-    /// Gets a specific slide (can be archived) associated with a specific slide Id by invoking datalayer and serializing result to JSON object.
+    /// Gets a specific slide (including archived) associated with a specific slide Id by invoking datalayer and serializing result to JSON object.
     /// </summary>
     /// <param name="id">the slide Id to filter on</param>
     /// <returns>Slide JSON object if any slide were found, otherwise null</returns>
@@ -66,21 +66,21 @@ public interface IBusinessRules
     /// <summary>
     /// Gets slides (non-archived) by pagination by invoking datalayer and serializing result to JSON object
     /// </summary>
-    /// <param name="groupId"></param>
-    /// <param name="page"></param>
-    /// <param name="size"></param>
+    /// <param name="groupId">the group id to filter on</param>
+    /// <param name="page">decides which set of Slides to return</param>
+    /// <param name="size">the size of the page</param>
     /// <returns>Slide JSON object if any slide were found, otherwise null<</returns>
     public Task<string> GetSlidesByGroup(int groupId, int page, int size);
 
     /// <summary>
-    /// Deserializes a Slide JSON object and adds the desralized object to the database by invoking datalayer.
+    /// Deserializes a Slide JSON object and adds the deserialized object to the database by invoking datalayer.
     /// </summary>
     /// <param name="slideObject">Slide JSON object</param>
     /// <returns>True if operation successfull otherwise false</returns>
-    public Task<bool> CreateSlide(string slideObject);
+    public Task<bool> AddSlide(string slideObject);
 
     /// <summary>
-    /// Archives a specific slide in the database by updating slide archived field and invoking datalayer.
+    /// Archives a specific slide in the database by updating the slide archived value and invoking datalayer.
     /// </summary>
     /// <param name="id">The id of the slide to archive</param>
     /// <returns>True if operation was successfull otherwise false.</returns>
