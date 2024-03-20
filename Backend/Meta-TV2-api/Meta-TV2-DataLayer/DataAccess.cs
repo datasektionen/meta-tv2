@@ -2,34 +2,23 @@
 
 namespace Meta_TV2_DataLayer;
 
-// Värt att kolla in "transactions" för timeouts
 public class DataAccess : IDataAccess
 {
     MetaTvContext db = new MetaTvContext();
     
-
     public async void AddGroups(Groups group){
         db.Add(group);
         await db.SaveChangesAsync();
         db.Dispose();
     }
 
-
-    public void Test_AddBlacklist(Blacklist blacklist){
-        db.Add(blacklist);
-        db.SaveChanges();
-        db.Dispose();
-    }
-
-    // public string getFirstAlphabetical(){
-    //     var query = from x in db.Blacklist select x;
-    //     Blacklist a = query.First();
-    //     return a.alias;
-    // }
-
-    public async Task<List<Groups>> GetGroups(){
+    public async Task<Optional<List<Groups>>> GetGroups(){
         var query = from x in db.Groups where x.archive == false select x;
-        return await query.ToListAsync();
+        var groups = await query.ToListAsync();
+        if (groups.Count() == 0) {
+            return Optional<List<Groups>>.Empty();
+        }
+        return Optional<List<Groups>>.Result(groups);
     }
 
     public async Task<Optional<Groups>> GetGroupById(int id){
@@ -48,14 +37,14 @@ public class DataAccess : IDataAccess
         }
     }
 
-    public async void ArchiveGroup(Groups group){
+    public async void UpdateGroup(Groups group){
         db.Update(group);
         await db.SaveChangesAsync();
         db.Dispose();
     }
 
-    public async Task<Optional<List<Groups>>> GetGroups(int page, int size){
-        var query = (from x in db.Groups where x.archive == false select x);
+    public async Task<Optional<List<Groups>>> GetGroups(int size, int page){
+        var query = from x in db.Groups where x.archive == false select x;
         List<Groups> groups = await query.Skip((page-1) * size).Take(size).ToListAsync();
         if (groups.Count() == 0) {
             return Optional<List<Groups>>.Empty();
