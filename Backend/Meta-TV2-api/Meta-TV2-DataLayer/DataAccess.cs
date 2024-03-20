@@ -49,7 +49,7 @@ public class DataAccess : IDataAccess
         }
     }
 
-    public async void ArchiveGroup(Groups group){ //TODO: Archieve all slides associated with group
+    public async void ArchiveGroup(Groups group){
         db.Update(group);
         await db.SaveChangesAsync();
         db.Dispose();

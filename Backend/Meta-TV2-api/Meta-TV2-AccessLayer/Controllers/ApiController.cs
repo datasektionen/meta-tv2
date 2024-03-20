@@ -62,7 +62,7 @@ public class Slide : ControllerBase {
     [HttpGet("{id}/page={page}&size={size}")]
     public async Task<IActionResult> GetSlidesByGroupPage(int id, int page, int size) {
         var slides = await businessRules.GetSlidesByGroup(id, page, size);
-        return slides != null ? Ok(slides) : NotFound("slides not found");
+        return slides != null ? Ok(slides) : NotFound("No slides found");
     }
 
     [HttpPost]
@@ -74,7 +74,7 @@ public class Slide : ControllerBase {
     [HttpDelete("{id}")]
     public async Task<IActionResult> ArchiveSlide(int id) {
         var delete = await businessRules.ArchiveSlide(id);
-        return delete ? Ok() : BadRequest();
+        return delete ? Ok() : BadRequest($"Failed to archive slide: {id}");
     }
 
 }

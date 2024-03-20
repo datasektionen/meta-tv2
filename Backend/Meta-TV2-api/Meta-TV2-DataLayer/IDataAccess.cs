@@ -45,16 +45,50 @@ public interface IDataAccess
     /// <returns></returns>
     public Task<Optional<List<Groups>>> GetGroups(int page, int size);
 
+
+    /// <summary>
+    /// Gets all non-archived slides from database (in database order)
+    /// </summary>
+    /// <returns>Optional object with a list of Slide objects as value, otherwise empty Optional object if no slides found</returns>
     public Task<Optional<List<Slides>>> GetSlides();
 
+    /// <summary>
+    /// Gets all non-archived slides associated with a specific group Id from the database (in database order)
+    /// </summary>
+    /// <param name="groupId">the group Id to filter slides on</param>
+    /// <returns>Optional object with a list of Slide objects as value, otherwise empty Optional object if no slides found</returns>
     public Task<Optional<List<Slides>>> GetSlidesByGroup(int groupId);
 
+    /// <summary>
+    /// Gets a specific slide associated with a specific slide Id from the databse (ignores if the slide is archived or not)
+    /// </summary>
+    /// <param name="id">the slide Id to filter against</param>
+    /// <returns>Optional object with a slide object, otherwise empty Optional object if no slide was found</returns>
     public Task<Optional<Slides>> GetSlideById(int id);
 
+    /// <summary>
+    /// Gets all non-archived slides associated with a specific group Id, page and size from the database.
+    /// The size determens the how many slides to return, and page determens which set of slides to return.
+    /// Page is 1 indexed.
+    /// </summary>
+    /// <param name="groupId">the group Id to filter slides on</param>
+    /// <param name="page">which set of result to return</param>
+    /// <param name="size">the size of the result</param>
+    /// <returns>Optional object witha list of slide objects as value, otherwise empty Optional object if no slides found</returns>
     public Task<Optional<List<Slides>>> GetSlidesByGroup(int groupId, int page, int size);
 
+    /// <summary>
+    /// Creates a new Slide object and stores the Slide object inside the database.
+    /// </summary>
+    /// <param name="obj">The slide object to store</param>
+    /// <returns>True if operation was sucessfull, False if not</returns>
     public Task<bool> CreateSlide(Slides obj);
 
+    /// <summary>
+    /// Updates a already existing slide in the databse and stores the update
+    /// Will update the slide with the given attributes based on the slideId given inside of (slide)
+    /// </summary>
+    /// <param name="slide">The updated slide to store</param>
     public void UpdateSlide(Slides slide);
 
 
