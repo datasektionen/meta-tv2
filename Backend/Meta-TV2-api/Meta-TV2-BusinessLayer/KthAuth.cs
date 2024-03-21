@@ -35,11 +35,8 @@ public class KthAuth : IKthAuth
         using (var client = new HttpClient()){
             try
             {
-                var request = await client.GetStringAsync("https://dfunkt.datasektionen.se/api/role/d-sys/current");
-                var details = JsonObject.Parse(request);
-                string adminUser = (string)details["mandates"][0]["User"]["kthid"];
-                
-                return string.Equals(adminUser, user);
+                var request = await client.GetStringAsync("https://pls.datasektionen.se/api/user/" + user + "/meta-tv/admin");
+                return Convert.ToBoolean(request);
             }
             catch (Exception e)
             {
