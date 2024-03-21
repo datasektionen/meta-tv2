@@ -91,4 +91,76 @@ public class BusinessRules : IBusinessRules
             return null;
         }
     }
+
+
+    public async Task<string> GetSlides() {
+        try
+        {
+            var result = await DataAccess.GetSlides();
+            if(!result.HasValue) 
+                return null;
+            return JsonSerializer.Serialize(result.Value);
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
+    }
+
+    public async Task<string> GetSlidesByGroup(int groupId) {
+        try {
+            var result = await DataAccess.GetSlidesByGroup(groupId);
+            if(!result.HasValue) 
+                return null;
+            return JsonSerializer.Serialize(result.Value);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public async Task<string> GetSlideById(int id) {
+        try{
+            var result = await DataAccess.GetSlideById(id);
+            if(!result.HasValue)
+                return null;
+            return JsonSerializer.Serialize(result.Value);
+        } catch(Exception e) {
+            return null;
+        }
+    }
+
+    public async Task<string> GetSlidesByGroup(int groupId, int page, int size) {
+        try {
+            var result = await DataAccess.GetSlidesByGroup(groupId, page, size);
+            if(!result.HasValue) 
+                return null;
+            return JsonSerializer.Serialize(result.Value);
+        } catch(Exception e){
+            return null;
+        }
+    }
+
+    public async Task<bool> AddSlide(string slideObject){
+        try {
+            var slide = JsonSerializer.Deserialize<Slides>(slideObject);
+            DataAccess.AddSlide(slide);
+            return true;
+        } catch(Exception e) {
+            return false;
+        }
+    }
+
+    public async Task<bool> ArchiveSlide(int id) {
+        try {
+            var slide = await DataAccess.GetSlideById(id);
+            if (!slide.HasValue) 
+                return false;
+            slide.Value.archive = true;
+            slide.Value.archiveDate = DateTime.Now;
+            DataAccess.UpdateSlide(slide.Value);
+            return true;
+        } catch(Exception e) {
+            return false;
+        }
+    }
 }
