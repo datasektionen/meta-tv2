@@ -47,6 +47,7 @@ public class BusinessRules : IBusinessRules
         }
     }
 
+    // TODO: Add try-catch
     public async Task<string> GetGroupById(int id){
         var data = await DataAccess.GetGroupById(id);
         if (data.HasValue)
