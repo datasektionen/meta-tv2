@@ -1,5 +1,14 @@
 <script>
+    let instructions = load_instructions();
     let info_box;
+
+    async function load_instructions() {
+        const response = await fetch('instructions.txt');
+        const text = await response.text();
+
+        return text;
+    }
+
 </script>
 
 <header>
@@ -14,13 +23,14 @@
     </nav>
 </header>
 
-
 <main>
     <dialog class="info_box" bind:this={info_box}>
-        <button on:click={()=>info_box.close()}> X </button>
-        <div> 
-            some information 
-        </div>
+        {#await instructions}
+            wating...
+        {:then instructions}
+            {@html instructions}
+        {/await}
+        <button class="info_box_exit" on:click={()=>info_box.close()}> X </button>
     </dialog>
     <slot />
 </main>
@@ -77,9 +87,9 @@
 
     .info_box {
         border-radius: 10px;
-        margin: 7% auto;
+        margin: 5% auto;
         width: 35%;
-        padding: 1%;
+        padding: 15px;
         background: white;
         border: none;
     }
@@ -90,6 +100,15 @@
         left: 5px;
         background: none;
         border: none;
+    }
+
+    .info_box_exit {
+        font-weight: bold;
+        position: absolute;
+        border: none;
+        background: none;
+        top: 7%;
+        left: 95%;
     }
 
 </style>
