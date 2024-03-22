@@ -4,6 +4,10 @@
     <ProjectReference Include="..\Meta-TV2-DataLayer\Meta-TV2-DataLayer.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.4.1" />
+  </ItemGroup>
+
   <PropertyGroup>
     <OutputType>library</OutputType>
     <TargetFramework>net8.0</TargetFramework>
