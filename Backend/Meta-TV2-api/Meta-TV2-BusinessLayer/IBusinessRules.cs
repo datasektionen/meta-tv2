@@ -79,4 +79,13 @@ public interface IBusinessRules
     /// <returns>True if operation was successfull otherwise false.</returns>
     public Task<bool> ArchiveSlide(int id);
 
+    public Task<string> GetPosts();
+
+    public Task<string> GetPosts(int id);
+
+    public Task<bool> AddPostWithUrl(string post);
+
+    public Task<string> AddPostWithFile(string post, string path);
+
+    public Task<(string, string)> GetPostFileType(int id);
 }

@@ -10,7 +10,6 @@ public class Posts
     [Key]
     [Column("postid")]
     public int postId {get; set;}
-    [JsonRequired]
     [Column("filepath")]
     public string filePath {get; set;}
     [JsonRequired]

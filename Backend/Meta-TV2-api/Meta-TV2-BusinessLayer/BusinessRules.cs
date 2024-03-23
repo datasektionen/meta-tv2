@@ -148,7 +148,7 @@ public class BusinessRules : IBusinessRules
         }
     }
 
-    public async Task<bool> ArchiveSlide(int id) {
+    public async Task<bool> ArchiveSlide(int id){
         try {
             var slide = await DataAccess.GetSlideById(id);
             if (!slide.HasValue) 
@@ -161,4 +161,66 @@ public class BusinessRules : IBusinessRules
             return false;
         }
     }
+
+    public async Task<string> GetPosts() {
+        try {
+            var posts = await DataAccess.GetPosts();
+            if (!posts.HasValue)
+                return null;
+            return JsonSerializer.Serialize(posts.Value);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public async Task<string> GetPosts(int id) {
+        try {
+            var posts = await DataAccess.GetPosts(id);
+            if (!posts.HasValue)
+                return null;
+            return JsonSerializer.Serialize(posts.Value);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public async Task<bool> AddPostWithUrl(string post) {
+        try {
+            var deserializedPost = JsonSerializer.Deserialize<Posts>(post);
+            if (deserializedPost.filePath == "" || deserializedPost.pathType != "Url")
+                return false;
+            DataAccess.AddPostWithUrl(deserializedPost);
+            return true;
+        } catch (Exception e) {
+            Console.WriteLine(e);
+            return false;
+        }
+    }
+
+    public async Task<string> AddPostWithFile(string post, string fileType) {
+        try {
+            var deserializedPost = JsonSerializer.Deserialize<Posts>(post);
+            deserializedPost.filePath = "."+fileType;
+            int id = await DataAccess.AddPostWithFile(deserializedPost);
+            return Path.Combine(deserializedPost.pathType, id.ToString());
+            
+        } catch(Exception e){
+            Console.WriteLine(e);
+            return null;
+        }
+    }
+
+    public async Task<(string, string)> GetPostFileType(int id) {
+        try {
+            var post = await DataAccess.GetPostByPostId(id);
+            if (!post.HasValue)
+                return (null, null);
+            if(post.Value.pathType == "Url")
+                return ("Url", post.Value.filePath);
+            return (post.Value.pathType, post.Value.filePath);
+        } catch (Exception e){
+            return (null, null);
+        }
+    }
+
 }

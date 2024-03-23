@@ -78,4 +78,14 @@ public interface IDataAccess
     /// </summary>
     /// <param name="slide">The updated slide to store</param>
     public void UpdateSlide(Slides slide);
+
+    public Task<Optional<List<Posts>>> GetPosts();
+
+    public Task<Optional<List<Posts>>> GetPosts(int id);
+
+    public void AddPostWithUrl(Posts post);
+
+    public Task<int> AddPostWithFile(Posts post);
+
+    public Task<Optional<Posts>> GetPostByPostId(int id);
 }
