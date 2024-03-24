@@ -20,6 +20,6 @@
         justify-content: space-evenly;
         align-items: center;
         padding: 20px;
-        margin: 10px;
+        margin: auto;
     }
 </style>

@@ -13,11 +13,11 @@
     export let endDate = (new Date()).toISOString().split('T')[0];
     export let endTime = (new Date()).getHours().toLocaleString(undefined,{minimumIntegerDigits: 2}) + ":" + (new Date()).getMinutes().toLocaleString(undefined,{minimumIntegerDigits: 2});
     export let archivedDate = "";
-    export let slides = [];
+    export let slides = [1];
 
-    let iconColorBlack = "#000000"
-    let iconColorRed = "#E82305"
-    let iconColorGreen = "#0FF71E"
+    const iconColorBlack = "#000000"
+    const iconColorRed = "#E82305"
+    const iconColorGreen = "#0FF71E"
 
     $: startDateTime = `${startDate} ${startTime}`;
     $: endDateTime = `${endDate} ${endTime}`;
@@ -34,7 +34,20 @@
         }
     };
     const clickedPublish = () => {
-        state = "preview";
+        title = title.trim();
+        if (title.length >= 3){
+            state = "preview";
+        } else {
+            alert("Title too short");
+        }
+    };
+    const clickedAddSlide = () => {
+        if (slides.length >= 10){
+            alert("This collection already containt the maximum amount of 10 slides");
+        } else {
+            slides.push(1);
+            slides = slides;
+        }
     };
 
 </script>
@@ -79,14 +92,16 @@
 
     <!--MIDDLE-->
     {#if hidden == false || state === "create"}
-        <div class="group_slide-holder"> 
-            {#each slides as slide}
-                {slide}
-            {:else}
-                <p>There are no slides yet</p>
-            {/each}
+        <div class="group_middle"> 
+            <div class="group_slide-holder"> 
+                {#each slides as slide}
+                    <div class="group_slide"><Slide /></div>
+                {:else}
+                    <p>There are no slides yet</p>
+                {/each}
+            </div>
             {#if state === "create" || state === "edit"}
-                <button class="group_add-slide-button">
+                <button class="group_add-slide-button" on:click={clickedAddSlide}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 1408 1408"><path fill={iconColorBlack} d="M1408 608v192q0 40-28 68t-68 28H896v416q0 40-28 68t-68 28H608q-40 0-68-28t-28-68V896H96q-40 0-68-28T0 800V608q0-40 28-68t68-28h416V96q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68"/></svg>
                 </button>
             {/if}
@@ -108,12 +123,13 @@
             {/if}
 
             <p>Never expire: </p>
-            <input type="checkbox" bind:checked={neverExpire}/>
+            <input type="checkbox" class="group_checkbox" bind:checked={neverExpire}/>
 
             <div class="group_footer_right-container">
                 <p>Only display this group: </p>
-                <input type="checkbox" bind:checked={priority}/>
-                <button>Hide content</button>
+                <input type="checkbox" class="group_checkbox" bind:checked={priority}/>
+                <p>Hide this group: </p>
+                <input type="checkbox" class="group_checkbox" bind:checked={hidden}/>
             </div>
             
         {:else if state === "preview"}
@@ -141,6 +157,7 @@
 <style>
     .group{
         margin: auto;
+        margin-top: 50px;
         margin-bottom: 50px;
         width: 80%;
         background-color: #E5E5E5;
@@ -149,7 +166,7 @@
         box-shadow: 2px 2px 5px gray;
     }
     .group_header {
-        padding: 20px;
+        padding: 1em;
         height: 50px;
         width: auto;
     }
@@ -157,7 +174,8 @@
     .group_header p,
     .group_footer p{
         display: inline;
-        vertical-align: bottom;
+        vertical-align: middle;
+        font-weight: 600;
     }
     .group_header_right-container{
         float: right;
@@ -178,28 +196,45 @@
         border: 0;
         height: 80%;
         border-radius: 0.4em;
+        height: 2em;
         font-size: larger;
         text-align: center;
     }
 
-    .group_slide-holder{
+    .group_middle{
         margin-top: 10px;
         margin-bottom: 10px;
         text-align: center;
     }
+    .group_slide-holder{
+       padding: 2em;
+    }
+    .group_slide{
+        display: block;
+        margin: auto;
+        padding: 0.5em;
+    }
+    
+
     .group_add-slide-button{
         width: 80%;
-        height: 40px;
+        height: 3em;
         background-color: #66ff66;
-        border-width: 1px;
-        border-radius: 10px;
+        border: 1px solid rgba(8, 66, 15, 0.15);
+        border-radius: 0.3em;
         font-size: larger;
     }
 
+    .group_add-slide-button:hover{
+        background-color: #2c974b;
+    }
+
     .group_footer {
-        padding: 20px;
-        height: 50px;
+        padding-left: 1em;
+        padding-right: 1em;
+        height: 3em;
         width: auto;
+        font-size: 1.2em;
     }
 
     .group_header_gray-text,
@@ -217,12 +252,29 @@
     }
 
     .group_publish-button{
-        padding: 10px;
         display: block;
         background-color: #66ff66;
-        margin-right: 0;
+        color: #fff;
+        border: 1px solid rgba(8, 66, 15, 0.15);
+        border-radius: 0.3em;
+
+        box-sizing: border-box;
+        font-size: 1.5em;
+        font-weight: 600;
+        line-height: 2.5em;
+
+        margin-right: 2em;
         margin-left:auto;
-        margin-top: 0;
+        margin-top: 2em;
         margin-bottom: auto;
+    }
+
+    .group_publish-button:hover {
+        background-color: #2c974b;
+    }
+
+    .group_checkbox{
+        height: 2em;
+        width: 2em;
     }
 </style>
