@@ -1,19 +1,21 @@
 <script>
-    import Group from '../lib/Group.svelte'
+    import Group from "$lib/Group.svelte";
+    import { State } from "$lib/index.js";
 </script>
+
 <button>Create Slide Collection</button>
-<h1 class="main_page_header">Currently in META</h1>
-<Group priority = {true} state = "create"/>
+<Group state={State.create} priority={true}/>
 
-<h1 class="main_page_header">Upcoming</h1>
+<h1>Currently in META</h1>
+<Group state={State.preview} lastEditedBy="stensvad" priority={true} neverExpire={true}/>
 
-<Group lastEditedBy = "stensvad" priority = {true} neverExpire = {true}/>
-<Group hidden = {true} lastEditedBy = "stensvad"/>
+<h1>Upcoming</h1>
+<Group state={State.preview} hidden={true} lastEditedBy="stensvad"/>
 
 <style>
-    .main_page_header{
-        text-align: center;
+    h1 {
         text-decoration: underline;
-        font-size: 3em;
+        font-size: 2.5rem;
+        margin: 0;
     }
 </style>

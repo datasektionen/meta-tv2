@@ -1,4 +1,6 @@
 <script>
+    import Upload from "$lib/Upload.svelte"
+
     let empty = true;
     let showUploadButton = true;
     let isContentUrl = false;
@@ -35,20 +37,9 @@
 <span class="slide-container">
     {#if empty}
         {#if showUploadButton }
-        <button on:click={toggleUploadState}>Upload content</button>
+            <button on:click={toggleUploadState}>Upload content</button>
         {:else}
-        <div>
-            <p>Upload URL</p>
-            <form on:submit|preventDefault={submitURL}>
-                <input bind:value={urlInput} type="url" placeholder="URL">
-                <input type="submit">
-            </form>
-            <br>
-            <p>OR</p>
-            <label for="file-upload" class="upload-btn">
-                <input type="file" id="file-upload" accept=".txt,.pdf,.doc,.docx" on:change={handleFileUpload}>
-            </label>
-        </div>
+            <Upload/>
         {/if}
         
     {:else if isContentUrl}
@@ -62,10 +53,9 @@
     button {
         color: #313131;
         background-color: #AAAAAA;
-        width: 10em;
-        height: 2em;
-        font-size: 20px;
-        border: none;
+        padding: 0.5em 1.5em;
+        border-radius: 0;
+        font-size: 1.2rem;
     }
 
     img {
