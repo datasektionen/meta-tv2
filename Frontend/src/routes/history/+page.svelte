@@ -39,7 +39,7 @@
         position: relative;
         width: 50%;
         margin: 0 auto;
-        min-height: 38em;
+        min-height: 40.5em;
     }
     .history_row {
         padding: 15px;
