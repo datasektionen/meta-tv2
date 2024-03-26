@@ -96,8 +96,8 @@
     </div>
 
     <!--MIDDLE-->
-    {#if hidden == false || state === State.create}
-        <div class="group_middle"> 
+    <div class="group_middle"> 
+        {#if hidden == false || state === State.create}
             <div class="slide-holder"> 
                 {#each slides as slide}
                     <Slide />
@@ -110,10 +110,10 @@
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1408 1408"><path d="M1408 608v192q0 40-28 68t-68 28H896v416q0 40-28 68t-68 28H608q-40 0-68-28t-28-68V896H96q-40 0-68-28T0 800V608q0-40 28-68t68-28h416V96q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68"/></svg>
                 </button>
             {/if}
-        </div>
-    {:else}
-        <p class="gray-text">This content has been hidden</p>
-    {/if}
+        {:else}
+            <p class="gray-text">This content has been hidden</p>
+        {/if}
+    </div>
 
     <!--FOOTER-->
     <div class="flex-two-regions">
@@ -123,7 +123,7 @@
                     <input type="date" bind:value={startDate}/>
                     <input type="time" bind:value={startTime}/>
                 </div>
-
+                <!--Arrow icon-->
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M10.159 10.72a.75.75 0 1 0 1.06 1.06l3.25-3.25L15 8l-.53-.53l-3.25-3.25a.75.75 0 0 0-1.061 1.06l1.97 1.97H1.75a.75.75 0 1 0 0 1.5h10.379z" clip-rule="evenodd"/></svg>
                 {#if !neverExpire}
                     <div>
@@ -177,6 +177,7 @@
 
 <style>
     .group {
+        min-width: 76em;
         padding: 1em;
         background-color: #E5E5E5;
         border-radius: 1em;
@@ -202,8 +203,12 @@
     }
 
     .group_middle {
+        min-height: 5em;
         margin: 1.5em 0;
-        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 
     .slide-holder {
