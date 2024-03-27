@@ -1,5 +1,5 @@
 <script>
-    import Group from '../lib/Group.svelte'
+    import Group from '$lib/Group.svelte'
 </script>
 
 <Group priority = {true} state = "create"/>

@@ -1,0 +1,4 @@
+<h3> Instructions </h3>
+
+<p> I den här rutan skrivs text från /static/instructions.txt ut. </p>
+
