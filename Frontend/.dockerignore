@@ -1,6 +1,4 @@
 .DS_Store
-**/bin
-**/obj
 .vscode
 node_modules
 /build
@@ -12,4 +10,5 @@ node_modules
 !.env.example
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
-Backend/Meta-TV2-api/Meta-TV2-AccessLayer/appsettings.json
+Dockerfile
+README.md
