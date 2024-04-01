@@ -65,6 +65,7 @@ public class Group : ControllerBase
 
     [Authorize]
     [HttpDelete("{id}")]
+    // TODO: Rename to ArchiveGroup
     public async Task<IActionResult> DeleteGroup(int id){
         var delete = await businessRules.ArchiveGroup(id);
         return delete ? Ok() : NotFound($"Group based on ID: {id} not found");
@@ -75,11 +76,13 @@ public class Group : ControllerBase
 public class Slide : ControllerBase {
     IBusinessRules businessRules = new BusinessRules();
 
+    [Authorize]
     [HttpGet]
     public async Task<IActionResult> GetSlides() {
         var slides = await businessRules.GetSlides();
         return slides != null ? Ok(slides) : NotFound("No slides found");
     }
+
     [HttpGet("{id}")]
     public async Task<IActionResult> GetSlidesByGroup(int id) {
         var slides = await businessRules.GetSlidesByGroup(id);
@@ -92,12 +95,14 @@ public class Slide : ControllerBase {
         return slides != null ? Ok(slides) : NotFound($"No slides found for group id: {id}");
     }
 
+    [Authorize]
     [HttpPost]
     public async Task<IActionResult> AddSlide(string slideObject) {
         var created = await businessRules.AddSlide(slideObject);
         return created ? Ok() : BadRequest("Failed to add Slide");
     }
 
+    [Authorize]
     [HttpDelete("{id}")]
     public async Task<IActionResult> ArchiveSlide(int id) {
         var delete = await businessRules.ArchiveSlide(id);
