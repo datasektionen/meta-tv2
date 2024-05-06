@@ -53,4 +53,13 @@ CREATE TABLE Blacklist (
 	alias VARCHAR(15) PRIMARY KEY
 );
 
--- DROP TABLE Posts; DROP TABLE Slides; DROP TABLE Changes; DROP TABLE Groups; DROP TABLE Blacklist
+-- Logging
+CREATE TABLE Logging (
+	logId SERIAL PRIMARY KEY,
+	type varchar(20) not null,
+	content varchar(200) not null,
+	occuredIn varchar(50),
+	dateAndTime timestamp without time zone NOT NULL
+);
+
+-- DROP TABLE Posts; DROP TABLE Slides; DROP TABLE Changes; DROP TABLE Groups; DROP TABLE Blacklist; DROP TABLE Logging
