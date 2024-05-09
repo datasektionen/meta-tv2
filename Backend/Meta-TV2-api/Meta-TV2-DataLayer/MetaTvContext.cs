@@ -9,7 +9,6 @@ public class MetaTvContext : DbContext
     public DbSet<Groups> Groups {get; set;}
     public DbSet<Changes> Changes {get; set;}
     public DbSet<Blacklist> Blacklist {get; set;}
-    public DbSet<Logging> Logging {get; set;}
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseNpgsql(@"Host=localhost;Database=META-TV", npgsqlOptionsAction: sqlOptions =>

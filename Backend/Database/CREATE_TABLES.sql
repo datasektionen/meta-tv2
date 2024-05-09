@@ -56,7 +56,7 @@ CREATE TABLE Blacklist (
 -- Logging
 CREATE TABLE Logging (
 	logId SERIAL PRIMARY KEY,
-	type varchar(20) not null,
+	logLevel INTEGER not null,
 	content varchar(200) not null,
 	occuredIn varchar(50),
 	dateAndTime timestamp without time zone NOT NULL
