@@ -1,19 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>library</OutputType>
     <TargetFramework>net8.0</TargetFramework>
-    <RootNamespace>Meta_TV2_DataLayer</RootNamespace>
+    <RootNamespace>Meta_TV2_Utils</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Meta-TV2-Utils\Meta-TV2-Utils.csproj" />
   </ItemGroup>
 
 </Project>
