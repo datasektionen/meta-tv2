@@ -27,6 +27,7 @@
 <style>
     header {
         padding: 0.2em 2em;
+        margin-bottom: 3em;
         box-shadow: 0 0 1em #111;
         display: flex;
         align-items: center;
@@ -55,9 +56,17 @@
         border-radius: 0.5em;
     }
 
+    main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 3em;
+    }
+
     footer {
         background-color: #eeeeee;
         padding: 3em 0;
+        margin-top: 3em;
     }
 
     footer p {
