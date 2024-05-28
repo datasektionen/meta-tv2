@@ -47,6 +47,7 @@ public class BusinessRules : IBusinessRules
         }
     }
 
+    // TODO: Add try-catch
     public async Task<string> GetGroupById(int id){
         var data = await DataAccess.GetGroupById(id);
         if (data.HasValue)
@@ -75,6 +76,7 @@ public class BusinessRules : IBusinessRules
         }
     }
 
+    // TODO: Swap page and size to match datalayer method signature. Swap this signature as well and change in accesslayer.
     public async Task<string> GetGroups(int page, int size){
         try
         {
@@ -87,6 +89,78 @@ public class BusinessRules : IBusinessRules
         {
             // logg e?
             return null;
+        }
+    }
+
+
+    public async Task<string> GetSlides() {
+        try
+        {
+            var result = await DataAccess.GetSlides();
+            if(!result.HasValue) 
+                return null;
+            return JsonSerializer.Serialize(result.Value);
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
+    }
+
+    public async Task<string> GetSlidesByGroup(int groupId) {
+        try {
+            var result = await DataAccess.GetSlidesByGroup(groupId);
+            if(!result.HasValue) 
+                return null;
+            return JsonSerializer.Serialize(result.Value);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public async Task<string> GetSlideById(int id) {
+        try{
+            var result = await DataAccess.GetSlideById(id);
+            if(!result.HasValue)
+                return null;
+            return JsonSerializer.Serialize(result.Value);
+        } catch(Exception e) {
+            return null;
+        }
+    }
+
+    public async Task<string> GetSlidesByGroup(int groupId, int page, int size) {
+        try {
+            var result = await DataAccess.GetSlidesByGroup(groupId, page, size);
+            if(!result.HasValue) 
+                return null;
+            return JsonSerializer.Serialize(result.Value);
+        } catch(Exception e){
+            return null;
+        }
+    }
+
+    public async Task<bool> AddSlide(string slideObject){
+        try {
+            var slide = JsonSerializer.Deserialize<Slides>(slideObject);
+            DataAccess.AddSlide(slide);
+            return true;
+        } catch(Exception e) {
+            return false;
+        }
+    }
+
+    public async Task<bool> ArchiveSlide(int id) {
+        try {
+            var slide = await DataAccess.GetSlideById(id);
+            if (!slide.HasValue) 
+                return false;
+            slide.Value.archive = true;
+            slide.Value.archiveDate = DateTime.Now;
+            DataAccess.UpdateSlide(slide.Value);
+            return true;
+        } catch(Exception e) {
+            return false;
         }
     }
 }

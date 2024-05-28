@@ -11,3 +11,4 @@ node_modules
 !.env.example
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+Backend/Meta-TV2-api/Meta-TV2-AccessLayer/appsettings.json

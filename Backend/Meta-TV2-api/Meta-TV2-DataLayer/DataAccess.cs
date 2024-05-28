@@ -51,4 +51,52 @@ public class DataAccess : IDataAccess
         }
         return Optional<List<Groups>>.Result(groups);
     }
+
+    public async Task<Optional<List<Slides>>> GetSlides() {
+        var query = from x in db.Slides where x.archive == false select x;
+        var slides = await query.ToListAsync();
+        if (slides.Count == 0) {
+            return Optional<List<Slides>>.Empty();
+        }
+        return Optional<List<Slides>>.Result(slides);
+    }
+
+    public async Task<Optional<List<Slides>>> GetSlidesByGroup(int groupId) {
+        var query = from x in db.Slides where x.archive == false & x.groupId == groupId select x;
+        var slides = await query.ToListAsync();
+        if(slides.Count == 0) {
+            return Optional<List<Slides>>.Empty();
+        }
+        return Optional<List<Slides>>.Result(slides);
+    }
+
+    public async Task<Optional<Slides>> GetSlideById(int id) {
+        var query = from x in db.Slides where x.slideId == id select x;
+        var slide = await query.FirstOrDefaultAsync();
+        if(slide == null) {
+            return Optional<Slides>.Empty();
+        }
+        return Optional<Slides>.Result(slide);
+    }
+
+    public async Task<Optional<List<Slides>>> GetSlidesByGroup(int groupId, int page, int size) {
+        var query = from x in db.Slides where x.archive == false & x.groupId == groupId select x;
+        List<Slides> groups = await query.Skip((page-1) * size).Take(size).ToListAsync();
+        if (groups.Count == 0){
+            return Optional<List<Slides>>.Empty();
+        }
+        return Optional<List<Slides>>.Result(groups);
+    }
+
+    public async void AddSlide(Slides obj) {
+        db.Add(obj);
+        await db.SaveChangesAsync();
+        db.Dispose();
+    }
+
+    public async void UpdateSlide(Slides slide){
+        db.Update(slide);
+        await db.SaveChangesAsync();
+        db.Dispose();
+    }
 }
