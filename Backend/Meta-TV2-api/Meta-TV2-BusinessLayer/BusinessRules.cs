@@ -47,6 +47,7 @@ public class BusinessRules : IBusinessRules
         }
     }
 
+    // TODO: Add try-catch
     public async Task<string> GetGroupById(int id){
         var data = await DataAccess.GetGroupById(id);
         if (data.HasValue)
@@ -75,6 +76,7 @@ public class BusinessRules : IBusinessRules
         }
     }
 
+    // TODO: Swap page and size to match datalayer method signature. Swap this signature as well and change in accesslayer.
     public async Task<string> GetGroups(int page, int size){
         try
         {
