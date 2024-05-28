@@ -1,0 +1,88 @@
+:root {
+    font-size: 16px;
+    font-family: "Lato", sans-serif;
+    line-height: 1.5;
+
+    --red: #E82305;
+    --black: #0e0e0e;
+    --green: #7dff88;
+    --green-hover: #75f07f;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+button {
+    padding: 1em;
+    border: 0;
+    border-radius: 0.3em;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+svg {
+    width: 2em;
+    height: 2em;
+}
+
+input[type=checkbox] {
+    height: 1.75em;
+    width: 1.75em;
+}
+
+.icon-button {
+    all: unset;
+}
+
+.popup-bg {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    background-color: rgba(30, 30, 30, 0.75);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.popup-box {
+    background-color: white;
+    padding: 1.5em;
+    width: fit-content;
+}
+
+.flex-two-regions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.flex-two-regions > * {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+
+.red-fill {
+    fill: var(--red);
+}
+
+.green-fill {
+    fill: var(--green);
+}
+
+.black-stroke {
+    stroke: var(--black);
+}
