@@ -1,13 +1,7 @@
-export async function load({params }) {
-    const res = await fetch('https://api.tv.betasektionen.se/JwtToken/IssueNewToken/'+  params.token, {
+/** @type {import('./$types').PageLoad} */
+export async function load({ fetch, params }) {	
+    const res = await fetch(`https://api.tv.betasektionen.se/JwtToken/IssueNewToken/${params.id}`, {
         method: 'POST'
-    });
-
-    const body = await res.json();
-    return {
-        props: {
-            body: body
-        }
-        
-    };
-}
+    });	
+    const item = await res.json();
+return { item };}

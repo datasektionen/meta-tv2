@@ -1,4 +1,4 @@
 <script>
-export let data;
-    console.log(data); 
+export let item;
+    console.log(item); 
 </script>
