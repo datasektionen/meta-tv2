@@ -1,4 +1,4 @@
-export async function load({ fetch, params }) {
+export async function load({params }) {
     const res = await fetch('https://api.tv.betasektionen.se/JwtToken/IssueNewToken/'+  params.token, {
         method: 'POST'
     });
