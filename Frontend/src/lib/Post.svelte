@@ -2,13 +2,13 @@
     import Upload from "$lib/Upload.svelte"
 
     let empty = true;
-    let showUploadButton = true;
+    let showUpload = false;
     let isContentUrl = false;
     export let urlInput = "";
     export let imageInput = "";
 
     function toggleUploadState() {
-        showUploadButton = !showUploadButton;
+        showUpload = !showUpload;
     }
 
     const handleFileUpload = (event) => {
@@ -34,14 +34,10 @@
     }
 </script>
 
+<Upload bind:showUpload/>
 <span class="slide-container">
     {#if empty}
-        {#if showUploadButton }
-            <button on:click={toggleUploadState}>Upload content</button>
-        {:else}
-            <Upload/>
-        {/if}
-        
+        <button on:click={() => showUpload = true}>Upload content</button>
     {:else if isContentUrl}
         <iframe title={urlInput} src={urlInput} frameborder="0"></iframe>
     {:else}

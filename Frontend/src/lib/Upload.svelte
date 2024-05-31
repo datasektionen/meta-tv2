@@ -1,12 +1,15 @@
 <script>
+    export let showUpload;
     let type = 0;
     let fileInput = "";
     let imageURL = "";
     let websiteURL = "";
+    let dialog;
+
+    $: if (dialog && showUpload) dialog.showModal();
 
     function handleFileUpload(event) {
         const file = event.target.files[0];
-
     }
 
     function drop(event) {
@@ -25,62 +28,101 @@
         }
     }
 
-    function submitImageURL() {
-        
-    }
+    function submitImageURL() {}
 
-    function submitWebsiteURL() {
-
-    }
+    function submitWebsiteURL() {}
 </script>
 
-<div class="popup-bg">
-    <div class="popup-box">
+<!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
+<dialog 
+    bind:this={dialog} 
+    on:close={() => (showUpload = false)}
+	on:click|self={() => dialog.close()}
+>
+    <button id="close" class="icon-button" on:click={() => dialog.close()}
+        >&times;</button
+    >
+    <div>
         <div id="tab-bar">
-            <button 
-                on:click={() => type = 0} 
-                aria-current={type === 0}
-            >File</button>
-            <button 
-                on:click={() => type = 1} 
-                aria-current={type === 1}
-            >Link to image</button>
-            <button 
-                on:click={() => type = 2} 
-                aria-current={type === 2}
-            >Website</button>
+            <button on:click={() => (type = 0)} aria-current={type === 0}
+                >File</button
+            >
+            <button on:click={() => (type = 1)} aria-current={type === 1}
+                >Link to image</button
+            >
+            <button on:click={() => (type = 2)} aria-current={type === 2}
+                >Website</button
+            >
         </div>
         <div id="upload-area">
             {#if type == 0}
                 <div>
-                    <input type="file" id="file" accept="image/*,video/*,.html" on:change={handleFileUpload}/>
+                    <input
+                        type="file"
+                        id="file"
+                        accept="image/*,video/*,.html"
+                        on:change={handleFileUpload}
+                    />
                     <p>Images, GIF, videos & HTML</p>
                 </div>
-                <div 
+                <div
                     id="drop-field"
                     role="region"
                     on:drop|preventDefault|stopPropagation={drop}
                     on:dragover|preventDefault|stopPropagation
                     on:dragenter|preventDefault|stopPropagation
-                ><p>Drag and drop</p></div>
+                >
+                    <p>Drag and drop</p>
+                </div>
             {:else if type == 1}
                 <form on:submit|preventDefault={submitImageURL}>
-                    <input bind:value={imageURL} type="text" id="image-link" placeholder="Direct link to image"/>
+                    <input
+                        bind:value={imageURL}
+                        type="text"
+                        id="image-link"
+                        placeholder="Direct link to image"
+                    />
                 </form>
             {:else if type == 2}
                 <form on:submit|preventDefault={submitWebsiteURL}>
-                    <input bind:value={websiteURL} type="text" id="website" placeholder="Link to website"/>
+                    <input
+                        bind:value={websiteURL}
+                        type="text"
+                        id="website"
+                        placeholder="Link to website"
+                    />
                 </form>
             {/if}
         </div>
     </div>
-</div>
+</dialog>
 
 <style>
-    .popup-box {
+    dialog {
+        padding: 0;
+    }
+
+    dialog > div {
         min-height: 15em;
         display: grid;
-        grid-template-rows: auto 1fr;
+        grid-template-rows: auto auto 1fr;
+        border: none;
+        background-color: white;
+        padding: 2em;
+    }
+
+    dialog::backdrop {
+        background-color: rgba(30, 30, 30, 0.75);
+    }
+
+    #close {
+        width: fit-content;
+        font-size: 2.5em;
+        line-height: 0.6;
+        color: #888;
+        position: absolute;
+        right: 0.15em;
+        top: 0.15em;
     }
 
     #tab-bar {
@@ -90,7 +132,7 @@
 
     #tab-bar > button {
         padding: 1em 4em;
-        border: none;
+        border-radius: 0;
         font-weight: bold;
         background-color: #f6f6f6;
     }
@@ -103,7 +145,7 @@
     #upload-area {
         margin: 2em 0 0;
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 16em 16em 16em;
         align-items: center;
     }
 
