@@ -121,7 +121,7 @@ public class Admin : ControllerBase {
         return created ? Ok() : BadRequest("Failed to ban user!");
     }
 
-    [HttpGet]
+    [HttpGet("information")]
     public async Task<IActionResult> GetAdminInformation() {
         var BlacklistedUsers = await businessRules.GetBlacklistedUsers();
         // TODO: add amount of tv-information
