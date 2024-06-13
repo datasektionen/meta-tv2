@@ -164,12 +164,13 @@ public class BusinessRules : IBusinessRules
         }
     }
 
-    public async Task<bool> BanUser(string alias){
+    public bool BanUser(string alias){
         try {
             var blacklist = JsonSerializer.Deserialize<Blacklist>(alias);
-             DataAccess.AddBlacklist(blacklist);
+            DataAccess.AddBlacklist(blacklist);
             return true;
-        } catch(Exception e) {
+        } 
+        catch(Exception e) {
             Console.WriteLine(e);
             return false;
         }
@@ -189,7 +190,7 @@ public class BusinessRules : IBusinessRules
         }
     }
 
-    public async Task<bool> UnbanUser(String alias) {
+    public async Task<bool> UnbanUser(string alias) {
         try {
             var entry = await DataAccess.GetBlacklistByAlias(alias);
             if(entry.HasValue) {
@@ -203,5 +204,4 @@ public class BusinessRules : IBusinessRules
             return false;
         }
     }
-
 }

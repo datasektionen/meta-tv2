@@ -84,7 +84,7 @@ public interface IBusinessRules
     /// </summary>
     /// <param name="alias">Blacklist JSON object</param>
     /// <returns>True if operation successfull otherwise false</returns>
-    public Task<bool> BanUser(string alias);
+    public bool BanUser(string alias);
 
     /// <summary>
     /// Gets blacklisted users from the database by invoking datalayer and serializing result to JSON object.
@@ -97,6 +97,6 @@ public interface IBusinessRules
     /// </summary>
     /// <returns>Return true if successful and false otherwise</returns>
     /// <param name="alias"> Alias of the user to unban </param>
-    public  Task<bool> UnbanUser(String alias);
+    public  Task<bool> UnbanUser(string alias);
 
 }

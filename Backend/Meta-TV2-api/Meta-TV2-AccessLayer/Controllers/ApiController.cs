@@ -16,7 +16,7 @@ public class JwtToken : ControllerBase
     }
     IKthAuth kthAuth = new KthAuth();
     IDataAccess dataAccess = new DataAccess();
-    
+
     // This method will be invoked trough callback with the DsektToken after successfully logging in.
     [HttpPost("IssueNewToken/{DsektToken}")]
     public async Task<IActionResult> IssueNewToken(string DsektToken){
@@ -116,8 +116,8 @@ public class Admin : ControllerBase {
     IBusinessRules businessRules = new BusinessRules();
     
     [HttpPost("banUser")]
-    public async Task<IActionResult> BanUser(string alias) {
-        var created = await businessRules.BanUser(alias);
+    public IActionResult BanUser(string alias) {
+        var created = businessRules.BanUser(alias);
         return created ? Ok() : BadRequest("Failed to ban user!");
     }
 
@@ -129,9 +129,8 @@ public class Admin : ControllerBase {
     }
 
     [HttpDelete("unban/{alias}")]
-    public async Task<IActionResult> UnbanUser(String alias) {
+    public async Task<IActionResult> UnbanUser(string alias) {
         var delete = await businessRules.UnbanUser(alias);
         return delete ? Ok() : BadRequest($"Failed to unban user: {alias}");
-    }
-    
+    }   
 }

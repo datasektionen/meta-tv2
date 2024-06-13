@@ -125,6 +125,4 @@ public class DataAccess : IDataAccess
         await db.SaveChangesAsync();
         db.Dispose();
     }
-    
-
 }
