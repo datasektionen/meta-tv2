@@ -22,14 +22,17 @@ public class JwtRules : IJwtRules
     public string IssueNewToken(int ExpiresIn){
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_Key));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-
-        var Sectoken = new JwtSecurityToken(_Issuer,
-            _Issuer,
-            new List<Claim>{
+        
+        var claims = new List<Claim>{
                 new Claim("IssuedAt", DateTime.Now.ToString()),
                 new Claim("DsektToken", _DsektToken),
-                new Claim("Admin", _IsAdmin.ToString())
-            }.AsEnumerable(),
+            };
+        if (_IsAdmin) {
+            claims.Add(new Claim(ClaimTypes.Role, "Admin"));
+        }
+        var Sectoken = new JwtSecurityToken(_Issuer,
+            _Issuer,
+            claims.AsEnumerable(),
             expires: DateTime.Now.AddMinutes(ExpiresIn),
             signingCredentials: credentials);
 
