@@ -1,12 +1,13 @@
-﻿using System.Data;
+using System.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace Meta_TV2_DataLayer;
 
 public class DataAccess : IDataAccess
 {
     MetaTvContext db = new MetaTvContext();
-    
+
     public async void AddGroups(Groups group){
         db.Add(group);
         await db.SaveChangesAsync();

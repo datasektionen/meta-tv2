@@ -2,10 +2,56 @@
 
 using System.Text.Json;
 using Meta_TV2_DataLayer;
+using Microsoft.Extensions.Configuration;
 
 public class BusinessRules : IBusinessRules
 {
     IDataAccess dataAccess = new DataAccess();
+
+    public async Task<Optional<Blacklist>> GetBlacklistByAlias(string alias){
+        return await dataAccess.GetBlacklistByAlias(alias);
+    }
+
+    public bool BanUser(string alias){
+        try {
+            var blacklist = JsonSerializer.Deserialize<Blacklist>(alias);
+            dataAccess.AddBlacklist(blacklist);
+            return true;
+        } 
+        catch(Exception e) {
+            Console.WriteLine(e);
+            return false;
+        }
+    }
+    public async Task<string> GetBlacklistedUsers() {
+        try
+        {
+            var result = await dataAccess.GetBlacklistedUsers();
+            if(!result.HasValue) 
+                return "";
+            return JsonSerializer.Serialize(result.Value);
+        }
+        catch (Exception e)
+        {  
+            //logg e?
+            return null;
+        }
+    }
+
+    public async Task<bool> UnbanUser(string alias) {
+        try {
+            var entry = await dataAccess.GetBlacklistByAlias(alias);
+            if(entry.HasValue) {
+                dataAccess.RemoveFromBlacklist(entry.Value);
+                return true;
+            }
+            return false;
+        }
+        catch (Exception e) {
+            //logg e?
+            return false;
+        }
+    }
 
     public async Task<bool> AddGroup(string groupObject){
         try
@@ -159,47 +205,6 @@ public class BusinessRules : IBusinessRules
             dataAccess.UpdateSlide(slide.Value);
             return true;
         } catch(Exception e) {
-            return false;
-        }
-    }
-
-    public bool BanUser(string alias){
-        try {
-            var blacklist = JsonSerializer.Deserialize<Blacklist>(alias);
-            DataAccess.AddBlacklist(blacklist);
-            return true;
-        } 
-        catch(Exception e) {
-            Console.WriteLine(e);
-            return false;
-        }
-    }
-    public async Task<string> GetBlacklistedUsers() {
-        try
-        {
-            var result = await DataAccess.GetBlacklistedUsers();
-            if(!result.HasValue) 
-                return "";
-            return JsonSerializer.Serialize(result.Value);
-        }
-        catch (Exception e)
-        {  
-            //logg e?
-            return null;
-        }
-    }
-
-    public async Task<bool> UnbanUser(string alias) {
-        try {
-            var entry = await DataAccess.GetBlacklistByAlias(alias);
-            if(entry.HasValue) {
-                DataAccess.RemoveFromBlacklist(entry.Value);
-                return true;
-            }
-            return false;
-        }
-        catch (Exception e) {
-            //logg e?
             return false;
         }
     }
