@@ -80,4 +80,24 @@ public interface IBusinessRules
     /// <returns>True if operation was successfull otherwise false.</returns>
     public Task<bool> ArchiveSlide(int id);
 
+    /// <summary>
+    /// Deserializes a Blacklist JSON object and adds the deserialized object to the database by invoking datalayer.
+    /// </summary>
+    /// <param name="alias">Blacklist JSON object</param>
+    /// <returns>True if operation successfull otherwise false</returns>
+    public bool BanUser(string alias);
+
+    /// <summary>
+    /// Gets blacklisted users from the database by invoking datalayer and serializing result to JSON object.
+    /// </summary>
+    /// <returns>Blacklisted JSON object if any groups were found, otherwise null</returns>
+    public Task<string> GetBlacklistedUsers();
+
+    /// <summary>
+    /// Unbans a user with the given alias.
+    /// </summary>
+    /// <returns>Return true if successful and false otherwise</returns>
+    /// <param name="alias"> Alias of the user to unban </param>
+    public  Task<bool> UnbanUser(string alias);
+
 }

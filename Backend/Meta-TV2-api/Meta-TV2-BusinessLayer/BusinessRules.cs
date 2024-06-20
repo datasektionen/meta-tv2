@@ -162,4 +162,45 @@ public class BusinessRules : IBusinessRules
             return false;
         }
     }
+
+    public bool BanUser(string alias){
+        try {
+            var blacklist = JsonSerializer.Deserialize<Blacklist>(alias);
+            DataAccess.AddBlacklist(blacklist);
+            return true;
+        } 
+        catch(Exception e) {
+            Console.WriteLine(e);
+            return false;
+        }
+    }
+    public async Task<string> GetBlacklistedUsers() {
+        try
+        {
+            var result = await DataAccess.GetBlacklistedUsers();
+            if(!result.HasValue) 
+                return "";
+            return JsonSerializer.Serialize(result.Value);
+        }
+        catch (Exception e)
+        {  
+            //logg e?
+            return null;
+        }
+    }
+
+    public async Task<bool> UnbanUser(string alias) {
+        try {
+            var entry = await DataAccess.GetBlacklistByAlias(alias);
+            if(entry.HasValue) {
+                DataAccess.RemoveFromBlacklist(entry.Value);
+                return true;
+            }
+            return false;
+        }
+        catch (Exception e) {
+            //logg e?
+            return false;
+        }
+    }
 }
