@@ -121,6 +121,7 @@ public class DataAccess : IDataAccess
         var entry = await db.Blacklist.FindAsync(alias);
         return entry != null ? Optional<Blacklist>.Result(entry) : Optional<Blacklist>.Empty();
     }
+
     public async void RemoveFromBlacklist(Blacklist obj){
         db.Blacklist.Remove(obj);
         await db.SaveChangesAsync();
