@@ -12,7 +12,8 @@ public class MetaTvContext : DbContext
     public DbSet<Blacklist> Blacklist {get; set;}
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseNpgsql(Environment.GetEnvironmentVariable("DATABASE_URL"), npgsqlOptionsAction: sqlOptions =>
+        var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL") ?? "Host=localhost;Database=META-TV";
+        optionsBuilder.UseNpgsql(connectionString, npgsqlOptionsAction: sqlOptions =>
         {
             sqlOptions.CommandTimeout(10); // Timeout to 10 seconds
         });
