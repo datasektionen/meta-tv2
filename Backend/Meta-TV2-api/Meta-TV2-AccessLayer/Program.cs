@@ -7,8 +7,8 @@ using Microsoft.OpenApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 //Jwt configuration starts here
-var JwtIssuer = builder.Configuration.GetSection("Jwt:Issuer").Get<string>() ?? Environment.GetEnvironmentVariable("JWT_ISSUER");
-var JwtKey = builder.Configuration.GetSection("Jwt:Key").Get<string>() ?? Environment.GetEnvironmentVariable("JWT_KEY");
+var JwtIssuer = builder.Configuration.GetSection("Jwt:Issuer").Get<string>() ?? Environment.GetEnvironmentVariable("Jwt__Issuer");
+var JwtKey = builder.Configuration.GetSection("Jwt:Key").Get<string>() ?? Environment.GetEnvironmentVariable("Jwt__Key");
 
 if (JwtIssuer == null || JwtKey == null){
     throw new SecurityException("No issuer or key was found in appsettings nor in the environment for generating JWT");
