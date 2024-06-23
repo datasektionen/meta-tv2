@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 var jwtIssuer = builder.Configuration.GetSection("Jwt:Issuer").Get<string>();
 var jwtKey = builder.Configuration.GetSection("Jwt:Key").Get<string>();
 
-if (jwtIssuer == null || jwtKey == null){
+if (jwtIssuer == null || jwtKey == null){
     throw new SecurityException("No issuer or key was found in appsettings for generating JWT");
 }
 
@@ -27,7 +27,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
          ValidAudience = jwtIssuer,
          IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
      };
- });
+});
+
+builder.Services.AddAuthorization(options => {
+    options.AddPolicy("AdminOnly", policy => policy.RequireClaim("Admin", "True"));
+});
 //Jwt configuration ends here
 
 builder.Services.AddControllers();
@@ -56,9 +60,12 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-
-
 var app = builder.Build();
+
+if (app.Environment.IsProduction())
+{
+    Console.WriteLine("\nBeware! You are building this project in PRODUCTION ENVIRONMENT\n");
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

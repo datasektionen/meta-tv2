@@ -9,13 +9,13 @@ using Microsoft.AspNetCore.Mvc;
 [Route("[controller]")]
 public class JwtToken : ControllerBase 
 {
-    private IConfiguration _config;
-    public JwtToken(IConfiguration config) 
+    private static IConfiguration _config;
+    public JwtToken(IConfiguration config)
     {
         _config = config;
     }
     IKthAuth kthAuth = new KthAuth();
-    IDataAccess dataAccess = new DataAccess();
+    IBusinessRules businessRules = new BusinessRules();
 
     // This method will be invoked trough callback with the DsektToken after successfully logging in.
     [HttpPost("IssueNewToken/{DsektToken}")]
@@ -24,10 +24,12 @@ public class JwtToken : ControllerBase
         if (user == null) {
             return BadRequest($"The given token was not valid. Token: {DsektToken}");
         }
-        var isBlacklisted = await dataAccess.GetBlacklistByAlias(user);
+        
+        var isBlacklisted = await businessRules.GetBlacklistByAlias(user);
         if (isBlacklisted.HasValue){
             return StatusCode(StatusCodes.Status403Forbidden, "You are not allowed to log in");
         }
+
         IJwtRules jwtRules = new JwtRules(_config["Jwt:Issuer"],
             _config["Jwt:Key"],
             await kthAuth.IsAdmin(user),
@@ -41,7 +43,7 @@ public class JwtToken : ControllerBase
 public class Group : ControllerBase
 {
     IBusinessRules businessRules = new BusinessRules();
-    
+
     [Authorize]
     [HttpPost]
     public async Task<IActionResult> AddGroup(string GroupObject){

@@ -2,10 +2,56 @@
 
 using System.Text.Json;
 using Meta_TV2_DataLayer;
+using Microsoft.Extensions.Configuration;
 
 public class BusinessRules : IBusinessRules
 {
-    IDataAccess DataAccess = new DataAccess();
+    IDataAccess dataAccess = new DataAccess();
+
+    public async Task<Optional<Blacklist>> GetBlacklistByAlias(string alias){
+        return await dataAccess.GetBlacklistByAlias(alias);
+    }
+
+    public bool BanUser(string alias){
+        try {
+            var blacklist = JsonSerializer.Deserialize<Blacklist>(alias);
+            dataAccess.AddBlacklist(blacklist);
+            return true;
+        } 
+        catch(Exception e) {
+            Console.WriteLine(e);
+            return false;
+        }
+    }
+    public async Task<string> GetBlacklistedUsers() {
+        try
+        {
+            var result = await dataAccess.GetBlacklistedUsers();
+            if(!result.HasValue) 
+                return "";
+            return JsonSerializer.Serialize(result.Value);
+        }
+        catch (Exception e)
+        {  
+            //logg e?
+            return null;
+        }
+    }
+
+    public async Task<bool> UnbanUser(string alias) {
+        try {
+            var entry = await dataAccess.GetBlacklistByAlias(alias);
+            if(entry.HasValue) {
+                dataAccess.RemoveFromBlacklist(entry.Value);
+                return true;
+            }
+            return false;
+        }
+        catch (Exception e) {
+            //logg e?
+            return false;
+        }
+    }
 
     public async Task<bool> AddGroup(string groupObject){
         try
@@ -22,7 +68,7 @@ public class BusinessRules : IBusinessRules
             // Deserialize the JSON content from the stream asynchronously
             var obj = await JsonSerializer.DeserializeAsync<Groups>(stream);
             
-            DataAccess.AddGroups(obj);
+            dataAccess.AddGroups(obj);
             return true;
         }
         catch (Exception e)
@@ -35,7 +81,7 @@ public class BusinessRules : IBusinessRules
     public async Task<string> GetGroups(){
         try
         {
-            var data = await DataAccess.GetGroups();
+            var data = await dataAccess.GetGroups();
             if (data.HasValue)
                 return JsonSerializer.Serialize(data.Value);
             else return null;
@@ -49,7 +95,7 @@ public class BusinessRules : IBusinessRules
 
     // TODO: Add try-catch
     public async Task<string> GetGroupById(int id){
-        var data = await DataAccess.GetGroupById(id);
+        var data = await dataAccess.GetGroupById(id);
         if (data.HasValue)
             return JsonSerializer.Serialize(data.Value);
         else return null;
@@ -59,14 +105,14 @@ public class BusinessRules : IBusinessRules
         try
         {
             // Get the group by Id
-            var group = await DataAccess.GetGroupById(id);
+            var group = await dataAccess.GetGroupById(id);
             
             // Modify the group attributes
             group.Value.archive = true;
             group.Value.archiveDate = DateTime.Now;
 
             // Update database
-            DataAccess.UpdateGroup(group.Value);
+            dataAccess.UpdateGroup(group.Value);
             return true;
         }
         catch (Exception e)
@@ -80,7 +126,7 @@ public class BusinessRules : IBusinessRules
     public async Task<string> GetGroups(int page, int size){
         try
         {
-            var data = await DataAccess.GetGroups(page, size);
+            var data = await dataAccess.GetGroups(page, size);
             if(data.HasValue)
                 return JsonSerializer.Serialize(data.Value);
             else return null;
@@ -92,11 +138,10 @@ public class BusinessRules : IBusinessRules
         }
     }
 
-
     public async Task<string> GetSlides() {
         try
         {
-            var result = await DataAccess.GetSlides();
+            var result = await dataAccess.GetSlides();
             if(!result.HasValue) 
                 return null;
             return JsonSerializer.Serialize(result.Value);
@@ -109,7 +154,7 @@ public class BusinessRules : IBusinessRules
 
     public async Task<string> GetSlidesByGroup(int groupId) {
         try {
-            var result = await DataAccess.GetSlidesByGroup(groupId);
+            var result = await dataAccess.GetSlidesByGroup(groupId);
             if(!result.HasValue) 
                 return null;
             return JsonSerializer.Serialize(result.Value);
@@ -120,7 +165,7 @@ public class BusinessRules : IBusinessRules
 
     public async Task<string> GetSlideById(int id) {
         try{
-            var result = await DataAccess.GetSlideById(id);
+            var result = await dataAccess.GetSlideById(id);
             if(!result.HasValue)
                 return null;
             return JsonSerializer.Serialize(result.Value);
@@ -131,7 +176,7 @@ public class BusinessRules : IBusinessRules
 
     public async Task<string> GetSlidesByGroup(int groupId, int page, int size) {
         try {
-            var result = await DataAccess.GetSlidesByGroup(groupId, page, size);
+            var result = await dataAccess.GetSlidesByGroup(groupId, page, size);
             if(!result.HasValue) 
                 return null;
             return JsonSerializer.Serialize(result.Value);
@@ -143,7 +188,7 @@ public class BusinessRules : IBusinessRules
     public async Task<bool> AddSlide(string slideObject){
         try {
             var slide = JsonSerializer.Deserialize<Slides>(slideObject);
-            DataAccess.AddSlide(slide);
+            dataAccess.AddSlide(slide);
             return true;
         } catch(Exception e) {
             return false;
@@ -152,55 +197,14 @@ public class BusinessRules : IBusinessRules
 
     public async Task<bool> ArchiveSlide(int id) {
         try {
-            var slide = await DataAccess.GetSlideById(id);
+            var slide = await dataAccess.GetSlideById(id);
             if (!slide.HasValue) 
                 return false;
             slide.Value.archive = true;
             slide.Value.archiveDate = DateTime.Now;
-            DataAccess.UpdateSlide(slide.Value);
+            dataAccess.UpdateSlide(slide.Value);
             return true;
         } catch(Exception e) {
-            return false;
-        }
-    }
-
-    public bool BanUser(string alias){
-        try {
-            var blacklist = JsonSerializer.Deserialize<Blacklist>(alias);
-            DataAccess.AddBlacklist(blacklist);
-            return true;
-        } 
-        catch(Exception e) {
-            Console.WriteLine(e);
-            return false;
-        }
-    }
-    public async Task<string> GetBlacklistedUsers() {
-        try
-        {
-            var result = await DataAccess.GetBlacklistedUsers();
-            if(!result.HasValue) 
-                return "";
-            return JsonSerializer.Serialize(result.Value);
-        }
-        catch (Exception e)
-        {  
-            //logg e?
-            return null;
-        }
-    }
-
-    public async Task<bool> UnbanUser(string alias) {
-        try {
-            var entry = await DataAccess.GetBlacklistByAlias(alias);
-            if(entry.HasValue) {
-                DataAccess.RemoveFromBlacklist(entry.Value);
-                return true;
-            }
-            return false;
-        }
-        catch (Exception e) {
-            //logg e?
             return false;
         }
     }

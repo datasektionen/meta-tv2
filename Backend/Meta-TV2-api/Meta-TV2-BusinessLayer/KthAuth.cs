@@ -4,7 +4,7 @@ namespace Meta_TV2_BusinessLayer;
 
 public class KthAuth : IKthAuth
 {
-    public async Task<string> VerifyToken(string token)
+    public async Task<string> VerifyToken(string token) // Väntar på API-nyckel från datasektionen
     {
         using (var client = new HttpClient()){
             try
