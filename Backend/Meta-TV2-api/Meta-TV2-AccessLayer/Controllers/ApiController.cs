@@ -1,6 +1,7 @@
 namespace Meta_TV2_api.Controllers;
 
 using Meta_TV2_BusinessLayer;
+using Meta_TV2_DataLayer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,21 +14,26 @@ public class JwtToken : ControllerBase
     {
         _config = config;
     }
-    
+    IKthAuth kthAuth = new KthAuth();
+    IDataAccess dataAccess = new DataAccess();
+
     // This method will be invoked trough callback with the DsektToken after successfully logging in.
     [HttpPost("IssueNewToken/{DsektToken}")]
     public async Task<IActionResult> IssueNewToken(string DsektToken){
-        IKthAuth kthAuth = new KthAuth();
-        var user = await kthAuth.VerifyToken(DsektToken);           // Verify that the token is valid
-        
-        if (user != null){
-            IJwtRules jwtRules = new JwtRules(_config["Jwt:Issuer"],
+        var user = await kthAuth.VerifyToken(DsektToken);           // Verify that the token is valid and recieve user
+        if (user == null) {
+            return BadRequest($"The given token was not valid. Token: {DsektToken}");
+        }
+        var isBlacklisted = await dataAccess.GetBlacklistByAlias(user);
+        if (isBlacklisted.HasValue){
+            return StatusCode(StatusCodes.Status403Forbidden, "You are not allowed to log in");
+        }
+        IJwtRules jwtRules = new JwtRules(_config["Jwt:Issuer"],
             _config["Jwt:Key"],
             await kthAuth.IsAdmin(user),
             DsektToken);
-            return Ok(jwtRules.IssueNewToken(20));                   // Issue 20 minute valid token
-        }
-        else return BadRequest($"The given token was not valid. Token: {DsektToken}");
+        //TODO send username to client
+        return Ok(jwtRules.IssueNewToken(20));                   // Issue 20 minute valid token    
     }
 }
 
@@ -43,7 +49,6 @@ public class Group : ControllerBase
         return add ? Ok() : BadRequest("Failed to add group.");
     }
 
-    [Authorize]
     [HttpGet]
     public async Task<IActionResult> GetGroups(){
         var groups = await businessRules.GetGroups();
@@ -103,4 +108,29 @@ public class Slide : ControllerBase {
         var delete = await businessRules.ArchiveSlide(id);
         return delete ? Ok() : BadRequest($"Failed to remove slide: {id}");
     }
+}
+
+[Authorize(Roles = "Admin")]
+[Route("[Controller]")]
+public class Admin : ControllerBase {
+    IBusinessRules businessRules = new BusinessRules();
+    
+    [HttpPost("banUser")]
+    public IActionResult BanUser(string alias) {
+        var created = businessRules.BanUser(alias);
+        return created ? Ok() : BadRequest("Failed to ban user!");
+    }
+
+    [HttpGet("information")]
+    public async Task<IActionResult> GetAdminInformation() {
+        var BlacklistedUsers = await businessRules.GetBlacklistedUsers();
+        // TODO: add amount of tv-information
+        return BlacklistedUsers != null ? Ok(BlacklistedUsers) : StatusCode(StatusCodes.Status500InternalServerError);
+    }
+
+    [HttpDelete("unban/{alias}")]
+    public async Task<IActionResult> UnbanUser(string alias) {
+        var delete = await businessRules.UnbanUser(alias);
+        return delete ? Ok() : BadRequest($"Failed to unban user: {alias}");
+    }   
 }
