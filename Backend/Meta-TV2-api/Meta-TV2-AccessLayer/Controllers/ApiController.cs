@@ -46,7 +46,7 @@ public class Group : ControllerBase
 
     [Authorize]
     [HttpPost]
-    public async Task<IActionResult> AddGroup(string GroupObject){
+    public async Task<IActionResult> AddGroup([FromBody] Groups GroupObject){
         var add = await businessRules.AddGroup(GroupObject);
         return add ? Ok() : BadRequest("Failed to add group.");
     }
@@ -100,7 +100,7 @@ public class Slide : ControllerBase {
     }
 
     [HttpPost]
-    public async Task<IActionResult> AddSlide(string slideObject) {
+    public async Task<IActionResult> AddSlide([FromBody] string slideObject) {
         var created = await businessRules.AddSlide(slideObject);
         return created ? Ok() : BadRequest("Failed to add Slide");
     }
