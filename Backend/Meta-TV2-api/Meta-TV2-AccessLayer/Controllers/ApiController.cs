@@ -29,6 +29,9 @@ public class JwtToken : ControllerBase
         if (isBlacklisted.HasValue){
             return StatusCode(StatusCodes.Status403Forbidden, "You are not allowed to log in");
         }
+        else if (isBlacklisted == null){
+            return BadRequest("Was not able to fetch if user is blacklisted");
+        }
 
         IJwtRules jwtRules = new JwtRules(_config["Jwt:Issuer"],
             _config["Jwt:Key"],

@@ -14,7 +14,6 @@ if (JwtIssuer == null || JwtKey == null){
     throw new SecurityException("No issuer or key was found in appsettings nor in the environment for generating JWT");
 }
 
-
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
  .AddJwtBearer(options =>
  {
