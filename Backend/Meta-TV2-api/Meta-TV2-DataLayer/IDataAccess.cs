@@ -30,10 +30,10 @@ public interface IDataAccess
     /// <summary>
     /// Gets groups (non-archived) by pagination (in database order)
     /// </summary>
-    /// <param name="size">Determines number of groups per page</param>
     /// <param name="page">Determines which chunk of groups to get</param>
+    /// <param name="size">Determines number of groups per page</param>
     /// <returns>Optional object with a list of Group objects as value, otherwise empty Optional object if no groups found</returns>
-    public Task<Optional<List<Groups>>> GetGroups(int size, int page);
+    public Task<Optional<List<Groups>>> GetGroups(int page, int size);
 
     /// <summary>
     /// Gets all non-archived slides from database (in database order)
