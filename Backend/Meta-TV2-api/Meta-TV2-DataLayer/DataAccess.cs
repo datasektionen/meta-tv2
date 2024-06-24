@@ -45,7 +45,7 @@ public class DataAccess : IDataAccess
         db.Dispose();
     }
 
-    public async Task<Optional<List<Groups>>> GetGroups(int size, int page){
+    public async Task<Optional<List<Groups>>> GetGroups(int page, int size){
         var query = from x in db.Groups where x.archive == false select x;
         List<Groups> groups = await query.Skip((page-1) * size).Take(size).ToListAsync();
         if (groups.Count() == 0) {

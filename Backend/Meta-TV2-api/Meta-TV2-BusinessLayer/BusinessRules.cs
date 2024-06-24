@@ -2,7 +2,6 @@
 
 using System.Text.Json;
 using Meta_TV2_DataLayer;
-using Microsoft.Extensions.Configuration;
 
 public class BusinessRules : IBusinessRules
 {
@@ -53,22 +52,10 @@ public class BusinessRules : IBusinessRules
         }
     }
 
-    public async Task<bool> AddGroup(string groupObject){
+    public bool AddGroup(Groups groupObject){
         try
         {
-            // Convert string to a stream
-            using var stream = new MemoryStream();
-            using (var writer = new StreamWriter(stream, leaveOpen: true))
-            {
-                await writer.WriteAsync(groupObject);
-                await writer.FlushAsync();
-            }
-            stream.Position = 0; // Reset the stream position to the beginning
-
-            // Deserialize the JSON content from the stream asynchronously
-            var obj = await JsonSerializer.DeserializeAsync<Groups>(stream);
-            
-            dataAccess.AddGroups(obj);
+            dataAccess.AddGroups(groupObject);
             return true;
         }
         catch (Exception e)
@@ -185,10 +172,9 @@ public class BusinessRules : IBusinessRules
         }
     }
 
-    public async Task<bool> AddSlide(string slideObject){
+    public bool AddSlide(Slides slideObject){
         try {
-            var slide = JsonSerializer.Deserialize<Slides>(slideObject);
-            dataAccess.AddSlide(slide);
+            dataAccess.AddSlide(slideObject);
             return true;
         } catch(Exception e) {
             return false;

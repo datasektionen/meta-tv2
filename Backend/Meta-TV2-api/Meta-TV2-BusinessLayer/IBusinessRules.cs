@@ -32,11 +32,11 @@ public interface IBusinessRules
     public  Task<bool> UnbanUser(string alias);
 
     /// <summary>
-    /// Deserializes a Group JSON object and adds the deserialized Group object to database by invoking datalayer
+    /// Adds the Group object to database by invoking datalayer
     /// </summary>
     /// <param name="groupObject">Group JSON object</param>
     /// <returns>True if successfull otherwise false</returns>
-    public Task<bool> AddGroup(string groupObject);
+    public bool AddGroup(Groups groupObject);
 
     /// <summary>
     /// Gets groups (non-archived) by invoking datalayer and serializing Group objects to JSON object
@@ -96,11 +96,11 @@ public interface IBusinessRules
     public Task<string> GetSlideById(int id);
 
     /// <summary>
-    /// Deserializes a Slide JSON object and adds the deserialized object to the database by invoking datalayer.
+    /// Adds the Slides object to the database by invoking datalayer.
     /// </summary>
     /// <param name="slideObject">Slide JSON object</param>
     /// <returns>True if operation successfull otherwise false</returns>
-    public Task<bool> AddSlide(string slideObject);
+    public bool AddSlide(Slides slideObject);
 
     /// <summary>
     /// Archives a specific slide in the database by updating the slide archived value and invoking datalayer.
