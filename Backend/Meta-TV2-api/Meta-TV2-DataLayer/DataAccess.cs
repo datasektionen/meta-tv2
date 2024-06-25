@@ -20,7 +20,7 @@ public class DataAccess : IDataAccess
         }
         return Optional<List<Groups>>.Result(groups);
     }
-
+    
     public async Task<Optional<Groups>> GetGroupById(int id){
         try
         {
@@ -128,7 +128,7 @@ public class DataAccess : IDataAccess
         db.Add(post);
         await db.SaveChangesAsync();
         db.Dispose();
-        return post.postId; //Can this always be garantied?
+        return post.postId;
     }
 
     public async Task<Optional<Posts>> GetPostByPostId(int id) {

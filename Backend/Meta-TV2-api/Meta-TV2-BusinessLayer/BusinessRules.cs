@@ -28,6 +28,7 @@ public class BusinessRules : IBusinessRules
         catch (Exception e)
         {
             // logg e?
+            Console.WriteLine(e);
             return false;
         }
     }
@@ -184,32 +185,6 @@ public class BusinessRules : IBusinessRules
         }
     }
 
-    public async Task<bool> AddPostWithUrl(string post) {
-        try {
-            var deserializedPost = JsonSerializer.Deserialize<Posts>(post);
-            if (deserializedPost.filePath == "" || deserializedPost.pathType != "Url")
-                return false;
-            DataAccess.AddPostWithUrl(deserializedPost);
-            return true;
-        } catch (Exception e) {
-            Console.WriteLine(e);
-            return false;
-        }
-    }
-
-    public async Task<string> AddPostWithFile(string post, string fileType) {
-        try {
-            var deserializedPost = JsonSerializer.Deserialize<Posts>(post);
-            deserializedPost.filePath = "."+fileType;
-            int id = await DataAccess.AddPostWithFile(deserializedPost);
-            return Path.Combine(deserializedPost.pathType, id.ToString());
-            
-        } catch(Exception e){
-            Console.WriteLine(e);
-            return null;
-        }
-    }
-
     public async Task<(string, string)> GetPostFileType(int id) {
         try {
             var post = await DataAccess.GetPostByPostId(id);
@@ -223,4 +198,31 @@ public class BusinessRules : IBusinessRules
         }
     }
 
+    public async Task<bool> AddPost(string post, ICustomFormFile file)
+    {
+        try {
+
+            var deserializedPost = JsonSerializer.Deserialize<Posts>(post);
+            if (file == null | deserializedPost.pathType == "")
+                return false;
+            if(deserializedPost.pathType == "Url" & deserializedPost.filePath != "") { // Handle URL case
+                DataAccess.AddPostWithUrl(deserializedPost);
+                return true;
+            }
+            deserializedPost.filePath = "." + file.ContentType.Split("/")[1];
+            int id = await DataAccess.AddPostWithFile(deserializedPost);
+            if (id == -1)
+                return false;
+
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", deserializedPost.pathType, id.ToString() + "." + file.ContentType.Split("/")[1]);
+            using (var stream = new FileStream(path, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+            return true;
+        } catch (Exception e) {
+            Console.WriteLine(e);
+            return false;
+        }
+    }
 }

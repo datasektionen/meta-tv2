@@ -79,13 +79,39 @@ public interface IBusinessRules
     /// <returns>True if operation was successfull otherwise false.</returns>
     public Task<bool> ArchiveSlide(int id);
 
+    /// <summary>
+    /// Gets all non archived posts from the database and serializes the result to JSON object.
+    /// </summary>
+    /// <returns>JSON object if posts found, otherwise null</returns>
     public Task<string> GetPosts();
 
+    /// <summary>
+    /// Gets all posts associated with a specific slide id that is not archived from the database and serializes the result to JSON object.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns>JSON object of posts, or null if none found</returns>
     public Task<string> GetPosts(int id);
 
-    public Task<bool> AddPostWithUrl(string post);
+//___________________________________________________________
 
-    public Task<string> AddPostWithFile(string post, string path);
 
+    /// <summary>
+    /// Gets the file type of a post by invoking datalayer.
+    /// Can only be one of these: Image, Video, Html or Url.
+    /// Ignores if the post is archived or not.
+    /// </summary>
+    /// <param name="id">The post id to sort on</param>
+    /// <returns>Tuple of strings, first being file type, second being filepath, if non found null on both.</returns>
     public Task<(string, string)> GetPostFileType(int id);
+    //___________________________________________________________
+
+    /// <summary>
+    /// Creates a new post with a assosciated file by invoking datalayer
+    /// The posts pathType attribute should correspond to the associated file
+    /// pathType can only be: Image, Video, Html or Url
+    /// </summary>
+    /// <param name="post">The post</param>
+    /// <param name="file">The file associated with post</param>
+    /// <returns>True if operation sucessfull, otherwise false</returns>
+    public Task<bool> AddPost(string post, ICustomFormFile file);
 }

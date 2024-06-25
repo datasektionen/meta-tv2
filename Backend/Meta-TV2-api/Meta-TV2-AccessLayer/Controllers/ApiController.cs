@@ -99,31 +99,23 @@ public class Post : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> GetPosts(int id)
     {
+        //Get post by id
         var posts = await businessRules.GetPosts(id);
         return posts != null ? Ok(posts) : BadRequest($"No posts found for id: {id}"); 
     }
 
+
     [HttpPost]
-    public async Task<IActionResult> AddPost(string post, IFormFile[] file) {
-        if(await businessRules.AddPostWithUrl(post))
-            return Ok("Post has been added");
-        if (file == null || file.Length == 0)
-            return BadRequest("File missing for post");
+    public async Task<IActionResult> AddPost(string post, IFormFile file)
+    {
+        // Convert IFormFile to ICustomFormFile
+        ICustomFormFile customFile = new FormFileWrapper(file);
 
-        foreach (var item in file) {
-            var pathWithIdentifier = await businessRules.AddPostWithFile(post, item.ContentType.Split("/")[1]);
-            if(pathWithIdentifier == null)
-                return BadRequest("Failed to add post");
-                
-            var completePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", pathWithIdentifier + "." + item.ContentType.Split("/")[1]);
-            using (var stream = new FileStream(completePath, FileMode.Create)) {
-                await item.CopyToAsync(stream);
-            }
-        }
-        return Ok("Post has been added");
+        var added = await businessRules.AddPost(post, customFile);
+        return added ? Ok() : BadRequest("Failed to add post");
     }
-
     [HttpGet("{id}/file")]
+
     public async Task<IActionResult> GetPostFile(int id)
     {
         var (folder, fileType) = await businessRules.GetPostFileType(id);
@@ -153,6 +145,5 @@ public class Post : ControllerBase
             return BadRequest("Something went wrong");
         }
     }
-
 
 }

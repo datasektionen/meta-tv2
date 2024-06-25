@@ -63,7 +63,7 @@ public interface IDataAccess
     /// <param name="groupId">the group Id to filter slides on</param>
     /// <param name="page">which set of result to return</param>
     /// <param name="size">the size of the result</param>
-    /// <returns>Optional object witha list of slide objects as value, otherwise empty Optional object if no slides found</returns>
+    /// <returns>Optional object with a list of slide objects as value, otherwise empty Optional object if no slides found</returns>
     public Task<Optional<List<Slides>>> GetSlidesByGroup(int groupId, int page, int size);
 
     /// <summary>
@@ -79,13 +79,38 @@ public interface IDataAccess
     /// <param name="slide">The updated slide to store</param>
     public void UpdateSlide(Slides slide);
 
+    /// <summary>
+    /// Gets all non-archived posts from the database
+    /// </summary>
+    /// <returns>Optional object with a list of posts as value, otherwise empty Optional object if no posts found</returns>
     public Task<Optional<List<Posts>>> GetPosts();
 
+    /// <summary>
+    /// Gets all non-archived posts associated with a specific slide Id from the database
+    /// </summary>
+    /// <param name="id">The slide ID to sort on</param>
+    /// <returns>Optional object with a list of posts as value, otherwise empty Optional object if no posts associated with the id was found</returns>
     public Task<Optional<List<Posts>>> GetPosts(int id);
 
+    /// <summary>
+    /// Creates a new post, with the attribute of the post being a URL. Then stores the post in the database.
+    /// </summary>
+    /// <param name="post">The post object to be stored</param>
     public void AddPostWithUrl(Posts post);
 
+    /// <summary>
+    /// Creates a new post, with the attribute of the post being a file. Then stores the post in the database.
+    /// the file path is stored in the database under the post.
+    /// </summary>
+    /// <param name="post">The post object to be stored</param>
+    /// <returns>The Post ID of the created and stored post</returns>
     public Task<int> AddPostWithFile(Posts post);
 
+    /// <summary>
+    /// Retrieves a post specified by the post Id from the database.
+    /// Ignores if the post is archived or not.
+    /// </summary>
+    /// <param name="id">The post ID to sort on</param>
+    /// <returns>Optional object with a post as value, otherise empty Optional object</returns>
     public Task<Optional<Posts>> GetPostByPostId(int id);
 }
