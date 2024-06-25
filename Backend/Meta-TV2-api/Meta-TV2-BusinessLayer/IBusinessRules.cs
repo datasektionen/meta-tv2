@@ -92,9 +92,6 @@ public interface IBusinessRules
     /// <returns>JSON object of posts, or null if none found</returns>
     public Task<string> GetPosts(int id);
 
-//___________________________________________________________
-
-
     /// <summary>
     /// Gets the file type of a post by invoking datalayer.
     /// Can only be one of these: Image, Video, Html or Url.
@@ -103,11 +100,10 @@ public interface IBusinessRules
     /// <param name="id">The post id to sort on</param>
     /// <returns>Tuple of strings, first being file type, second being filepath, if non found null on both.</returns>
     public Task<(string, string)> GetPostFileType(int id);
-    //___________________________________________________________
 
     /// <summary>
     /// Creates a new post with a assosciated file by invoking datalayer
-    /// The posts pathType attribute should correspond to the associated file
+    /// The posts pathType attribute should correspond to the associated file type
     /// pathType can only be: Image, Video, Html or Url
     /// </summary>
     /// <param name="post">The post</param>
