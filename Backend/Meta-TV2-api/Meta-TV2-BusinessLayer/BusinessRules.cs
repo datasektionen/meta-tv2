@@ -8,7 +8,14 @@ public class BusinessRules : IBusinessRules
     IDataAccess dataAccess = new DataAccess();
 
     public async Task<Optional<Blacklist>> GetBlacklistByAlias(string alias){
-        return await dataAccess.GetBlacklistByAlias(alias);
+        try
+        {
+            return await dataAccess.GetBlacklistByAlias(alias);
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
     }
 
     public bool BanUser(string alias){

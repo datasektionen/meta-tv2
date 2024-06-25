@@ -7,11 +7,11 @@ using Microsoft.OpenApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 //Jwt configuration starts here
-var jwtIssuer = builder.Configuration.GetSection("Jwt:Issuer").Get<string>();
-var jwtKey = builder.Configuration.GetSection("Jwt:Key").Get<string>();
+var JwtIssuer = builder.Configuration.GetSection("Jwt:Issuer").Get<string>() ?? Environment.GetEnvironmentVariable("Jwt__Issuer");
+var JwtKey = builder.Configuration.GetSection("Jwt:Key").Get<string>() ?? Environment.GetEnvironmentVariable("Jwt__Key");
 
-if (jwtIssuer == null || jwtKey == null){
-    throw new SecurityException("No issuer or key was found in appsettings for generating JWT");
+if (JwtIssuer == null || JwtKey == null){
+    throw new SecurityException("No issuer or key was found in appsettings nor in the environment for generating JWT");
 }
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -23,9 +23,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
          ValidateAudience = true,
          ValidateLifetime = true,
          ValidateIssuerSigningKey = true,
-         ValidIssuer = jwtIssuer,
-         ValidAudience = jwtIssuer,
-         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
+         ValidIssuer = JwtIssuer,
+         ValidAudience = JwtIssuer,
+         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtKey))
      };
 });
 
