@@ -10,6 +10,7 @@ public class MetaTvContext : DbContext
     public DbSet<Groups> Groups {get; set;}
     public DbSet<Changes> Changes {get; set;}
     public DbSet<Blacklist> Blacklist {get; set;}
+    
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         var connectionString = UrlToConnectionString(Environment.GetEnvironmentVariable("DATABASE_URL")) ?? "Host=localhost;Database=META-TV";
