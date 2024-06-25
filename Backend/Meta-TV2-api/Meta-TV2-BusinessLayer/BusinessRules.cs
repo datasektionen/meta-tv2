@@ -201,7 +201,6 @@ public class BusinessRules : IBusinessRules
     public async Task<bool> AddPost(string post, ICustomFormFile file)
     {
         try {
-
             var deserializedPost = JsonSerializer.Deserialize<Posts>(post);
             if (file == null | deserializedPost.pathType == "")
                 return false;

@@ -104,7 +104,6 @@ public class Post : ControllerBase
         return posts != null ? Ok(posts) : BadRequest($"No posts found for id: {id}"); 
     }
 
-
     [HttpPost]
     public async Task<IActionResult> AddPost(string post, IFormFile file)
     {
@@ -145,5 +144,4 @@ public class Post : ControllerBase
             return BadRequest("Something went wrong");
         }
     }
-
 }
