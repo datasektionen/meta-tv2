@@ -201,7 +201,13 @@ public class BusinessRules : IBusinessRules
     public async Task<bool> AddPost(string post, ICustomFormFile file)
     {
         try {
+
             var deserializedPost = JsonSerializer.Deserialize<Posts>(post);
+
+            if( deserializedPost.pathType != "Url" && deserializedPost.pathType != "Video" && deserializedPost.pathType != "Image" && deserializedPost.pathType != "Html") {
+                return false;
+            }
+
             if (file == null | deserializedPost.pathType == "")
                 return false;
             if(deserializedPost.pathType == "Url" & deserializedPost.filePath != "") { // Handle URL case
@@ -220,7 +226,6 @@ public class BusinessRules : IBusinessRules
             }
             return true;
         } catch (Exception e) {
-            Console.WriteLine(e);
             return false;
         }
     }
