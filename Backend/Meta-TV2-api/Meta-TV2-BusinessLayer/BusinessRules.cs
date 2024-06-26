@@ -205,7 +205,7 @@ public class BusinessRules : IBusinessRules
 
     public async Task<string> GetPosts() {
         try {
-            var posts = await DataAccess.GetPosts();
+            var posts = await dataAccess.GetPosts();
             if (!posts.HasValue)
                 return null;
             return JsonSerializer.Serialize(posts.Value);
@@ -216,7 +216,7 @@ public class BusinessRules : IBusinessRules
 
     public async Task<string> GetPosts(int id) {
         try {
-            var posts = await DataAccess.GetPosts(id);
+            var posts = await dataAccess.GetPosts(id);
             if (!posts.HasValue)
                 return null;
             return JsonSerializer.Serialize(posts.Value);
@@ -227,7 +227,7 @@ public class BusinessRules : IBusinessRules
 
     public async Task<(string, string)> GetPostFileType(int id) {
         try {
-            var post = await DataAccess.GetPostByPostId(id);
+            var post = await dataAccess.GetPostByPostId(id);
             if (!post.HasValue)
                 return (null, null);
             if(post.Value.pathType == "Url")
@@ -251,11 +251,11 @@ public class BusinessRules : IBusinessRules
             if (file == null | deserializedPost.pathType == "")
                 return false;
             if(deserializedPost.pathType == "Url" & deserializedPost.filePath != "") { // Handle URL case
-                DataAccess.AddPostWithUrl(deserializedPost);
+                dataAccess.AddPostWithUrl(deserializedPost);
                 return true;
             }
             deserializedPost.filePath = "." + file.ContentType.Split("/")[1];
-            int id = await DataAccess.AddPostWithFile(deserializedPost);
+            int id = await dataAccess.AddPostWithFile(deserializedPost);
             if (id == -1)
                 return false;
 
