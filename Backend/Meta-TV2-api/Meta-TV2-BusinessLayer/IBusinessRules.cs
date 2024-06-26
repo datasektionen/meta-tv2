@@ -1,13 +1,42 @@
-﻿﻿namespace Meta_TV2_BusinessLayer;
+﻿﻿using Meta_TV2_DataLayer;
+
+namespace Meta_TV2_BusinessLayer;
 
 public interface IBusinessRules
 {
     /// <summary>
-    /// Deserializes a Group JSON object and adds the deserialized Group object to database by invoking datalayer
+    /// Invokes the datalayer method to fetch if an alias is blacklisted
+    /// </summary>
+    /// <param name="alias">The alias to look for</param>
+    /// <returns>Optional object with the Blacklist object as value, otherwise empty Optional object if no record of alias found</returns>
+    public Task<Optional<Blacklist>> GetBlacklistByAlias(string alias);
+
+    /// <summary>
+    /// Deserializes a Blacklist JSON object and adds the deserialized object to the database by invoking datalayer.
+    /// </summary>
+    /// <param name="alias">Blacklist JSON object</param>
+    /// <returns>True if operation successfull otherwise false</returns>
+    public bool BanUser(string alias);
+
+    /// <summary>
+    /// Gets blacklisted users from the database by invoking datalayer and serializing result to JSON object.
+    /// </summary>
+    /// <returns>Blacklisted JSON object if any groups were found, otherwise null</returns>
+    public Task<string> GetBlacklistedUsers();
+
+    /// <summary>
+    /// Unbans a user with the given alias.
+    /// </summary>
+    /// <returns>Return true if successful and false otherwise</returns>
+    /// <param name="alias"> Alias of the user to unban </param>
+    public  Task<bool> UnbanUser(string alias);
+
+    /// <summary>
+    /// Adds the Group object to database by invoking datalayer
     /// </summary>
     /// <param name="groupObject">Group JSON object</param>
     /// <returns>True if successfull otherwise false</returns>
-    public Task<bool> AddGroup(string groupObject);
+    public bool AddGroup(Groups groupObject);
 
     /// <summary>
     /// Gets groups (non-archived) by invoking datalayer and serializing Group objects to JSON object
@@ -49,12 +78,6 @@ public interface IBusinessRules
     /// <param name="groupId">The group Id to filter on</param>
     /// <returns>Slide JSON object if any slides were found, otherwise null</returns>
     public Task<string> GetSlidesByGroup(int groupId);
-    /// <summary>
-    /// Gets a specific slide (including archived) associated with a specific slide Id by invoking datalayer and serializing result to JSON object.
-    /// </summary>
-    /// <param name="id">the slide Id to filter on</param>
-    /// <returns>Slide JSON object if any slide were found, otherwise null</returns>
-    public Task<string> GetSlideById(int id);
 
     /// <summary>
     /// Gets slides (non-archived) by pagination by invoking datalayer and serializing result to JSON object
@@ -66,11 +89,18 @@ public interface IBusinessRules
     public Task<string> GetSlidesByGroup(int groupId, int page, int size);
 
     /// <summary>
-    /// Deserializes a Slide JSON object and adds the deserialized object to the database by invoking datalayer.
+    /// Gets a specific slide (including archived) associated with a specific slide Id by invoking datalayer and serializing result to JSON object.
+    /// </summary>
+    /// <param name="id">the slide Id to filter on</param>
+    /// <returns>Slide JSON object if any slide were found, otherwise null</returns>
+    public Task<string> GetSlideById(int id);
+
+    /// <summary>
+    /// Adds the Slides object to the database by invoking datalayer.
     /// </summary>
     /// <param name="slideObject">Slide JSON object</param>
     /// <returns>True if operation successfull otherwise false</returns>
-    public Task<bool> AddSlide(string slideObject);
+    public bool AddSlide(Slides slideObject);
 
     /// <summary>
     /// Archives a specific slide in the database by updating the slide archived value and invoking datalayer.
