@@ -1,12 +1,14 @@
-﻿using Meta_TV2_Utils;
+using Meta_TV2_Utils;
+using System.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace Meta_TV2_DataLayer;
 
 public class DataAccess : IDataAccess
 {
     MetaTvContext db = new MetaTvContext();
-    
+
     public async void AddGroups(Groups group){
         db.Add(group);
         await db.SaveChangesAsync();
@@ -44,7 +46,7 @@ public class DataAccess : IDataAccess
         db.Dispose();
     }
 
-    public async Task<Optional<List<Groups>>> GetGroups(int size, int page){
+    public async Task<Optional<List<Groups>>> GetGroups(int page, int size){
         var query = from x in db.Groups where x.archive == false select x;
         List<Groups> groups = await query.Skip((page-1) * size).Take(size).ToListAsync();
         if (groups.Count() == 0) {
@@ -97,6 +99,32 @@ public class DataAccess : IDataAccess
 
     public async void UpdateSlide(Slides slide){
         db.Update(slide);
+        await db.SaveChangesAsync();
+        db.Dispose();
+    }
+
+    public async void AddBlacklist(Blacklist obj) {
+        db.Add(obj);
+        await db.SaveChangesAsync();
+        db.Dispose();
+    }
+
+    public async Task<Optional<List<Blacklist>>> GetBlacklistedUsers() {
+        var query = from x in db.Blacklist select x;
+        var blacklists = await query.ToListAsync();
+        if (blacklists.Count == 0) {
+            return Optional<List<Blacklist>>.Empty();
+        }
+        return Optional<List<Blacklist>>.Result(blacklists);
+    }
+
+    public async Task<Optional<Blacklist>> GetBlacklistByAlias(string alias) {
+        var entry = await db.Blacklist.FindAsync(alias);
+        return entry != null ? Optional<Blacklist>.Result(entry) : Optional<Blacklist>.Empty();
+    }
+
+    public async void RemoveFromBlacklist(Blacklist obj){
+        db.Blacklist.Remove(obj);
         await db.SaveChangesAsync();
         db.Dispose();
     }

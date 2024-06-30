@@ -1,0 +1,13 @@
+.DS_Store
+**/bin
+**/obj
+.vscode
+node_modules
+/build
+**/.svelte-kit
+.env
+.env.*
+!.env.example
+Meta-TV2-AccessLayer/appsettings.json
+Dockerfile
+README.md

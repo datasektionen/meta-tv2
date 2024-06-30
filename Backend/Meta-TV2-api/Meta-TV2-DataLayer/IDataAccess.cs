@@ -30,10 +30,10 @@ public interface IDataAccess
     /// <summary>
     /// Gets groups (non-archived) by pagination (in database order)
     /// </summary>
-    /// <param name="size">Determines number of groups per page</param>
     /// <param name="page">Determines which chunk of groups to get</param>
+    /// <param name="size">Determines number of groups per page</param>
     /// <returns>Optional object with a list of Group objects as value, otherwise empty Optional object if no groups found</returns>
-    public Task<Optional<List<Groups>>> GetGroups(int size, int page);
+    public Task<Optional<List<Groups>>> GetGroups(int page, int size);
 
     /// <summary>
     /// Gets all non-archived slides from database (in database order)
@@ -78,4 +78,29 @@ public interface IDataAccess
     /// </summary>
     /// <param name="slide">The updated slide to store</param>
     public void UpdateSlide(Slides slide);
+
+    /// <summary>
+    /// Stores a the given Blacklist obj into the database.
+    /// </summary>
+    /// <param name="obj">The Blacklist object to store</param>
+    public void AddBlacklist(Blacklist obj);
+
+    /// <summary>
+    /// Gets all blacklisted users from database (in database order)
+    /// </summary>
+    /// <returns>Optional object with a list of Blacklisted objects as value, otherwise empty Optional object if no blacklisted users</returns>
+    public Task<Optional<List<Blacklist>>> GetBlacklistedUsers();
+
+    /// <summary>
+    /// Get the Blacklist object with the specified alias
+    /// </summary>
+    /// <returns>Optional object with the Blacklist object, otherwise empty Optional object if such Blacklisted alias does not exists</returns>
+    /// <param name="alias"> The alias to search for</param>
+    public Task<Optional<Blacklist>> GetBlacklistByAlias(string alias);
+    
+    /// <summary>
+    /// Removes the Blacklist object from the database
+    /// </summary>
+    /// <param name="obj">The object to delete from the database</param>
+    public void RemoveFromBlacklist(Blacklist obj);
 }
