@@ -98,15 +98,18 @@ public class BusinessRules : IBusinessRules
     public async Task<bool> ArchiveGroup(int id){
         try
         {
-            // Get the group by Id
             var group = await dataAccess.GetGroupById(id);
-            
-            // Modify the group attributes
-            group.Value.archive = true;
-            group.Value.archiveDate = DateTime.Now;
+            if (!group.HasValue)
+                return false;
 
-            // Update database
-            dataAccess.UpdateGroup(group.Value);
+            if (!group.Value.archive){      // Makes sure to not archive an archived slide
+                // Modify the group attributes
+                group.Value.archive = true;
+                group.Value.archiveDate = DateTime.Now;
+
+                // Update database
+                dataAccess.UpdateGroup(group.Value);
+            }
             return true;
         }
         catch (Exception e)
@@ -193,9 +196,15 @@ public class BusinessRules : IBusinessRules
             var slide = await dataAccess.GetSlideById(id);
             if (!slide.HasValue) 
                 return false;
-            slide.Value.archive = true;
-            slide.Value.archiveDate = DateTime.Now;
-            dataAccess.UpdateSlide(slide.Value);
+            
+            if (!slide.Value.archive){      // Makes sure to not archive an archived slide
+                // Modify the group attributes
+                slide.Value.archive = true;
+                slide.Value.archiveDate = DateTime.Now;
+
+                // Update database
+                dataAccess.UpdateSlide(slide.Value);
+            }
             return true;
         } catch(Exception e) {
             return false;
