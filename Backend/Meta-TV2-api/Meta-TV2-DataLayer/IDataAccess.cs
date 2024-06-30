@@ -70,7 +70,7 @@ public interface IDataAccess
     /// Creates a new Slide and stores the Slide inside the database.
     /// </summary>
     /// <param name="obj">The slide object to store</param>
-    public void AddSlide(Slides obj);
+    public void AddSlide(Slides slide);
 
     /// <summary>
     /// Updates an already existing slide in the databse and stores the update.
