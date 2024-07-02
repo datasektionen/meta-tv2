@@ -225,7 +225,7 @@ public class BusinessRules : IBusinessRules
         }
     }
 
-    public async Task<(string, string)> GetPostFileType(int id) {
+    public async Task<(string, string)> GetPostFileInfo(int id) {
         try {
             var post = await dataAccess.GetPostByPostId(id);
             if (!post.HasValue)
@@ -241,14 +241,13 @@ public class BusinessRules : IBusinessRules
     public async Task<bool> AddPost(string post, ICustomFormFile file)
     {
         try {
-
             var deserializedPost = JsonSerializer.Deserialize<Posts>(post);
 
             if( deserializedPost.pathType != "Url" && deserializedPost.pathType != "Video" && deserializedPost.pathType != "Image" && deserializedPost.pathType != "Html") {
                 return false;
             }
 
-            if (file == null | deserializedPost.pathType == "")
+            if (file == null)
                 return false;
             if(deserializedPost.pathType == "Url" & deserializedPost.filePath != "") { // Handle URL case
                 dataAccess.AddPostWithUrl(deserializedPost);

@@ -55,8 +55,7 @@ public class Group : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetGroups()
-    {
+    public async Task<IActionResult> GetGroups(){
         var groups = await businessRules.GetGroups();
         return groups != null ? Ok(groups) : NotFound("No groups found");
     }
@@ -88,11 +87,11 @@ public class Slide : ControllerBase
     IBusinessRules businessRules = new BusinessRules();
 
     [HttpGet]
-    public async Task<IActionResult> GetSlides()
-    {
+    public async Task<IActionResult> GetSlides(){
         var slides = await businessRules.GetSlides();
         return slides != null ? Ok(slides) : NotFound("No slides found");
     }
+
     [HttpGet("GroupId")]
     public async Task<IActionResult> GetSlidesByGroup([FromQuery] int id) {
         var slides = await businessRules.GetSlidesByGroup(id);
@@ -131,7 +130,7 @@ public class Post : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetPosts(int id)
+    public async Task<IActionResult> GetPosts([FromQuery] int id)
     {
         //Get post by id
         var posts = await businessRules.GetPosts(id);
@@ -139,7 +138,7 @@ public class Post : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> AddPost(string post, IFormFile file)
+    public async Task<IActionResult> AddPost([FromQuery] string post, IFormFile file)
     {
         // Convert IFormFile to ICustomFormFile
         ICustomFormFile customFile = new FormFileWrapper(file);
@@ -147,11 +146,11 @@ public class Post : ControllerBase
         var added = await businessRules.AddPost(post, customFile);
         return added ? Ok() : BadRequest("Failed to add post");
     }
-    [HttpGet("{id}/file")]
 
-    public async Task<IActionResult> GetPostFile(int id)
+    [HttpGet("{id}/file")]
+    public async Task<IActionResult> GetPostFile([FromQuery] int id)
     {
-        var (folder, fileType) = await businessRules.GetPostFileType(id);
+        var (folder, fileType) = await businessRules.GetPostFileInfo(id);
         if (folder == null)
         {
             return NotFound($"Post with id: {id} doesn't exist");

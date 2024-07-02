@@ -123,16 +123,17 @@ public interface IBusinessRules
     public Task<string> GetPosts(int id);
 
     /// <summary>
-    /// Gets the file type of a post by invoking datalayer.
-    /// Can only be one of these: Image, Video, Html or Url.
+    /// Gets the file info of a post by invoking datalayer.
+    /// The first string in the tuple returns the file type. Can only be one of these: Image, Video, Html or Url.
+    /// The second string in the tuple returns the file path along with file name. If file type is Url then file path holds the actual Url.
     /// Ignores if the post is archived or not.
     /// </summary>
     /// <param name="id">The post id to sort on</param>
     /// <returns>Tuple of strings, first being file type, second being filepath, if non found null on both.</returns>
-    public Task<(string, string)> GetPostFileType(int id);
+    public Task<(string, string)> GetPostFileInfo(int id);
 
     /// <summary>
-    /// Creates a new post with a assosciated file by invoking datalayer
+    /// Creates a new post with a associated file by invoking datalayer
     /// The posts pathType attribute should correspond to the associated file type
     /// pathType can only be: Image, Video, Html or Url
     /// </summary>
