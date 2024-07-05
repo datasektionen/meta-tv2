@@ -116,9 +116,9 @@ public interface IBusinessRules
     public Task<string> GetPosts();
 
     /// <summary>
-    /// Gets all posts associated with a specific slide id that is not archived from the database and serializes the result to JSON object.
+    /// Gets all posts associated with a specific non archived slide id from the database and serializes the result to JSON object.
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">The slide id to sort on</param>
     /// <returns>JSON object of posts, or null if none found</returns>
     public Task<string> GetPosts(int id);
 
@@ -133,11 +133,11 @@ public interface IBusinessRules
     public Task<(string, string)> GetPostFileInfo(int id);
 
     /// <summary>
-    /// Creates a new post with a associated file by invoking datalayer
+    /// Creates an new post with a associated file by invoking datalayer
     /// The posts pathType attribute should correspond to the associated file type
     /// pathType can only be: Image, Video, Html or Url
     /// </summary>
-    /// <param name="post">The post</param>
+    /// <param name="post">The serialized JSON post</param>
     /// <param name="file">The file associated with post</param>
     /// <returns>True if operation sucessfull, otherwise false</returns>
     public Task<bool> AddPost(string post, ICustomFormFile file);

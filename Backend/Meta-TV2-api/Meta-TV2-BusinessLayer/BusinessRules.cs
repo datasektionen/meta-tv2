@@ -241,20 +241,23 @@ public class BusinessRules : IBusinessRules
     public async Task<bool> AddPost(string post, ICustomFormFile file)
     {
         try {
-            var deserializedPost = JsonSerializer.Deserialize<Posts>(post);
+            Posts deserializedPost = JsonSerializer.Deserialize<Posts>(post);
 
-            if( deserializedPost.pathType != "Url" && deserializedPost.pathType != "Video" && deserializedPost.pathType != "Image" && deserializedPost.pathType != "Html") {
+            if (deserializedPost.pathType != "Url" && deserializedPost.pathType != "Video" && deserializedPost.pathType != "Image" && deserializedPost.pathType != "Html")
                 return false;
-            }
 
             if (file == null)
                 return false;
-            if(deserializedPost.pathType == "Url" & deserializedPost.filePath != "") { // Handle URL case
+
+            if (deserializedPost.pathType == "Url" & deserializedPost.filePath != "")
+            { // Handle URL case
                 dataAccess.AddPostWithUrl(deserializedPost);
                 return true;
             }
+
             deserializedPost.filePath = "." + file.ContentType.Split("/")[1];
             int id = await dataAccess.AddPostWithFile(deserializedPost);
+
             if (id == -1)
                 return false;
 
@@ -264,7 +267,9 @@ public class BusinessRules : IBusinessRules
                 await file.CopyToAsync(stream);
             }
             return true;
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             return false;
         }
     }

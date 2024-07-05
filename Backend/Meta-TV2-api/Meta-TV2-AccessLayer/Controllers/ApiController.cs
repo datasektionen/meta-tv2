@@ -129,7 +129,7 @@ public class Post : ControllerBase
         return posts != null ? Ok(posts) : BadRequest("No posts found"); 
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("id")]
     public async Task<IActionResult> GetPosts([FromQuery] int id)
     {
         //Get post by id
@@ -138,7 +138,7 @@ public class Post : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> AddPost([FromQuery] string post, IFormFile file)
+    public async Task<IActionResult> AddPost([FromForm] string post, IFormFile file) //post is still string and should be sent as a JSON in the Form format with key "post" and value should be the JSON
     {
         // Convert IFormFile to ICustomFormFile
         ICustomFormFile customFile = new FormFileWrapper(file);
@@ -147,7 +147,7 @@ public class Post : ControllerBase
         return added ? Ok() : BadRequest("Failed to add post");
     }
 
-    [HttpGet("{id}/file")]
+    [HttpGet("file")]
     public async Task<IActionResult> GetPostFile([FromQuery] int id)
     {
         var (folder, fileType) = await businessRules.GetPostFileInfo(id);
