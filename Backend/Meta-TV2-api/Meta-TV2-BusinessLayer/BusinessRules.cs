@@ -241,12 +241,12 @@ public class BusinessRules : IBusinessRules
     public async Task<bool> AddPost(string post, ICustomFormFile file)
     {
         try {
-            Posts deserializedPost = JsonSerializer.Deserialize<Posts>(post);
+            var deserializedPost = JsonSerializer.Deserialize<Posts>(post);
+
+            if (file.IsEmpty)
+                return false;   // No file was passed
 
             if (deserializedPost.pathType != "Url" && deserializedPost.pathType != "Video" && deserializedPost.pathType != "Image" && deserializedPost.pathType != "Html")
-                return false;
-
-            if (file == null)
                 return false;
 
             if (deserializedPost.pathType == "Url" & deserializedPost.filePath != "")
@@ -262,6 +262,17 @@ public class BusinessRules : IBusinessRules
                 return false;
 
             var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", deserializedPost.pathType, id.ToString() + "." + file.ContentType.Split("/")[1]);
+            
+            // Get the directory from the file path
+            var directory = Path.GetDirectoryName(path);
+
+            // Ensure that the directory exists
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+
+            // Write the file to the directory
             using (var stream = new FileStream(path, FileMode.Create))
             {
                 await file.CopyToAsync(stream);

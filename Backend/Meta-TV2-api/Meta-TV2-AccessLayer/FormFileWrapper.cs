@@ -11,6 +11,7 @@ namespace Meta_TV2_api
             _formFile = formFile;
         }
 
+        public bool IsEmpty => _formFile == null;
         public string FileName => _formFile.FileName;
         public string ContentType => _formFile.ContentType;
         public long Length => _formFile.Length;
