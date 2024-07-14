@@ -108,4 +108,37 @@ public interface IBusinessRules
     /// <param name="id">The id of the slide to archive</param>
     /// <returns>True if operation was successfull otherwise false.</returns>
     public Task<bool> ArchiveSlide(int id);
+
+    /// <summary>
+    /// Gets all non archived posts from the database and serializes the result to JSON object.
+    /// </summary>
+    /// <returns>JSON object if posts found, otherwise null</returns>
+    public Task<string> GetPosts();
+
+    /// <summary>
+    /// Gets all posts associated with a specific non archived slide id from the database and serializes the result to JSON object.
+    /// </summary>
+    /// <param name="id">The slide id to sort on</param>
+    /// <returns>JSON object of posts, or null if none found</returns>
+    public Task<string> GetPosts(int id);
+
+    /// <summary>
+    /// Gets the file info of a post by invoking datalayer.
+    /// The first string in the tuple returns the file type. Can only be one of these: Image, Video, Html or Url.
+    /// The second string in the tuple returns the file path along with file name. If file type is Url then file path holds the actual Url.
+    /// Ignores if the post is archived or not.
+    /// </summary>
+    /// <param name="id">The post id to sort on</param>
+    /// <returns>Tuple of strings, first being file type, second being filepath, if non found null on both.</returns>
+    public Task<(string, string)> GetPostFileInfo(int id);
+
+    /// <summary>
+    /// Creates an new post with a associated file by invoking datalayer
+    /// The posts pathType attribute should correspond to the associated file type
+    /// pathType can only be: Image, Video, Html or Url
+    /// </summary>
+    /// <param name="post">The serialized JSON post</param>
+    /// <param name="file">The file associated with post</param>
+    /// <returns>True if operation sucessfull, otherwise false</returns>
+    public Task<bool> AddPost(string post, ICustomFormFile file);
 }

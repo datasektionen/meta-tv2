@@ -82,14 +82,16 @@ public class Group : ControllerBase
 }
 
 [Route("[Controller]")]
-public class Slide : ControllerBase {
+public class Slide : ControllerBase 
+{
     IBusinessRules businessRules = new BusinessRules();
 
     [HttpGet]
-    public async Task<IActionResult> GetSlides() {
+    public async Task<IActionResult> GetSlides(){
         var slides = await businessRules.GetSlides();
         return slides != null ? Ok(slides) : NotFound("No slides found");
     }
+
     [HttpGet("GroupId")]
     public async Task<IActionResult> GetSlidesByGroup([FromQuery] int id) {
         var slides = await businessRules.GetSlidesByGroup(id);
@@ -115,6 +117,67 @@ public class Slide : ControllerBase {
     }
 }
 
+[Route("[controller]")]
+public class Post : ControllerBase
+{
+    IBusinessRules businessRules = new BusinessRules();
+
+    [HttpGet]
+    public async Task<IActionResult> GetPosts()
+    {
+        var posts = await businessRules.GetPosts();
+        return posts != null ? Ok(posts) : BadRequest("No posts found"); 
+    }
+
+    [HttpGet("id")]
+    public async Task<IActionResult> GetPosts([FromQuery] int id)
+    {
+        //Get post by id
+        var posts = await businessRules.GetPosts(id);
+        return posts != null ? Ok(posts) : BadRequest($"No posts found for id: {id}"); 
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> AddPost([FromForm] string post, IFormFile file) //post is still string and should be sent as a JSON in the Form format with key "post" and value should be the JSON
+    {
+        // Convert IFormFile to ICustomFormFile
+        ICustomFormFile customFile = new FormFileWrapper(file);
+
+        var added = await businessRules.AddPost(post, customFile);
+        return added ? Ok() : BadRequest("Failed to add post");
+    }
+
+    [HttpGet("file")]
+    public async Task<IActionResult> GetPostFile([FromQuery] int id)
+    {
+        var (folder, fileType) = await businessRules.GetPostFileInfo(id);
+        if (folder == null)
+        {
+            return NotFound($"Post with id: {id} doesn't exist");
+        }
+        if (folder == "Url")
+        {
+            return Ok(fileType);
+        }
+        try
+        {
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", folder, id.ToString() + fileType);
+            var file = System.IO.File.OpenRead(path);
+            return folder switch
+            {
+                "Image" => File(file, "image/" + fileType.Split(".")[1]),
+                "Video" => File(file, "video/" + fileType.Split(".")[1]),
+                "Html" => File(file, "text/html"),
+                _ => BadRequest("Something went wrong")
+            };
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return BadRequest("Something went wrong");
+        }
+    }
+}
 [Authorize(Roles = "Admin")]
 [Route("[Controller]")]
 public class Admin : ControllerBase {

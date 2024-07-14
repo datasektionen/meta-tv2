@@ -1,6 +1,7 @@
 using System.Security;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
@@ -33,6 +34,11 @@ builder.Services.AddAuthorization(options => {
     options.AddPolicy("AdminOnly", policy => policy.RequireClaim("Admin", "True"));
 });
 //Jwt configuration ends here
+
+builder.Services.Configure<FormOptions>(options =>
+{
+    options.MultipartBodyLengthLimit = 104857600; // 100 MB maximum multipart/form-data size
+});
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
