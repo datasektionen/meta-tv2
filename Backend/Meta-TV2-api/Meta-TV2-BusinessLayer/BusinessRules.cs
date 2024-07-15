@@ -68,6 +68,7 @@ public class BusinessRules : IBusinessRules
         catch (Exception e)
         {
             // logg e?
+            Console.WriteLine(e);
             return false;
         }
     }
@@ -191,7 +192,7 @@ public class BusinessRules : IBusinessRules
         }
     }
 
-    public async Task<bool> ArchiveSlide(int id) {
+    public async Task<bool> ArchiveSlide(int id){
         try {
             var slide = await dataAccess.GetSlideById(id);
             if (!slide.HasValue) 
@@ -207,6 +208,88 @@ public class BusinessRules : IBusinessRules
             }
             return true;
         } catch(Exception e) {
+            return false;
+        }
+    }
+
+    public async Task<string> GetPosts() {
+        try {
+            var posts = await dataAccess.GetPosts();
+            if (!posts.HasValue)
+                return null;
+            return JsonSerializer.Serialize(posts.Value);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public async Task<string> GetPosts(int id) {
+        try {
+            var posts = await dataAccess.GetPosts(id);
+            if (!posts.HasValue)
+                return null;
+            return JsonSerializer.Serialize(posts.Value);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public async Task<(string, string)> GetPostFileInfo(int id) {
+        try {
+            var post = await dataAccess.GetPostByPostId(id);
+            if (!post.HasValue)
+                return (null, null);
+            if(post.Value.pathType == "Url")
+                return ("Url", post.Value.filePath);
+            return (post.Value.pathType, post.Value.filePath);
+        } catch (Exception e){
+            return (null, null);
+        }
+    }
+
+    public async Task<bool> AddPost(string post, ICustomFormFile file)
+    {
+        try {
+            var deserializedPost = JsonSerializer.Deserialize<Posts>(post);
+
+            if (file.IsEmpty)
+                return false;   // No file was passed
+
+            if (deserializedPost.pathType != "Url" && deserializedPost.pathType != "Video" && deserializedPost.pathType != "Image" && deserializedPost.pathType != "Html")
+                return false;
+
+            if (deserializedPost.pathType == "Url" & deserializedPost.filePath != "")
+            { // Handle URL case
+                dataAccess.AddPostWithUrl(deserializedPost);
+                return true;
+            }
+
+            deserializedPost.filePath = "." + file.ContentType.Split("/")[1];
+            int id = await dataAccess.AddPostWithFile(deserializedPost);
+
+            if (id == -1)
+                return false;
+
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", deserializedPost.pathType, id.ToString() + "." + file.ContentType.Split("/")[1]);
+            
+            // Get the directory from the file path
+            var directory = Path.GetDirectoryName(path);
+
+            // Ensure that the directory exists
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+
+            // Write the file to the directory
+            using (var stream = new FileStream(path, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+            return true;
+        }
+        catch (Exception e)
+        {
             return false;
         }
     }
