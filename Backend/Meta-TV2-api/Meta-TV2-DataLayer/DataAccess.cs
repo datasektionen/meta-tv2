@@ -150,52 +150,68 @@ public class DataAccess : IDataAccess
     }
 
     public async Task<Optional<List<Posts>>> GetPosts() {
-        var query = from x in db.Posts join y in db.Slides on x.slideId equals y.slideId where y.archive == false select x;
-        var result = await query.ToListAsync();
-        if (result.Count == 0){
+        try
+        {
+            var query = from x in db.Posts join y in db.Slides on x.slideId equals y.slideId where y.archive == false select x;
+            var result = await query.ToListAsync();
+            if (result.Count == 0)
+                return Optional<List<Posts>>.Empty();
+            return Optional<List<Posts>>.Result(result);
+        }
+        catch (Exception e)
+        {
+            _logger.Log(LogLevels.ERROR, e.Message, "DataAccess.GetPosts", DateTime.Now);
             return Optional<List<Posts>>.Empty();
         }
-        return Optional<List<Posts>>.Result(result);
+
     }
 
     public async Task<Optional<List<Posts>>> GetPosts(int id) {
-        var query = from x in db.Posts join y in db.Slides on x.slideId equals y.slideId where y.archive == false & x.slideId == id select x;
-        var result = await query.ToListAsync();
-        if (result.Count == 0){
+        try
+        {
+            var query = from x in db.Posts join y in db.Slides on x.slideId equals y.slideId where y.archive == false & x.slideId == id select x;
+            var result = await query.ToListAsync();
+            if (result.Count == 0)
+                return Optional<List<Posts>>.Empty();
+            return Optional<List<Posts>>.Result(result);
+        }
+        catch (Exception e)
+        {
+            _logger.Log(LogLevels.ERROR, $"slideId: {id}. {e.Message}", "DataAccess.GetPosts", DateTime.Now);
             return Optional<List<Posts>>.Empty();
         }
-        return Optional<List<Posts>>.Result(result);
     }
 
     public async void AddPostWithUrl(Posts post){
         db.Add(post);
         await db.SaveChangesAsync();
-        _logger.Log(LogLevels.INFORMATION, $"Slide updated. groupId: {slide.groupId}", "DataAccess.UpdateSlide", DateTime.Now);
+        _logger.Log(LogLevels.INFORMATION, $"Post added (URL). File path: {post.filePath}", "DataAccess.AddPostWithUrl", DateTime.Now);
         db.Dispose();
     }
 
-    public async Task<Optional<List<Posts>>> GetPosts() {
-        var query = from x in db.Posts join y in db.Slides on x.slideId equals y.slideId where y.archive == false select x;
-        var result = await query.ToListAsync();
-        if (result.Count == 0){
-            return Optional<List<Posts>>.Empty();
-        }
-        return Optional<List<Posts>>.Result(result);
-    }
-
-    public async Task<Optional<List<Posts>>> GetPosts(int id) {
-        var query = from x in db.Posts join y in db.Slides on x.slideId equals y.slideId where y.archive == false & x.slideId == id select x;
-        var result = await query.ToListAsync();
-        if (result.Count == 0){
-            return Optional<List<Posts>>.Empty();
-        }
-        return Optional<List<Posts>>.Result(result);
-    }
-
-    public async void AddPostWithUrl(Posts post){
+    public async Task<int> AddPostWithFile(Posts post) {
         db.Add(post);
         await db.SaveChangesAsync();
+        _logger.Log(LogLevels.INFORMATION, $"Post added (File). File path: {post.filePath}", "DataAccess.AddPostWithFile", DateTime.Now);
         db.Dispose();
+        return post.postId;
+    }
+
+    public async Task<Optional<Posts>> GetPostByPostId(int id) {
+        try
+        {
+            var query = from x in db.Posts where x.postId == id select x;
+            var post = await query.FirstAsync();
+            db.Dispose();
+            if(post == null)
+                return Optional<Posts>.Empty();
+            return Optional<Posts>.Result(post);
+        }
+        catch (Exception e)
+        {
+            _logger.Log(LogLevels.ERROR, $"PostId: {id}. {e.Message}", "DataAccess.GetPostByPostId", DateTime.Now);
+            return Optional<Posts>.Empty();
+        }
     }
 
     public async void AddBlacklist(Blacklist obj) {
@@ -203,22 +219,6 @@ public class DataAccess : IDataAccess
         await db.SaveChangesAsync();
         _logger.Log(LogLevels.INFORMATION, $"Blacklisted user added. Alias: {obj.alias}", "DataAccess.AddGroups", DateTime.Now);
         db.Dispose();
-    }
-
-    public async Task<int> AddPostWithFile(Posts post) {
-        db.Add(post);
-        await db.SaveChangesAsync();
-        db.Dispose();
-        return post.postId;
-    }
-
-    public async Task<Optional<Posts>> GetPostByPostId(int id) {
-        var query = from x in db.Posts where x.postId == id select x;
-        var post = await query.FirstAsync();
-        db.Dispose();
-        if(post == null)
-            return Optional<Posts>.Empty();
-        return Optional<Posts>.Result(post);
     }
     
     public async Task<Optional<List<Blacklist>>> GetBlacklistedUsers() {
