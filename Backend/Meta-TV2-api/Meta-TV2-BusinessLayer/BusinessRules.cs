@@ -7,58 +7,6 @@ public class BusinessRules : IBusinessRules
 {
     IDataAccess dataAccess = new DataAccess();
 
-    public async Task<Optional<Blacklist>> GetBlacklistByAlias(string alias){
-        try
-        {
-            return await dataAccess.GetBlacklistByAlias(alias);
-        }
-        catch (Exception e)
-        {
-            return null;
-        }
-    }
-
-    public bool BanUser(string alias){
-        try {
-            var blacklist = JsonSerializer.Deserialize<Blacklist>(alias);
-            dataAccess.AddBlacklist(blacklist);
-            return true;
-        } 
-        catch(Exception e) {
-            Console.WriteLine(e);
-            return false;
-        }
-    }
-    public async Task<string> GetBlacklistedUsers() {
-        try
-        {
-            var result = await dataAccess.GetBlacklistedUsers();
-            if(!result.HasValue) 
-                return "";
-            return JsonSerializer.Serialize(result.Value);
-        }
-        catch (Exception e)
-        {  
-            //logg e?
-            return null;
-        }
-    }
-
-    public async Task<bool> UnbanUser(string alias) {
-        try {
-            var entry = await dataAccess.GetBlacklistByAlias(alias);
-            if(entry.HasValue) {
-                dataAccess.RemoveFromBlacklist(entry.Value);
-                return true;
-            }
-            return false;
-        }
-        catch (Exception e) {
-            //logg e?
-            return false;
-        }
-    }
-
     public bool AddGroup(Groups groupObject){
         try
         {
@@ -223,9 +171,9 @@ public class BusinessRules : IBusinessRules
         }
     }
 
-    public async Task<string> GetPosts(int id) {
+    public async Task<string> GetPostsBySlide(int slideId) {
         try {
-            var posts = await dataAccess.GetPosts(id);
+            var posts = await dataAccess.GetPostsBySlide(slideId);
             if (!posts.HasValue)
                 return null;
             return JsonSerializer.Serialize(posts.Value);
@@ -290,6 +238,59 @@ public class BusinessRules : IBusinessRules
         }
         catch (Exception e)
         {
+            return false;
+        }
+    }
+
+    public async Task<Optional<Blacklist>> GetBlacklistByAlias(string alias){
+        try
+        {
+            return await dataAccess.GetBlacklistByAlias(alias);
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
+    }
+
+    public bool BanUser(string alias){
+        try {
+            var blacklist = JsonSerializer.Deserialize<Blacklist>(alias);
+            dataAccess.AddBlacklist(blacklist);
+            return true;
+        } 
+        catch(Exception e) {
+            Console.WriteLine(e);
+            return false;
+        }
+    }
+    
+    public async Task<string> GetBlacklistedUsers() {
+        try
+        {
+            var result = await dataAccess.GetBlacklistedUsers();
+            if(!result.HasValue) 
+                return "";
+            return JsonSerializer.Serialize(result.Value);
+        }
+        catch (Exception e)
+        {  
+            //logg e?
+            return null;
+        }
+    }
+
+    public async Task<bool> UnbanUser(string alias) {
+        try {
+            var entry = await dataAccess.GetBlacklistByAlias(alias);
+            if(entry.HasValue) {
+                dataAccess.RemoveFromBlacklist(entry.Value);
+                return true;
+            }
+            return false;
+        }
+        catch (Exception e) {
+            //logg e?
             return false;
         }
     }
