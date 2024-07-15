@@ -1,7 +1,7 @@
-﻿namespace Meta_TV2_BusinessLayer;
-
-using System.Text.Json;
+﻿using System.Text.Json;
 using Meta_TV2_DataLayer;
+
+namespace Meta_TV2_BusinessLayer;
 
 public class BusinessRules : IBusinessRules
 {

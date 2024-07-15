@@ -88,9 +88,9 @@ public interface IDataAccess
     /// <summary>
     /// Gets all non-archived posts associated with a specific slide Id from the database
     /// </summary>
-    /// <param name="id">The slide ID to sort on</param>
+    /// <param name="slideId">The slide ID to sort on</param>
     /// <returns>Optional object with a list of posts as value, otherwise empty Optional object if no posts associated with the id was found</returns>
-    public Task<Optional<List<Posts>>> GetPosts(int id);
+    public Task<Optional<List<Posts>>> GetPostsBySlide(int slideId);
 
     /// <summary>
     /// Creates a new post, with the attribute of the post being a URL. Then stores the post in the database.

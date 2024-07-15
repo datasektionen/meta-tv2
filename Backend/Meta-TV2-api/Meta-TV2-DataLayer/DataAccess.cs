@@ -21,6 +21,7 @@ public class DataAccess : IDataAccess
         {
             var query = from x in db.Groups where x.archive == false select x;
             var groups = await query.ToListAsync();
+            _logger.Log(LogLevels.INFORMATION, $"Groups fetched. Count: {groups.Count}", "DataAccess.GetGroups", DateTime.Now);
             if (groups.Count() != 0)
                 return Optional<List<Groups>>.Result(groups);
             else return Optional<List<Groups>>.Empty();
@@ -37,6 +38,7 @@ public class DataAccess : IDataAccess
         {
             var query = from x in db.Groups where x.archive == false select x;
             List<Groups> groups = await query.Skip((page-1) * size).Take(size).ToListAsync();
+            _logger.Log(LogLevels.INFORMATION, $"Fetched groups. Count: {groups.Count}", "DataAccess.GetGroups(size, page)", DateTime.Now);
             if (groups.Count() != 0)
                 return Optional<List<Groups>>.Result(groups);
             else return Optional<List<Groups>>.Empty();
@@ -53,6 +55,7 @@ public class DataAccess : IDataAccess
         {
             var query = from x in db.Groups where x.groupId == id select x;
             var group = await query.FirstOrDefaultAsync();
+            _logger.Log(LogLevels.INFORMATION, $"Fetched group by Id. Id: {id}", "DataAccess.GetGroupById(id)", DateTime.Now);
             if (group != null)
                 return Optional<Groups>.Result(group);
             else return Optional<Groups>.Empty();
@@ -76,6 +79,7 @@ public class DataAccess : IDataAccess
         {
             var query = from x in db.Slides where x.archive == false select x;
             var slides = await query.ToListAsync();
+            _logger.Log(LogLevels.INFORMATION, $"Fetched slides. Count: {slides.Count}", "DataAccess.GetSlides", DateTime.Now);
             if (slides.Count != 0)
                 return Optional<List<Slides>>.Result(slides);
             else return Optional<List<Slides>>.Empty();
@@ -92,6 +96,7 @@ public class DataAccess : IDataAccess
         {
             var query = from x in db.Slides where x.archive == false & x.groupId == groupId select x;
             var slides = await query.ToListAsync();
+            _logger.Log(LogLevels.INFORMATION, $"Fetched Slides by group. Count: {slides.Count}, GroupId: {groupId}", "DataAccess.GetSlidesByGroup(groupId)", DateTime.Now);
             if(slides.Count != 0)
                 return Optional<List<Slides>>.Result(slides);
             else return Optional<List<Slides>>.Empty();
@@ -107,9 +112,10 @@ public class DataAccess : IDataAccess
         try
         {
             var query = from x in db.Slides where x.archive == false & x.groupId == groupId select x;
-            List<Slides> groups = await query.Skip((page-1) * size).Take(size).ToListAsync();
-            if (groups.Count != 0)
-                return Optional<List<Slides>>.Result(groups);
+            List<Slides> slides = await query.Skip((page-1) * size).Take(size).ToListAsync();
+            _logger.Log(LogLevels.INFORMATION, $"Fetched Slides by group. Count: {slides.Count}, GroupId: {groupId}", "DataAccess.GetSlidesByGroup(groupId, page, size)", DateTime.Now);
+            if (slides.Count != 0)
+                return Optional<List<Slides>>.Result(slides);
             else return Optional<List<Slides>>.Empty();
         }
         catch (Exception e)
@@ -124,6 +130,7 @@ public class DataAccess : IDataAccess
         {
             var query = from x in db.Slides where x.slideId == id select x;
             var slide = await query.FirstOrDefaultAsync();
+            _logger.Log(LogLevels.INFORMATION, $"Fetched Slide by id. Id: {id}", "DataAccess.GetSlidesById(id)", DateTime.Now);
             if(slide != null)
                 return Optional<Slides>.Result(slide);
             else return Optional<Slides>.Empty();
@@ -153,10 +160,11 @@ public class DataAccess : IDataAccess
         try
         {
             var query = from x in db.Posts join y in db.Slides on x.slideId equals y.slideId where y.archive == false select x;
-            var result = await query.ToListAsync();
-            if (result.Count == 0)
+            var posts = await query.ToListAsync();
+            _logger.Log(LogLevels.INFORMATION, $"Fetched Posts. Count: {posts.Count}", "DataAccess.GetPosts", DateTime.Now);
+            if (posts.Count == 0)
                 return Optional<List<Posts>>.Empty();
-            return Optional<List<Posts>>.Result(result);
+            return Optional<List<Posts>>.Result(posts);
         }
         catch (Exception e)
         {
@@ -166,18 +174,19 @@ public class DataAccess : IDataAccess
 
     }
 
-    public async Task<Optional<List<Posts>>> GetPosts(int id) {
+    public async Task<Optional<List<Posts>>> GetPostsBySlide(int slideId) {
         try
         {
-            var query = from x in db.Posts join y in db.Slides on x.slideId equals y.slideId where y.archive == false & x.slideId == id select x;
-            var result = await query.ToListAsync();
-            if (result.Count == 0)
+            var query = from x in db.Posts join y in db.Slides on x.slideId equals y.slideId where y.archive == false & x.slideId == slideId select x;
+            var posts = await query.ToListAsync();
+            _logger.Log(LogLevels.INFORMATION, $"Fetched Posts. Count: {posts.Count}", "DataAccess.GetPostsBySlide", DateTime.Now);
+            if (posts.Count == 0)
                 return Optional<List<Posts>>.Empty();
-            return Optional<List<Posts>>.Result(result);
+            return Optional<List<Posts>>.Result(posts);
         }
         catch (Exception e)
         {
-            _logger.Log(LogLevels.ERROR, $"slideId: {id}. {e.Message}", "DataAccess.GetPosts", DateTime.Now);
+            _logger.Log(LogLevels.ERROR, $"slideId: {slideId}. {e.Message}", "DataAccess.GetPostsBySlide", DateTime.Now);
             return Optional<List<Posts>>.Empty();
         }
     }
@@ -202,7 +211,7 @@ public class DataAccess : IDataAccess
         {
             var query = from x in db.Posts where x.postId == id select x;
             var post = await query.FirstAsync();
-            db.Dispose();
+            _logger.Log(LogLevels.INFORMATION, $"Fetched Post. Id: {id}", "DataAccess.GetPostByPostId", DateTime.Now);
             if(post == null)
                 return Optional<Posts>.Empty();
             return Optional<Posts>.Result(post);
@@ -226,6 +235,7 @@ public class DataAccess : IDataAccess
         {
             var query = from x in db.Blacklist select x;
             var blacklists = await query.ToListAsync();
+            _logger.Log(LogLevels.INFORMATION, $"Fetched blacklisted users", "DataAccess.GetBlacklistedUsers", DateTime.Now);
             if (blacklists.Count != 0)
                 return Optional<List<Blacklist>>.Result(blacklists);
             return Optional<List<Blacklist>>.Empty();
@@ -242,6 +252,7 @@ public class DataAccess : IDataAccess
         {
             var query = from x in db.Blacklist where x.alias == alias select x;
             var foundAlias = await query.FirstOrDefaultAsync();
+            _logger.Log(LogLevels.INFORMATION, $"Fetched blacklist by alias. Alias: {alias}", "DataAccess.GetBlacklistByAlias", DateTime.Now);
             if (foundAlias != null)
                 return Optional<Blacklist>.Result(foundAlias);
             else return Optional<Blacklist>.Empty();
