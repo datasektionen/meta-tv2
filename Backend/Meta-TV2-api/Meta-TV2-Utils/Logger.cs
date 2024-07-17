@@ -11,9 +11,14 @@ public class Logger : ILogger
 
     private async void StoreLog(LogEntity log){
         MetaTvUtilsContext db = new MetaTvUtilsContext();
-        db.Add(log);
-        await db.SaveChangesAsync();
-        db.Dispose();
+        try {
+            db.Add(log);
+            await db.SaveChangesAsync();
+            db.Dispose();
+        }
+        catch (Exception e) {
+            Console.WriteLine(e.Message);
+        }
     }
 }
 
