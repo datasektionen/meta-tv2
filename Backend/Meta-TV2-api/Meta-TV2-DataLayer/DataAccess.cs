@@ -28,7 +28,7 @@ public class DataAccess : IDataAccess
         }
         catch (Exception e)
         {
-            _logger.Log(LogLevels.ERROR, e.Message, "DataAccess.GetGroups()", DateTime.Now);
+            Console.WriteLine(e.Message);
             return Optional<List<Groups>>.Empty();
         }
     }
@@ -45,7 +45,7 @@ public class DataAccess : IDataAccess
         }
         catch (Exception e)
         {
-            _logger.Log(LogLevels.ERROR, e.Message, "DataAccess.GetGroups(size, page)", DateTime.Now);
+            Console.WriteLine(e.Message);
             return Optional<List<Groups>>.Empty();
         }
     }
@@ -62,7 +62,7 @@ public class DataAccess : IDataAccess
         }
         catch (Exception e)
         {
-            _logger.Log(LogLevels.ERROR, $"groupId: {id}. {e.Message}", "DataAccess.GetGroupById", DateTime.Now);
+            Console.WriteLine(e.Message);
             return Optional<Groups>.Empty();
         }
     }
@@ -86,7 +86,7 @@ public class DataAccess : IDataAccess
         }
         catch (Exception e)
         {
-            _logger.Log(LogLevels.ERROR, e.Message, "DataAccess.GetSlides", DateTime.Now);
+            Console.WriteLine(e.Message);
             return Optional<List<Slides>>.Empty();
         }
     }
@@ -103,7 +103,7 @@ public class DataAccess : IDataAccess
         }
         catch (Exception e)
         {
-            _logger.Log(LogLevels.ERROR, $"groupId: {groupId}. {e.Message}", "DataAccess.GetSlidesByGroup(groupId)", DateTime.Now);
+            Console.WriteLine(e.Message);
             return Optional<List<Slides>>.Empty();
         }
     }
@@ -120,7 +120,7 @@ public class DataAccess : IDataAccess
         }
         catch (Exception e)
         {
-            _logger.Log(LogLevels.ERROR, $"groupId: {groupId}. {e.Message}", "DataAccess.GetSlidesByGroup(groupId, page, size)", DateTime.Now);
+            Console.WriteLine(e.Message);
             return Optional<List<Slides>>.Empty();
         }
     }
@@ -137,7 +137,7 @@ public class DataAccess : IDataAccess
         }
         catch (Exception e)
         {
-            _logger.Log(LogLevels.ERROR, $"slideId: {id}. {e.Message}", "DataAccess.GetSlideById", DateTime.Now);
+            Console.WriteLine(e.Message);
             return Optional<Slides>.Empty();
         }
     }
@@ -168,7 +168,7 @@ public class DataAccess : IDataAccess
         }
         catch (Exception e)
         {
-            _logger.Log(LogLevels.ERROR, e.Message, "DataAccess.GetPosts", DateTime.Now);
+            Console.WriteLine(e.Message);
             return Optional<List<Posts>>.Empty();
         }
 
@@ -186,7 +186,7 @@ public class DataAccess : IDataAccess
         }
         catch (Exception e)
         {
-            _logger.Log(LogLevels.ERROR, $"slideId: {slideId}. {e.Message}", "DataAccess.GetPostsBySlide", DateTime.Now);
+            Console.WriteLine(e.Message);
             return Optional<List<Posts>>.Empty();
         }
     }
@@ -218,7 +218,7 @@ public class DataAccess : IDataAccess
         }
         catch (Exception e)
         {
-            _logger.Log(LogLevels.ERROR, $"PostId: {id}. {e.Message}", "DataAccess.GetPostByPostId", DateTime.Now);
+            Console.WriteLine(e.Message);
             return Optional<Posts>.Empty();
         }
     }
@@ -242,7 +242,7 @@ public class DataAccess : IDataAccess
         }
         catch (Exception e)
         {
-            _logger.Log(LogLevels.ERROR, $"{e.Message}", "DataAccess.GetBlacklistedUsers", DateTime.Now);
+            Console.WriteLine(e.Message);
             throw;
         }
     }
@@ -259,7 +259,7 @@ public class DataAccess : IDataAccess
         }
         catch (Exception e)
         {
-            _logger.Log(LogLevels.ERROR, $"Alias: {alias}. {e.Message}", "DataAccess.GetBlacklistByAlias", DateTime.Now);
+            Console.WriteLine(e.Message);
             return Optional<Blacklist>.Empty();
         }
     }
