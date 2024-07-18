@@ -118,9 +118,9 @@ public interface IBusinessRules
     /// <summary>
     /// Gets all posts associated with a specific non archived slide id from the database and serializes the result to JSON object.
     /// </summary>
-    /// <param name="id">The slide id to sort on</param>
+    /// <param name="slideId">The slide id to sort on</param>
     /// <returns>JSON object of posts, or null if none found</returns>
-    public Task<string> GetPosts(int id);
+    public Task<string> GetPostsBySlide(int slideId);
 
     /// <summary>
     /// Gets the file info of a post by invoking datalayer.

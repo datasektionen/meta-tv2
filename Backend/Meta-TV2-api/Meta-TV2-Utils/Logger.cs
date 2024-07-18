@@ -1,15 +1,30 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Meta_TV2_DataLayer;
+namespace Meta_TV2_Utils;
 
-public class MetaTvContext : DbContext
+public class Logger : ILogger
 {
-    public DbSet<Posts> Posts {get; set;}
-    public DbSet<Slides> Slides {get; set;}
-    public DbSet<Groups> Groups {get; set;}
-    public DbSet<Changes> Changes {get; set;}
-    public DbSet<Blacklist> Blacklist {get; set;}
-    
+    public void Log(LogLevels logLevel, string content, string occuredIn, DateTime dateAndTime){
+        LogEntity log = new LogEntity{ logLevel = logLevel, content = content, occuredIn = occuredIn, dateAndTime = dateAndTime };
+        StoreLog(log);
+    }
+
+    private async void StoreLog(LogEntity log){
+        MetaTvUtilsContext db = new MetaTvUtilsContext();
+        try {
+            db.Add(log);
+            await db.SaveChangesAsync();
+            db.Dispose();
+        }
+        catch (Exception e) {
+            Console.WriteLine(e.Message);
+        }
+    }
+}
+
+public class MetaTvUtilsContext : DbContext
+{
+    public DbSet<LogEntity> Logging {get; set;}
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         var connectionString = UrlToConnectionString(Environment.GetEnvironmentVariable("DATABASE_URL")) ?? "Host=localhost;Database=META-TV";
